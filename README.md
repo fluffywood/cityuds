@@ -1,7 +1,5 @@
 # CityU MSDS 选课板
 
-[![Deploy static site to Pages](https://github.com/fluffywood/cityuds/actions/workflows/pages.yml/badge.svg)](https://github.com/fluffywood/cityuds/actions/workflows/pages.yml)
-
 面向 City University of Hong Kong（CityU）MSDS 学生的静态选课参考工具，用于浏览课程、比较班次、组合每周课表，并集中查看课程事实与往届学生经验。
 
 > 当前数据适用于 **Semester A 2026/27**。课表快照时间为 **2026-08-04 16:48（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
@@ -39,9 +37,10 @@
 ### 详细课程文件与中文翻译
 
 - 对当前网站中有对应文件的 16 门课程提供“查看详细课程介绍”入口。
-- 在独立页面内嵌英文 PDF 原文，无需访客预先下载本地文件。
+- 使用项目内置的 PDF.js 在独立页面逐页显示英文 PDF 原文，无需访客预先下载本地文件。
 - 按 PDF 页码展示完整中文翻译，便于和英文内容逐页核对。
-- 提供新窗口打开和下载 PDF 的备用入口，兼顾无法内嵌 PDF 的移动端浏览器。
+- 手机浏览器直接在网页中加载 PDF，不再由原生 PDF iframe 自动跳转到下载页面。
+- 提供原文件和下载 PDF 的备用入口；PDF.js 许可证见 `assets/vendor/pdfjs/LICENSE`。
 
 ### 本地保存与界面适配
 
@@ -90,7 +89,8 @@ cityuds/
 │   ├── shared.js              # 数据加载、存储和公共工具
 │   ├── planner.js             # 课程筛选、选课和课表逻辑
 │   ├── course.js              # 课程详情渲染逻辑
-│   └── syllabus.js            # 课程文件与翻译渲染逻辑
+│   ├── syllabus.js            # 课程文件与翻译渲染逻辑
+│   └── vendor/pdfjs/          # 网页内 PDF 渲染库与许可证
 ├── data/
 │   ├── courses/index.json     # 学期、培养要求和课程索引
 │   ├── course-documents/      # PDF 映射与逐页中文翻译
@@ -98,8 +98,7 @@ cityuds/
 │   ├── reviews/               # 各课程评价摘要
 │   ├── source-reviews/        # 按来源整理的课程评价原文
 │   └── sources.json           # 评价来源及原文链接
-├── docs/                      # 课程 PDF 资料
-└── .github/workflows/pages.yml # GitHub Pages 自动部署
+└── docs/                      # 课程 PDF 资料
 ```
 
 ## 数据更新说明
@@ -115,16 +114,16 @@ cityuds/
 
 ## 部署
 
-仓库已配置 GitHub Actions。推送到 `main` 分支后，`.github/workflows/pages.yml` 会自动将整个静态站点部署到 GitHub Pages。
+仓库通过 GitHub Pages 直接发布 `main` 分支根目录。仓库设置应保持为 `Settings → Pages → Deploy from a branch → main → /(root)`；推送到 `main` 后会自动更新线上网站。
 
 ```powershell
 git status
-git add README.md
+git add -A
 git commit -m "描述本次修改"
 git push
 ```
 
-可在仓库的 [Actions 页面](https://github.com/fluffywood/cityuds/actions) 查看部署状态。
+可在仓库的 [Pages 设置](https://github.com/fluffywood/cityuds/settings/pages)查看发布状态和线上地址。
 
 ## 使用提示与免责声明
 

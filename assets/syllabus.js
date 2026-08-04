@@ -3,6 +3,9 @@
 
   const detail = document.getElementById("syllabus-detail");
   const code = new URLSearchParams(window.location.search).get("code")?.trim().toUpperCase();
+  const pdfJsBaseUrl = new URL("assets/vendor/pdfjs/", document.baseURI);
+  const pdfJsModuleUrl = new URL("pdf.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
+  const pdfJsWorkerUrl = new URL("pdf.worker.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
 
   function getJson(url) {
     return fetch(url).then((response) => {
@@ -19,9 +22,120 @@
       </article>`;
   }
 
+  function setPdfStatus(message, state = "loading") {
+    const status = document.getElementById("pdf-viewer-status");
+    if (!status) return;
+    status.dataset.state = state;
+    status.querySelector(".pdf-viewer-status-text").textContent = message;
+  }
+
+  async function renderPdfPage(pdf, pageElement) {
+    if (pageElement.dataset.renderState !== "idle") return;
+    pageElement.dataset.renderState = "loading";
+    pageElement.setAttribute("aria-busy", "true");
+    const pageNumber = Number(pageElement.dataset.pageNumber);
+
+    try {
+      const page = await pdf.getPage(pageNumber);
+      const baseViewport = page.getViewport({ scale: 1 });
+      const availableWidth = Math.max(1, pageElement.clientWidth - 2);
+      const viewport = page.getViewport({ scale: availableWidth / baseViewport.width });
+      const maxPixelRatio = availableWidth > 700 ? 1.5 : 2;
+      const outputScale = Math.min(window.devicePixelRatio || 1, maxPixelRatio);
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d", { alpha: false });
+      if (!context) throw new Error("当前浏览器不支持 Canvas PDF 渲染");
+
+      canvas.className = "pdf-page-canvas";
+      canvas.width = Math.floor(viewport.width * outputScale);
+      canvas.height = Math.floor(viewport.height * outputScale);
+      canvas.setAttribute("role", "img");
+      canvas.setAttribute("aria-label", `PDF 第 ${pageNumber} 页`);
+
+      await page.render({
+        canvas,
+        canvasContext: context,
+        transform: outputScale === 1 ? null : [outputScale, 0, 0, outputScale, 0, 0],
+        viewport
+      }).promise;
+
+      const pageLabel = document.createElement("span");
+      pageLabel.className = "pdf-page-number";
+      pageLabel.textContent = `第 ${pageNumber} 页`;
+      pageElement.style.aspectRatio = `${viewport.width} / ${viewport.height}`;
+      pageElement.replaceChildren(canvas, pageLabel);
+      pageElement.dataset.renderState = "rendered";
+      pageElement.setAttribute("aria-busy", "false");
+      page.cleanup();
+    } catch (error) {
+      pageElement.dataset.renderState = "error";
+      pageElement.setAttribute("aria-busy", "false");
+      pageElement.classList.add("pdf-page-error");
+      pageElement.textContent = `第 ${pageNumber} 页加载失败，请使用上方原文件入口。`;
+      console.error(`PDF page ${pageNumber} render failed`, error);
+    }
+  }
+
+  function observePdfPages(pdf, pageElements) {
+    if (!("IntersectionObserver" in window)) {
+      pageElements.reduce(
+        (sequence, pageElement) => sequence.then(() => renderPdfPage(pdf, pageElement)),
+        Promise.resolve()
+      );
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        renderPdfPage(pdf, entry.target);
+      });
+    }, { rootMargin: "700px 0px" });
+
+    pageElements.forEach((pageElement) => observer.observe(pageElement));
+  }
+
+  async function loadPdfViewer(pdfUrl) {
+    const pagesContainer = document.getElementById("pdf-pages");
+    if (!pagesContainer) return;
+
+    try {
+      const pdfjsLib = await import(pdfJsModuleUrl);
+      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfJsWorkerUrl;
+      const loadingTask = pdfjsLib.getDocument({ url: pdfUrl });
+      loadingTask.onProgress = ({ loaded, total }) => {
+        if (!total) return;
+        setPdfStatus(`正在加载英文 PDF… ${Math.round((loaded / total) * 100)}%`);
+      };
+      const pdf = await loadingTask.promise;
+      const pageElements = Array.from({ length: pdf.numPages }, (_, index) => {
+        const pageNumber = index + 1;
+        const pageElement = document.createElement("article");
+        pageElement.className = "pdf-page";
+        pageElement.dataset.pageNumber = String(pageNumber);
+        pageElement.dataset.renderState = "idle";
+        pageElement.setAttribute("aria-label", `英文 PDF 第 ${pageNumber} 页`);
+        pageElement.setAttribute("aria-busy", "true");
+        pageElement.innerHTML = `<span class="pdf-page-placeholder">第 ${pageNumber} 页等待显示…</span>`;
+        return pageElement;
+      });
+
+      pagesContainer.replaceChildren(...pageElements);
+      setPdfStatus(`英文 PDF 已加载，共 ${pdf.numPages} 页；向下滚动时自动显示。`, "ready");
+      observePdfPages(pdf, pageElements);
+    } catch (error) {
+      setPdfStatus("英文 PDF 暂时无法在页面内显示。", "error");
+      const errorMessage = document.createElement("div");
+      errorMessage.className = "pdf-viewer-error";
+      errorMessage.textContent = "请使用上方“原文件备用入口”查看课程文件。";
+      pagesContainer.replaceChildren(errorMessage);
+      console.error("PDF viewer initialization failed", error);
+    }
+  }
+
   function render(course, courseDocument, translation) {
     const pdfUrl = new URL(courseDocument.pdf, window.location.href).href;
-    const pdfViewerUrl = `${pdfUrl}#view=FitH`;
     const backUrl = `course.html?code=${encodeURIComponent(course.code)}`;
 
     document.title = `${course.code} 详细课程介绍 · MSDS 选课板`;
@@ -38,7 +152,7 @@
           <p>${MSDS.escapeHtml(translation.title_en)} · ${translation.pages.length} 页</p>
         </div>
         <div class="syllabus-actions">
-          <a class="button button-primary" href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">新窗口打开 PDF</a>
+          <a class="button button-primary" href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">原文件备用入口</a>
           <a class="button button-quiet" href="${MSDS.escapeHtml(pdfUrl)}" download>下载 PDF</a>
         </div>
       </section>
@@ -52,10 +166,16 @@
         <section id="course-pdf" class="document-panel pdf-panel">
           <div class="document-panel-heading">
             <div><span>Original document</span><h2>英文 PDF 原文</h2></div>
-            <a href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">无法显示？单独打开</a>
+            <a href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">单独打开原文件</a>
           </div>
-          <iframe class="pdf-frame" src="${MSDS.escapeHtml(pdfViewerUrl)}" title="${MSDS.escapeHtml(course.code)} 英文课程介绍 PDF"></iframe>
-          <p class="pdf-fallback">如果当前浏览器无法在页面内显示 PDF，请使用上方“新窗口打开 PDF”或“下载 PDF”。</p>
+          <div id="pdf-viewer" class="pdf-viewer" aria-label="${MSDS.escapeHtml(course.code)} 英文课程介绍 PDF">
+            <div id="pdf-viewer-status" class="pdf-viewer-status" data-state="loading" role="status" aria-live="polite">
+              <span class="pdf-viewer-spinner" aria-hidden="true"></span>
+              <span class="pdf-viewer-status-text">正在准备网页内 PDF 阅读器…</span>
+            </div>
+            <div id="pdf-pages" class="pdf-pages"></div>
+          </div>
+          <p class="pdf-fallback">PDF 会直接绘制在当前网页中，不会自动跳转或下载；如渲染失败，可使用上方备用入口。</p>
         </section>
 
         <section id="course-translation" class="document-panel translation-panel">
@@ -68,6 +188,8 @@
           </div>
         </section>
       </div>`;
+
+    loadPdfViewer(pdfUrl);
   }
 
   if (!code) {
