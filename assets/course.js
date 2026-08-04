@@ -100,7 +100,7 @@
                 </div>
                 <p>${MSDS.escapeHtml(source.review)}</p>
               </article>`).join("")}</div>` : '<div class="notice source-empty">本地资料暂未找到可核对的学生评价来源。</div>'}
-            <div class="notice source-notice"><strong>阅读提示：</strong>学生经验对应往届课程，考核方式、教师与难度可能变化。当前班次事实来自 2026-08-02 的 AIMS 课表快照。</div>
+            <div class="notice source-notice"><strong>阅读提示：</strong>学生经验对应往届课程，考核方式、教师与难度可能变化。当前班次事实来自 2026-08-04 16:48（Asia/Beijing）的 AIMS 课表快照。</div>
           </section>
         </div>
       </div>`;
