@@ -16,10 +16,66 @@
 
   function renderPage(page) {
     return `
-      <article class="translation-page">
+      <article class="translation-page" data-page-number="${MSDS.escapeHtml(page.page)}">
         <h3>第 ${MSDS.escapeHtml(page.page)} 页</h3>
         <div class="translation-text">${MSDS.escapeHtml(page.text)}</div>
       </article>`;
+  }
+
+  function trackCurrentPage(container, pages, onChange) {
+    let animationFrame = 0;
+    let currentPageNumber = 0;
+
+    function update() {
+      animationFrame = 0;
+      const containerTop = container.getBoundingClientRect().top;
+      const anchor = containerTop + Math.min(container.clientHeight * 0.2, 120);
+      const currentPage = pages.reduce((nearest, page) => {
+        const pageRect = page.getBoundingClientRect();
+        const nearestRect = nearest.getBoundingClientRect();
+        const pageDistance = anchor < pageRect.top
+          ? pageRect.top - anchor
+          : Math.max(0, anchor - pageRect.bottom);
+        const nearestDistance = anchor < nearestRect.top
+          ? nearestRect.top - anchor
+          : Math.max(0, anchor - nearestRect.bottom);
+        return pageDistance < nearestDistance ? page : nearest;
+      });
+      const pageNumber = Number(currentPage.dataset.pageNumber);
+
+      if (pageNumber === currentPageNumber) return;
+      currentPageNumber = pageNumber;
+      pages.forEach((page) => page.classList.toggle("is-current", page === currentPage));
+      onChange(pageNumber);
+    }
+
+    container.addEventListener("scroll", () => {
+      if (!animationFrame) animationFrame = window.requestAnimationFrame(update);
+    }, { passive: true });
+    update();
+  }
+
+  function setTranslationPage(pageNumber) {
+    const pagesContainer = document.getElementById("translation-pages");
+    const page = pagesContainer?.querySelector(`[data-page-number="${pageNumber}"]`);
+    if (!pagesContainer || !page) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    pagesContainer.scrollTo({
+      top: page.offsetTop,
+      behavior: reducedMotion ? "auto" : "smooth"
+    });
+  }
+
+  function setupTranslationPager() {
+    const pagesContainer = document.getElementById("translation-pages");
+    const pageCounter = document.getElementById("translation-page-counter");
+    if (!pagesContainer || !pageCounter) return;
+
+    const pages = Array.from(pagesContainer.querySelectorAll(".translation-page"));
+    trackCurrentPage(pagesContainer, pages, (pageNumber) => {
+      pageCounter.textContent = `第 ${pageNumber} / ${pages.length} 页`;
+    });
   }
 
   function setPdfStatus(message, state = "loading") {
@@ -76,7 +132,7 @@
     }
   }
 
-  function observePdfPages(pdf, pageElements) {
+  function observePdfPages(pdf, pageElements, pagesContainer) {
     if (!("IntersectionObserver" in window)) {
       pageElements.reduce(
         (sequence, pageElement) => sequence.then(() => renderPdfPage(pdf, pageElement)),
@@ -91,7 +147,7 @@
         observer.unobserve(entry.target);
         renderPdfPage(pdf, entry.target);
       });
-    }, { rootMargin: "700px 0px" });
+    }, { root: pagesContainer, rootMargin: "700px 0px" });
 
     pageElements.forEach((pageElement) => observer.observe(pageElement));
   }
@@ -123,7 +179,8 @@
 
       pagesContainer.replaceChildren(...pageElements);
       setPdfStatus(`英文 PDF 已加载，共 ${pdf.numPages} 页；向下滚动时自动显示。`, "ready");
-      observePdfPages(pdf, pageElements);
+      trackCurrentPage(pagesContainer, pageElements, setTranslationPage);
+      observePdfPages(pdf, pageElements, pagesContainer);
     } catch (error) {
       setPdfStatus("英文 PDF 暂时无法在页面内显示。", "error");
       const errorMessage = document.createElement("div");
@@ -183,12 +240,17 @@
             <div><span>Chinese translation</span><h2>中文翻译</h2></div>
           </div>
           <div class="translation-notice"><strong>翻译说明：</strong>中文内容按英文 PDF 逐页整理，仅供理解与选课参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
-          <div class="translation-pages">
+          <div class="translation-page-status">
+            <span>上下滚动，逐页对照英文原文</span>
+            <strong id="translation-page-counter" aria-live="polite">第 1 / ${translation.pages.length} 页</strong>
+          </div>
+          <div id="translation-pages" class="translation-pages" tabindex="0" role="region" aria-label="中文翻译逐页阅读区">
             ${translation.pages.map(renderPage).join("")}
           </div>
         </section>
       </div>`;
 
+    setupTranslationPager();
     loadPdfViewer(pdfUrl);
   }
 

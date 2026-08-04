@@ -1972,8 +1972,16 @@ main {
 
 .pdf-pages {
   display: grid;
+  position: relative;
   gap: 14px;
+  height: clamp(420px, 58vh, 660px);
+  height: clamp(420px, 58svh, 660px);
   padding: 14px;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  scroll-padding-top: 14px;
+  scroll-snap-type: y proximity;
   background: #cbd5e1;
 }
 
@@ -1988,6 +1996,8 @@ main {
   background: white;
   aspect-ratio: 210 / 297;
   box-shadow: 0 5px 18px rgba(15, 23, 42, 0.16);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .pdf-page-canvas {
@@ -2053,16 +2063,59 @@ main {
   color: var(--info);
 }
 
+.translation-page-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.translation-page-status strong {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+  font-size: 11px;
+}
+
 .translation-pages {
   display: grid;
+  position: relative;
   gap: 14px;
+  height: clamp(420px, 58vh, 660px);
+  height: clamp(420px, 58svh, 660px);
+  padding-right: 6px;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  scroll-padding-top: 1px;
+  scroll-snap-type: y proximity;
+}
+
+.translation-pages:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 34%, transparent);
+  outline-offset: 3px;
 }
 
 .translation-page {
+  min-height: 100%;
   overflow: hidden;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
   background: var(--card-strong);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.translation-page.is-current {
+  border-color: color-mix(in srgb, var(--primary) 56%, var(--hairline));
+  box-shadow: 0 0 0 2px var(--primary-soft);
 }
 
 .translation-page h3 {
@@ -2085,6 +2138,13 @@ main {
 
 /* ---------------- 响应式 ---------------- */
 
+@media (min-width: 1121px) {
+  .translation-panel {
+    position: sticky;
+    top: 82px;
+  }
+}
+
 @media (max-width: 1120px) {
   .planner-shell {
     grid-template-columns: 310px minmax(720px, 1fr);
@@ -2093,6 +2153,13 @@ main {
 
   .syllabus-layout {
     grid-template-columns: 1fr;
+  }
+
+  .pdf-pages,
+  .translation-pages {
+    height: clamp(420px, 64vh, 660px);
+    height: clamp(420px, 64svh, 660px);
+    overscroll-behavior-y: auto;
   }
 }
 
@@ -2287,6 +2354,16 @@ main {
   .translation-text {
     padding: 14px;
     font-size: 12px;
+  }
+
+  .translation-page-status {
+    align-items: flex-start;
+  }
+
+  .pdf-pages,
+  .translation-pages {
+    height: clamp(340px, 64vh, 520px);
+    height: clamp(340px, 64svh, 520px);
   }
 }
 
