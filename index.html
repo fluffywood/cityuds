@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CityU MSDS Semester A 2026/27 静态排课与选课参考工具">
+    <title>MSDS 选课板 · Semester A 2026/27</title>
+    <link rel="stylesheet" href="assets/styles.css?v=20260803d">
+  </head>
+  <body data-page="planner">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MSDS 选课板首页">
+        <span class="brand-mark">D</span>
+        <span><strong>MSDS 选课板</strong><small>Semester A · 2026/27</small></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a class="active" href="index.html">课程表</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-intro planner-intro">
+        <div>
+          <h1 class="page-title">自助排课台</h1>
+          <p>左侧悬停即可预览课程评价与时段；加入后，右侧悬停课程块可查看详情或删除。</p>
+        </div>
+        <div class="intro-stats" aria-label="课程概况">
+          <div><strong>30</strong><span>毕业学分</span></div>
+          <div><strong>15 + 15</strong><span>核心 + 选修</span></div>
+        </div>
+      </section>
+
+      <section class="planner-shell" aria-label="课程表规划器">
+        <aside class="course-sidebar">
+          <div class="sidebar-head">
+            <div class="segmented-control" role="tablist" aria-label="课程面板">
+              <button class="segment active" type="button" data-panel="browse" role="tab" aria-selected="true">浏览课程</button>
+              <button class="segment" type="button" data-panel="selected" role="tab" aria-selected="false">已选 <span id="selected-tab-count">0</span></button>
+            </div>
+          </div>
+
+          <div id="browse-panel" class="sidebar-panel">
+            <label class="search-box">
+              <span class="sr-only">搜索课程</span>
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input id="course-search" type="search" placeholder="搜索课号或课程名" autocomplete="off">
+            </label>
+            <div class="filter-row" aria-label="课程类型筛选">
+              <button class="filter-pill active" type="button" data-filter="all">全部</button>
+              <button class="filter-pill" type="button" data-filter="core">核心</button>
+              <button class="filter-pill" type="button" data-filter="elective">选修</button>
+            </div>
+            <div class="day-filter" aria-label="按上课星期筛选">
+              <span>上课日</span>
+              <div class="day-filter-row">
+                <button class="day-filter-pill active" type="button" data-day-filter="all">全部</button>
+                <button class="day-filter-pill" type="button" data-day-filter="M">一</button>
+                <button class="day-filter-pill" type="button" data-day-filter="T">二</button>
+                <button class="day-filter-pill" type="button" data-day-filter="W">三</button>
+                <button class="day-filter-pill" type="button" data-day-filter="R">四</button>
+                <button class="day-filter-pill" type="button" data-day-filter="F">五</button>
+                <button class="day-filter-pill" type="button" data-day-filter="S">六</button>
+              </div>
+            </div>
+            <div id="course-list" class="course-list" aria-live="polite"></div>
+          </div>
+
+          <div id="selected-panel" class="sidebar-panel" hidden>
+            <div id="selected-list" class="selected-list"></div>
+          </div>
+        </aside>
+
+        <div class="timetable-panel">
+          <div class="timetable-toolbar">
+            <div>
+              <p class="eyebrow">我的课表</p>
+              <h2 class="selection-summary">
+                <span class="selection-summary-part">必修 <strong id="core-count">0</strong>门 <strong id="core-credit-count">0</strong>分</span>
+                <span class="selection-summary-plus" aria-hidden="true">+</span>
+                <span class="selection-summary-part">选修 <strong id="elective-count">0</strong>门 <strong id="elective-credit-count">0</strong>分</span>
+                <span class="selection-summary-plus" aria-hidden="true">+</span>
+                <span class="selection-summary-part">总 <strong id="selected-count">0</strong>门 <strong id="credit-count">0</strong>分</span>
+              </h2>
+            </div>
+            <div class="toolbar-actions">
+              <span id="conflict-status" class="conflict-status is-clear">暂无冲突</span>
+              <button id="clear-selection" class="button button-quiet" type="button">清空</button>
+            </div>
+          </div>
+          <div id="selected-chips" class="selected-chips" aria-label="已选课程快捷操作"></div>
+
+          <div class="timetable-scroll">
+            <div class="timetable" id="timetable">
+              <div class="timetable-corner">GMT+8</div>
+              <div class="day-heading" data-day="M"><strong>周一</strong><span>MON</span></div>
+              <div class="day-heading" data-day="T"><strong>周二</strong><span>TUE</span></div>
+              <div class="day-heading" data-day="W"><strong>周三</strong><span>WED</span></div>
+              <div class="day-heading" data-day="R"><strong>周四</strong><span>THU</span></div>
+              <div class="day-heading" data-day="F"><strong>周五</strong><span>FRI</span></div>
+              <div class="day-heading" data-day="S"><strong>周六</strong><span>SAT</span></div>
+              <div id="time-axis" class="time-axis" aria-hidden="true"></div>
+              <div id="day-columns" class="day-columns"></div>
+              <div id="empty-timetable" class="empty-timetable">
+                <span class="empty-plus">+</span>
+                <strong>从左侧加入课程</strong>
+                <p>班次可在“已选”中切换</p>
+              </div>
+            </div>
+          </div>
+          <p class="data-note">课表快照：2026-08-02（Asia/Shanghai），数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。</p>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="assets/shared.js?v=20260803d"></script>
+    <script src="assets/planner.js?v=20260803d"></script>
+  </body>
+</html>

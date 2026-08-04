@@ -1,0 +1,38 @@
+[
+  {
+    "crn": "21009",
+    "section": "C01",
+    "credits": 3,
+    "web": "Y",
+    "available": "120",
+    "capacity": "120",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "F",
+    "time": "19:00 - 21:50",
+    "building": "BOC",
+    "room": "R4057",
+    "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
+    "medium": "English",
+    "notes": [
+      "only for Programme: MSDS"
+    ]
+  },
+  {
+    "crn": "21010",
+    "section": "C02",
+    "credits": 3,
+    "web": "Y",
+    "available": "115",
+    "capacity": "115",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "R",
+    "time": "19:00 - 21:50",
+    "building": "BOC",
+    "room": "R4057",
+    "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
+    "medium": "English",
+    "notes": [
+      "only for Programme: MSDS"
+    ]
+  }
+]

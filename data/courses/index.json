@@ -1,0 +1,451 @@
+{
+  "programme": "MSDS",
+  "semester": "Semester A 2026/27",
+  "schedule_as_of": "2026-08-02 13:35 Asia/Shanghai",
+  "graduation_credit_units": 30,
+  "requirement_credit_units": {
+    "core": 15,
+    "electives": 15
+  },
+  "source_url": "https://banweb.cityu.edu.hk/pls/PROD/hwscrssh_cityu.P_GetCrse",
+  "notes": [
+    "班次时间与名额数据采集自 CityU AIMS 系统（Semester A 2026/27），仅供参考。",
+    "Availability and capacity are a snapshot from the schedule timestamp and may change.",
+    "WEB=N means the section is listed but is not available for normal web registration; contact the programme or academic unit for registration arrangements.",
+    "Zero-credit section components are retained because some courses require registration in both lecture and tutorial components."
+  ],
+  "courses": [
+    {
+      "code": "DSC5001",
+      "requirement_type": "core",
+      "programme_title": "Statistical Machine Learning I",
+      "schedule_title": "Statistical Machine Learning I",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "154",
+        "capacity": "800",
+        "medium": "English"
+      },
+      "section_count": 3
+    },
+    {
+      "code": "DSC5002",
+      "requirement_type": "core",
+      "programme_title": "Exploratory Data Analysis and Visualization",
+      "schedule_title": "Exploratory Data Analysis and Visualization",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "54",
+        "capacity": "500",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "DSC5003",
+      "requirement_type": "core",
+      "programme_title": "Storing and Retrieving Data",
+      "schedule_title": "Storing and Retrieving Data",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "54",
+        "capacity": "500",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "DSC6004",
+      "requirement_type": "elective",
+      "programme_title": "Topics of Artificial Intelligence for Smart Cities",
+      "schedule_title": "Topics of Artificial Intelligence for Smart Cities",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "300",
+        "capacity": "300",
+        "medium": "English"
+      },
+      "section_count": 5
+    },
+    {
+      "code": "DSC6006",
+      "requirement_type": "elective",
+      "programme_title": "Dissertation",
+      "schedule_title": "Dissertation",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "DSC6008",
+      "requirement_type": "elective",
+      "programme_title": "Design of Experiments",
+      "schedule_title": "Design of Experiments",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "300",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "DSC6011",
+      "requirement_type": "elective",
+      "programme_title": "Optimization for Data Science",
+      "schedule_title": "Optimization for Data Science",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "190",
+        "capacity": "190",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6012",
+      "requirement_type": "elective",
+      "programme_title": "Time Series and Recurrent Neural Networks",
+      "schedule_title": "Time Series and Recurrent Neural Networks",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "250",
+        "capacity": "250",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6013",
+      "requirement_type": "elective",
+      "programme_title": "Topics in Financial Engineering and Technology",
+      "schedule_title": "Topics in Financial Engineering and Technology",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "250",
+        "capacity": "250",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6016",
+      "requirement_type": "elective",
+      "programme_title": "Predictive Analytics and Financial Applications",
+      "schedule_title": "Predictive Analytics and Financial Applications",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "200",
+        "capacity": "200",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6017",
+      "requirement_type": "elective",
+      "programme_title": "Internship Project",
+      "schedule_title": "Internship Project",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "DSC6018",
+      "requirement_type": "elective",
+      "programme_title": "Health Data Analytics",
+      "schedule_title": "Health Data Analytics",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "200",
+        "capacity": "200",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6020",
+      "requirement_type": "elective",
+      "programme_title": "Artificial Intelligence for Scientific Knowledge Discovery",
+      "schedule_title": "Artificial Intelligence for Scientific Knowledge Discovery",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "300",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6021",
+      "requirement_type": "elective",
+      "programme_title": "Generative Artificial Intelligence",
+      "schedule_title": "Generative Artificial Intelligence",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "300",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6026",
+      "requirement_type": "elective",
+      "programme_title": "Social Network Analysis",
+      "schedule_title": "Social Network Analysis",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "250",
+        "capacity": "250",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC8001",
+      "requirement_type": "elective",
+      "programme_title": "Seminars on Data Science I",
+      "schedule_title": "Seminars on Data Science I",
+      "title_changed": false,
+      "credits": 1,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "DSC8002",
+      "requirement_type": "elective",
+      "programme_title": "Seminars on Data Science II",
+      "schedule_title": "Seminars on Data Science II",
+      "title_changed": false,
+      "credits": 1,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "DSC8003",
+      "requirement_type": "elective",
+      "programme_title": "Machine Learning",
+      "schedule_title": "Machine Learning",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "100",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC8004",
+      "requirement_type": "elective",
+      "programme_title": "Advanced Statistics",
+      "schedule_title": "Advanced Statistics",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "100",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "DSC8005",
+      "requirement_type": "elective",
+      "programme_title": "Optimization",
+      "schedule_title": "Optimization",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "100",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "CS5285",
+      "requirement_type": "elective",
+      "programme_title": "Information Security for eCommerce",
+      "schedule_title": "Information Security for eCommerce",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "235",
+        "capacity": "235",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "CS5487",
+      "requirement_type": "elective",
+      "programme_title": "Machine Learning: Principles and Practice",
+      "schedule_title": "Machine Learning: Principles and Practice",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "180",
+        "capacity": "180",
+        "medium": "English"
+      },
+      "section_count": 2
+    },
+    {
+      "code": "CS6290",
+      "requirement_type": "elective",
+      "programme_title": "Privacy-enhancing Technologies",
+      "schedule_title": "Privacy-enhancing Technologies",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "120",
+        "capacity": "120",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "CS6493",
+      "requirement_type": "elective",
+      "programme_title": "Natural Language Processing",
+      "schedule_title": "Natural Language Processing",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "150",
+        "capacity": "150",
+        "medium": "English"
+      },
+      "section_count": 2
+    }
+  ]
+}

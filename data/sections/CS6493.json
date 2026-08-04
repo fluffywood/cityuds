@@ -1,0 +1,38 @@
+[
+  {
+    "crn": "21014",
+    "section": "C01",
+    "credits": 3,
+    "web": "Y",
+    "available": "75",
+    "capacity": "75",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "M",
+    "time": "12:00 - 13:50",
+    "building": "LI",
+    "room": "3408",
+    "instructor": "TBA",
+    "medium": "English",
+    "notes": [
+      "only for Programme: MSDS"
+    ]
+  },
+  {
+    "crn": "21015",
+    "section": "C61",
+    "credits": 3,
+    "web": "Y",
+    "available": "75",
+    "capacity": "75",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "M",
+    "time": "19:00 - 20:50",
+    "building": "LI",
+    "room": "3408",
+    "instructor": "TBA",
+    "medium": "English",
+    "notes": [
+      "only for Programme: MSDS"
+    ]
+  }
+]

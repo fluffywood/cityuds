@@ -1,0 +1,20 @@
+[
+  {
+    "crn": "21013",
+    "section": "C01",
+    "credits": 3,
+    "web": "Y",
+    "available": "120",
+    "capacity": "120",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "W",
+    "time": "19:00 - 21:50",
+    "building": "YEUNG",
+    "room": "LT-2",
+    "instructor": "TBA",
+    "medium": "English",
+    "notes": [
+      "only for Programme: MSDS"
+    ]
+  }
+]

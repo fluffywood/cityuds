@@ -1,0 +1,66 @@
+{
+  "DSC5001": {
+    "pdf": "docs/SDSC5001.pdf",
+    "translation": "data/course-documents/translations/DSC5001.json"
+  },
+  "DSC5002": {
+    "pdf": "docs/SDSC5002.pdf",
+    "translation": "data/course-documents/translations/DSC5002.json"
+  },
+  "DSC5003": {
+    "pdf": "docs/SDSC5003.pdf",
+    "translation": "data/course-documents/translations/DSC5003.json"
+  },
+  "DSC6004": {
+    "pdf": "docs/SDSC6004.pdf",
+    "translation": "data/course-documents/translations/DSC6004.json"
+  },
+  "DSC6006": {
+    "pdf": "docs/SDSC6006.pdf",
+    "translation": "data/course-documents/translations/DSC6006.json"
+  },
+  "DSC6008": {
+    "pdf": "docs/SDSC6008.pdf",
+    "translation": "data/course-documents/translations/DSC6008.json"
+  },
+  "DSC6011": {
+    "pdf": "docs/SDSC6011.pdf",
+    "translation": "data/course-documents/translations/DSC6011.json"
+  },
+  "DSC6012": {
+    "pdf": "docs/SDSC6012.pdf",
+    "translation": "data/course-documents/translations/DSC6012.json"
+  },
+  "DSC6013": {
+    "pdf": "docs/SDSC6013.pdf",
+    "translation": "data/course-documents/translations/DSC6013.json"
+  },
+  "DSC6016": {
+    "pdf": "docs/SDSC6016.pdf",
+    "translation": "data/course-documents/translations/DSC6016.json"
+  },
+  "DSC6017": {
+    "pdf": "docs/SDSC6017.pdf",
+    "translation": "data/course-documents/translations/DSC6017.json"
+  },
+  "DSC6018": {
+    "pdf": "docs/SDSC6018.pdf",
+    "translation": "data/course-documents/translations/DSC6018.json"
+  },
+  "CS5285": {
+    "pdf": "docs/CS5285.pdf",
+    "translation": "data/course-documents/translations/CS5285.json"
+  },
+  "CS5487": {
+    "pdf": "docs/CS5487.pdf",
+    "translation": "data/course-documents/translations/CS5487.json"
+  },
+  "CS6290": {
+    "pdf": "docs/CS6290.pdf",
+    "translation": "data/course-documents/translations/CS6290.json"
+  },
+  "CS6493": {
+    "pdf": "docs/CS6493.pdf",
+    "translation": "data/course-documents/translations/CS6493.json"
+  }
+}
