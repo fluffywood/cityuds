@@ -73,6 +73,60 @@
   font-size: 20rpx;
 }
 
+.support-card {
+  padding: 30rpx;
+  border-color: #f0d8d2;
+  background: linear-gradient(145deg, #fffdfc 0%, #fff4f0 100%);
+}
+
+.support-eyebrow {
+  color: #c74631;
+  font-size: 20rpx;
+  font-weight: 850;
+  letter-spacing: 1.5rpx;
+}
+
+.support-title {
+  margin-top: 10rpx;
+  color: #263550;
+  font-size: 30rpx;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.support-copy {
+  margin-top: 12rpx;
+  color: #697586;
+  font-size: 22rpx;
+  line-height: 1.68;
+}
+
+.support-url {
+  display: block;
+  margin-top: 20rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 14rpx;
+  background: rgba(255, 255, 255, 0.86);
+  color: #2855d9;
+  font-size: 21rpx;
+  line-height: 1.45;
+  word-break: break-all;
+}
+
+.support-button {
+  display: flex;
+  min-height: 76rpx;
+  margin: 20rpx 0 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  background: #24292f;
+  color: #ffffff;
+  font-size: 25rpx;
+  font-weight: 750;
+  line-height: 1;
+}
+
 .feature-list {
   padding: 4rpx 26rpx;
 }

@@ -52,6 +52,33 @@ const { documents } = require(path.join(miniProgramRoot, "data", "documents.js")
 const { documentRoutes } = require(path.join(miniProgramRoot, "data", "document-routes.js"));
 const planner = require(path.join(miniProgramRoot, "utils", "planner.js"));
 
+assert(appConfig.pages[0] === "pages/home/index", "首页必须是小程序首个页面");
+assert(appConfig.tabBar?.list?.[0]?.pagePath === "pages/home/index", "首页必须是首个 TabBar 入口");
+
+const homeMarkup = await readFile(path.join(miniProgramRoot, "pages", "home", "index.wxml"), "utf8");
+assert(homeMarkup.includes('/assets/home-logo.jpg'), "首页缺少 CityU DS Only Logo");
+assert(!homeMarkup.includes("使用人次"), "首页不应显示使用人次计数");
+assert(homeMarkup.includes("PC端使用网页版更方便"), "首页缺少 PC 端访问入口");
+const homeLogic = await readFile(path.join(miniProgramRoot, "pages", "home", "index.js"), "utf8");
+assert(homeLogic.includes("https://fluffywood.github.io/cityuds/"), "网页版地址不正确");
+assert(homeLogic.includes("setClipboardData"), "网页版地址复制功能缺失");
+const homeLogo = await readFile(path.join(miniProgramRoot, "assets", "home-logo.jpg"));
+assert(homeLogo[0] === 0xff && homeLogo[1] === 0xd8, "首页 Logo 不是 JPEG 文件");
+
+const aboutMarkup = await readFile(path.join(miniProgramRoot, "pages", "about", "index.wxml"), "utf8");
+const supportPosition = aboutMarkup.indexOf("赞赏与支持");
+const featurePosition = aboutMarkup.indexOf("我可以做什么");
+assert(supportPosition >= 0 && supportPosition < featurePosition, "赞赏功能应位于“我可以做什么”上方");
+const aboutLogic = await readFile(path.join(miniProgramRoot, "pages", "about", "index.js"), "utf8");
+assert(aboutLogic.includes("https://github.com/fluffywood/cityuds"), "GitHub 项目地址不正确");
+assert(aboutLogic.includes("setClipboardData"), "GitHub 地址复制功能缺失");
+
+const timetableMarkup = await readFile(path.join(miniProgramRoot, "pages", "timetable", "index.wxml"), "utf8");
+assert(
+  (timetableMarkup.match(/更改班次和时间/g) || []).length === 2,
+  "主课和 Tutorial 选择器都应显示更改班次提示"
+);
+
 assert(courses.length === 24, `应有 24 门课程，实际为 ${courses.length}`);
 assert(metadata.schedule_as_of === "2026-08-04 16:48 Asia/Beijing", "课表快照时间不正确");
 assert(manifest.course_count === 16, `应有 16 份文档，实际为 ${manifest.course_count}`);

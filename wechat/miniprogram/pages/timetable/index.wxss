@@ -191,20 +191,41 @@
 }
 
 .picker-row {
-  align-items: flex-start;
+  align-items: center;
   padding: 18rpx 0;
   border-top: 1rpx solid #edf0f5;
   color: #667085;
   font-size: 23rpx;
 }
 
-.picker-row text:first-child {
-  flex: 0 0 120rpx;
+.picker-label {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-direction: row;
+  gap: 10rpx;
+}
+
+.picker-type {
   color: #263654;
   font-weight: 750;
 }
 
-.picker-row text:last-child {
+.picker-change-hint {
+  padding: 6rpx 10rpx;
+  border-radius: 999rpx;
+  background: #eaf0ff;
+  color: #2855d9;
+  font-size: 19rpx;
+  font-weight: 750;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.picker-value {
+  min-width: 0;
+  flex: 1;
+  line-height: 1.45;
   text-align: right;
 }
 

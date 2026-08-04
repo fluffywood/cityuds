@@ -75,7 +75,13 @@
         data-code="{{item.code}}"
         bindchange="changePrimary"
       >
-        <view class="picker-row"><text>主课</text><text>{{item.primaryLabel}} ›</text></view>
+        <view class="picker-row">
+          <view class="picker-label">
+            <text class="picker-type">主课</text>
+            <text class="picker-change-hint">更改班次和时间</text>
+          </view>
+          <text class="picker-value">{{item.primaryLabel}} ›</text>
+        </view>
       </picker>
       <picker
         wx:if="{{item.tutorialChoices.length > 1}}"
@@ -86,7 +92,13 @@
         data-code="{{item.code}}"
         bindchange="changeTutorial"
       >
-        <view class="picker-row"><text>Tutorial</text><text>{{item.tutorialLabel}} ›</text></view>
+        <view class="picker-row">
+          <view class="picker-label">
+            <text class="picker-type">Tutorial</text>
+            <text class="picker-change-hint">更改班次和时间</text>
+          </view>
+          <text class="picker-value">{{item.tutorialLabel}} ›</text>
+        </view>
       </picker>
     </view>
   </view>

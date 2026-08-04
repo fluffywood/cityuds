@@ -21,7 +21,16 @@
     </view>
   </view>
 
-  <view class="section-heading">可以做什么</view>
+  <view class="section-heading">赞赏与支持</view>
+  <view class="surface support-card">
+    <view class="support-eyebrow">OPEN SOURCE</view>
+    <view class="support-title">如果小程序对你有帮助，求一个 Star ⭐</view>
+    <view class="support-copy">欢迎前往 GitHub 为项目点亮 Star。你的支持会帮助课程资料和小程序继续完善，完全自愿，不影响任何功能。</view>
+    <text class="support-url" selectable="{{true}}" user-select="{{true}}">{{githubUrl}}</text>
+    <button class="support-button" bindtap="onSupportProject">复制 GitHub 链接</button>
+  </view>
+
+  <view class="section-heading">我可以做什么</view>
   <view class="surface feature-list">
     <view class="feature-item">
       <view class="feature-icon blue">课</view>

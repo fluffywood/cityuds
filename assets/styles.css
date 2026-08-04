@@ -239,6 +239,37 @@ select:focus-visible {
   animation: nav-pulse 1.6s ease-in-out infinite;
 }
 
+.main-nav .support-link {
+  display: inline-flex;
+  min-height: 42px;
+  padding: 10px 17px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #f0d8d2;
+  background: linear-gradient(145deg, #fffdfc 0%, #fff0eb 100%);
+  color: #c74631;
+  font-size: 14px;
+  font-weight: 850;
+  box-shadow: 0 8px 20px rgba(199, 70, 49, 0.14);
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.main-nav .support-link:hover {
+  border-color: #e9bbae;
+  background: #ffe9e1;
+  color: #a93624;
+  transform: translateY(-1px);
+}
+
+.support-star {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.support-mobile-text {
+  display: none;
+}
+
 @keyframes nav-pulse {
   0%, 100% { opacity: 0.35; transform: translateX(-50%) scale(0.85); }
   50% { opacity: 1; transform: translateX(-50%) scale(1); }
@@ -295,6 +326,33 @@ main {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.75;
+}
+
+.planner-intro-copy {
+  min-width: 0;
+}
+
+.planner-title-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.planner-title-row .page-title {
+  margin: 0;
+}
+
+.planner-intro-logo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: #ffffff;
+  object-fit: contain;
+  box-shadow: 0 12px 28px rgba(40, 52, 78, 0.1);
+  flex: 0 0 auto;
 }
 
 .eyebrow {
@@ -2164,6 +2222,21 @@ main {
     margin-left: 0;
   }
 
+  .main-nav .support-link {
+    min-height: 36px;
+    padding: 8px 10px;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .support-desktop-text {
+    display: none;
+  }
+
+  .support-mobile-text {
+    display: inline;
+  }
+
   .page-intro {
     width: calc(100% - 32px);
     padding: 30px 0 22px;
@@ -2171,6 +2244,16 @@ main {
 
   .planner-intro {
     display: block;
+  }
+
+  .planner-title-row {
+    gap: 14px;
+  }
+
+  .planner-intro-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
   }
 
   .intro-stats {
@@ -2275,6 +2358,16 @@ main {
 
   .page-intro h1 {
     font-size: 32px;
+  }
+
+  .planner-title-row {
+    gap: 12px;
+  }
+
+  .planner-intro-logo {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
   }
 
   .intro-stats {

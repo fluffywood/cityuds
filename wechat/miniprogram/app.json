@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/home/index",
     "pages/courses/index",
     "pages/timetable/index",
     "pages/about/index"
@@ -120,6 +121,10 @@
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
       {
         "pagePath": "pages/courses/index",
         "text": "课程"
