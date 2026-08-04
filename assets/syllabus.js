@@ -6,6 +6,7 @@
   const pdfJsBaseUrl = new URL("assets/vendor/pdfjs/", document.baseURI);
   const pdfJsModuleUrl = new URL("pdf.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
   const pdfJsWorkerUrl = new URL("pdf.worker.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
+  let displayTranslationPage = null;
 
   function getJson(url) {
     return fetch(url).then((response) => {
@@ -20,6 +21,15 @@
         <h3>第 ${MSDS.escapeHtml(page.page)} 页</h3>
         <div class="translation-text">${MSDS.escapeHtml(page.text)}</div>
       </article>`;
+  }
+
+  function renderTranslationPager(pageCount, isBottom = false) {
+    return `
+      <div class="translation-page-status${isBottom ? " translation-page-status-bottom" : ""}">
+        <button class="translation-page-button" type="button" data-translation-action="previous" aria-label="查看上一页中文翻译">← 上一页</button>
+        <strong class="translation-page-counter" aria-live="polite">第 1 / ${pageCount} 页</strong>
+        <button class="translation-page-button" type="button" data-translation-action="next" aria-label="查看下一页中文翻译">下一页 →</button>
+      </div>`;
   }
 
   function trackCurrentPage(container, pages, onChange) {
@@ -56,26 +66,62 @@
   }
 
   function setTranslationPage(pageNumber) {
-    const pagesContainer = document.getElementById("translation-pages");
-    const page = pagesContainer?.querySelector(`[data-page-number="${pageNumber}"]`);
-    if (!pagesContainer || !page) return;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    pagesContainer.scrollTo({
-      top: page.offsetTop,
-      behavior: reducedMotion ? "auto" : "smooth"
-    });
+    if (displayTranslationPage) displayTranslationPage(pageNumber, false);
   }
 
   function setupTranslationPager() {
     const pagesContainer = document.getElementById("translation-pages");
-    const pageCounter = document.getElementById("translation-page-counter");
-    if (!pagesContainer || !pageCounter) return;
-
+    if (!pagesContainer) return;
     const pages = Array.from(pagesContainer.querySelectorAll(".translation-page"));
-    trackCurrentPage(pagesContainer, pages, (pageNumber) => {
-      pageCounter.textContent = `第 ${pageNumber} / ${pages.length} 页`;
+    const pageCounters = Array.from(document.querySelectorAll(".translation-page-counter"));
+    const previousButtons = Array.from(document.querySelectorAll('[data-translation-action="previous"]'));
+    const nextButtons = Array.from(document.querySelectorAll('[data-translation-action="next"]'));
+    if (!pages.length) return;
+
+    let currentIndex = 0;
+
+    function showPage(pageNumber, moveViewport) {
+      const nextIndex = pages.findIndex((page) => Number(page.dataset.pageNumber) === Number(pageNumber));
+      if (nextIndex < 0) return;
+
+      currentIndex = nextIndex;
+      pages.forEach((page, index) => {
+        const isCurrent = index === currentIndex;
+        page.hidden = !isCurrent;
+        page.classList.toggle("is-current", isCurrent);
+        if (isCurrent) page.removeAttribute("aria-hidden");
+        else page.setAttribute("aria-hidden", "true");
+      });
+
+      const currentPageNumber = pages[currentIndex].dataset.pageNumber;
+      pageCounters.forEach((counter) => {
+        counter.textContent = `第 ${currentPageNumber} / ${pages.length} 页`;
+      });
+      previousButtons.forEach((button) => { button.disabled = currentIndex === 0; });
+      nextButtons.forEach((button) => { button.disabled = currentIndex === pages.length - 1; });
+
+      if (moveViewport) {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        pagesContainer.scrollIntoView({
+          block: "start",
+          behavior: reducedMotion ? "auto" : "smooth"
+        });
+      }
+    }
+
+    previousButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (currentIndex > 0) showPage(pages[currentIndex - 1].dataset.pageNumber, true);
+      });
     });
+    nextButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (currentIndex < pages.length - 1) showPage(pages[currentIndex + 1].dataset.pageNumber, true);
+      });
+    });
+
+    displayTranslationPage = showPage;
+    showPage(pages[0].dataset.pageNumber, false);
   }
 
   function setPdfStatus(message, state = "loading") {
@@ -240,13 +286,12 @@
             <div><span>Chinese translation</span><h2>中文翻译</h2></div>
           </div>
           <div class="translation-notice"><strong>翻译说明：</strong>中文内容按英文 PDF 逐页整理，仅供理解与选课参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
-          <div class="translation-page-status">
-            <span>上下滚动，逐页对照英文原文</span>
-            <strong id="translation-page-counter" aria-live="polite">第 1 / ${translation.pages.length} 页</strong>
-          </div>
-          <div id="translation-pages" class="translation-pages" tabindex="0" role="region" aria-label="中文翻译逐页阅读区">
+          <p class="translation-page-guide">使用“上一页 / 下一页”原地切换译文；英文 PDF 翻页时也会自动对齐到相同页码。</p>
+          ${renderTranslationPager(translation.pages.length)}
+          <div id="translation-pages" class="translation-pages" role="region" aria-label="中文翻译原地分页阅读区">
             ${translation.pages.map(renderPage).join("")}
           </div>
+          ${renderTranslationPager(translation.pages.length, true)}
         </section>
       </div>`;
 
