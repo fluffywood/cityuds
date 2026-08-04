@@ -1,0 +1,131 @@
+.course-card {
+  margin-bottom: 20rpx;
+  padding: 26rpx;
+  border: 1rpx solid #dce3ee;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(39, 54, 85, 0.06);
+}
+
+.course-card-head {
+  display: flex;
+  gap: 18rpx;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.course-code-row,
+.course-meta,
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.course-code {
+  color: #2448a8;
+  font-size: 30rpx;
+  font-weight: 850;
+}
+
+.course-type {
+  padding: 5rpx 10rpx;
+  border-radius: 999rpx;
+  background: #eef2ff;
+  color: #485dcc;
+  font-size: 19rpx;
+  font-weight: 750;
+}
+
+.course-type.core {
+  background: #e9f8ef;
+  color: #18794e;
+}
+
+.course-title {
+  margin-top: 10rpx;
+  color: #1a2438;
+  font-size: 29rpx;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.add-button {
+  width: 68rpx;
+  min-width: 68rpx;
+  height: 68rpx;
+  margin: 0;
+  padding: 0;
+  border-radius: 20rpx;
+  background: #2855d9;
+  color: #ffffff;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 68rpx;
+}
+
+.add-button.is-added {
+  background: #e9f8ef;
+  color: #18794e;
+}
+
+.course-meta {
+  margin-top: 18rpx;
+  color: #697586;
+  font-size: 21rpx;
+}
+
+.course-meta text + text::before {
+  margin-right: 12rpx;
+  color: #c0c8d5;
+  content: "·";
+}
+
+.course-schedule {
+  margin-top: 12rpx;
+  color: #44526a;
+  font-size: 23rpx;
+  line-height: 1.55;
+}
+
+.course-review {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  border-radius: 18rpx;
+  background: #f6f8fc;
+}
+
+.review-verdict {
+  display: inline-block;
+  margin-right: 12rpx;
+  color: #2849a9;
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.review-verdict.level-caution {
+  color: #b54708;
+}
+
+.review-verdict.level-recommended {
+  color: #18794e;
+}
+
+.review-summary {
+  color: #5d6879;
+  font-size: 22rpx;
+  line-height: 1.6;
+}
+
+.tag-row {
+  margin-top: 16rpx;
+}
+
+.tag {
+  padding: 7rpx 12rpx;
+  border-radius: 999rpx;
+  background: #eef3fb;
+  color: #52637e;
+  font-size: 19rpx;
+}

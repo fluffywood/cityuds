@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "CS5487 课程介绍",
+  "usingComponents": {
+    "document-viewer": "/components/document-viewer/index"
+  }
+}

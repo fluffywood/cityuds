@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "DSC5001 课程介绍",
+  "usingComponents": {
+    "document-viewer": "/components/document-viewer/index"
+  }
+}

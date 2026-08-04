@@ -1,0 +1,66 @@
+<view class="page-shell courses-page">
+  <view class="hero">
+    <view class="hero-eyebrow">{{semester}}</view>
+    <view class="page-title">浏览课程</view>
+    <view class="page-subtitle">按课程编号、名称、类别与上课日期筛选，加入后可在课表页调整班次。</view>
+    <view class="snapshot">课表快照：{{scheduleAsOf}}</view>
+  </view>
+
+  <view class="search-panel surface">
+    <view class="search-box">
+      <text class="search-icon">⌕</text>
+      <input
+        class="search-input"
+        value="{{searchTerm}}"
+        placeholder="搜索课程编号或英文名称"
+        confirm-type="search"
+        bindinput="onSearchInput"
+      />
+      <button wx:if="{{searchTerm}}" class="clear-search" bindtap="onClearSearch" aria-label="清空搜索">×</button>
+    </view>
+
+    <view class="filter-label">课程类别</view>
+    <view class="filter-row">
+      <button
+        wx:for="{{requirementFilters}}"
+        wx:key="value"
+        class="filter-chip {{requirementType === item.value ? 'is-active' : ''}}"
+        data-value="{{item.value}}"
+        bindtap="onRequirementFilter"
+      >{{item.label}}</button>
+    </view>
+
+    <view class="filter-label day-label">上课日期</view>
+    <scroll-view class="day-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="day-row">
+        <button
+          wx:for="{{dayFilters}}"
+          wx:key="value"
+          class="filter-chip day-chip {{day === item.value ? 'is-active' : ''}}"
+          data-value="{{item.value}}"
+          bindtap="onDayFilter"
+        >{{item.label}}</button>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="list-summary">
+    <text>找到 {{resultCount}} 门课程</text>
+    <text class="selected-summary">已加入 {{selectedCount}} 门</text>
+  </view>
+
+  <view wx:if="{{displayCourses.length}}">
+    <course-card
+      wx:for="{{displayCourses}}"
+      wx:key="code"
+      course="{{item}}"
+      added="{{item.added}}"
+      bind:open="onOpenCourse"
+      bind:toggle="onToggleCourse"
+    />
+  </view>
+  <view wx:else class="surface empty-state">
+    <view class="empty-title">没有符合条件的课程</view>
+    <view>试试清空搜索词，或换一个类别和日期。</view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "浏览课程",
+  "usingComponents": {
+    "course-card": "/components/course-card/index"
+  }
+}

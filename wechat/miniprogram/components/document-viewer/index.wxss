@@ -1,0 +1,146 @@
+.document-shell {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 28rpx;
+  background: #eef2f7;
+}
+
+.document-hero,
+.original-card,
+.translation-card {
+  border: 1rpx solid #d8e0eb;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(39, 54, 85, 0.07);
+}
+
+.document-hero {
+  display: flex;
+  padding: 28rpx;
+  flex-direction: column;
+}
+
+.course-code {
+  color: #2855d9;
+  font-size: 24rpx;
+  font-weight: 850;
+  letter-spacing: 1rpx;
+}
+
+.title-zh {
+  margin-top: 12rpx;
+  color: #162139;
+  font-size: 40rpx;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.title-en {
+  margin-top: 8rpx;
+  color: #6b7789;
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.pager {
+  display: grid;
+  margin: 20rpx 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 12rpx;
+  align-items: center;
+}
+
+.pager-button {
+  width: 100%;
+  min-height: 72rpx;
+  padding: 0 12rpx;
+  border: 1rpx solid #cbd5e4;
+  border-radius: 16rpx;
+  background: #ffffff;
+  color: #2849a9;
+  font-size: 23rpx;
+  font-weight: 750;
+  line-height: 72rpx;
+}
+
+.pager-button[disabled] {
+  background: #f2f4f7;
+  color: #a4adbb;
+}
+
+.pager-count {
+  padding: 12rpx 16rpx;
+  border-radius: 999rpx;
+  background: #e9efff;
+  color: #2849a9;
+  font-size: 21rpx;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.original-card,
+.translation-card {
+  overflow: hidden;
+}
+
+.translation-card {
+  margin-top: 22rpx;
+}
+
+.card-heading {
+  display: flex;
+  padding: 18rpx 22rpx;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #e0e6ef;
+  background: #f6f8fc;
+  color: #59677d;
+  font-size: 20rpx;
+  font-weight: 750;
+}
+
+.translation-heading {
+  background: #eaf0ff;
+  color: #304fa5;
+}
+
+.original-image {
+  display: block;
+  width: 100%;
+  background: #ffffff;
+}
+
+.image-error {
+  padding: 36rpx;
+  color: #b42335;
+  text-align: center;
+}
+
+.translation-text {
+  display: block;
+  padding: 28rpx;
+  color: #273248;
+  font-size: 27rpx;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.notice {
+  margin-top: 20rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 18rpx;
+  background: #fff7e8;
+  color: #8a5b13;
+  font-size: 21rpx;
+  line-height: 1.65;
+}
+
+.pager-bottom {
+  margin-bottom: 0;
+}
+
+.empty-state {
+  padding: 120rpx 30rpx;
+  color: #7a8699;
+  text-align: center;
+}

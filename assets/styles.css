@@ -1872,13 +1872,6 @@ main {
   color: var(--primary);
 }
 
-.syllabus-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(390px, 0.8fr);
-  gap: 20px;
-  align-items: start;
-}
-
 .document-panel {
   min-width: 0;
   padding: 20px;
@@ -1927,120 +1920,6 @@ main {
   text-decoration: underline;
 }
 
-.pdf-viewer {
-  overflow: hidden;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
-  background: #e2e8f0;
-}
-
-.pdf-viewer-status {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 44px;
-  padding: 10px 13px;
-  border-bottom: 1px solid var(--border-strong);
-  background: var(--card-strong);
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.pdf-viewer-spinner {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 auto;
-  border: 2px solid var(--primary-soft);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 850ms linear infinite;
-}
-
-.pdf-viewer-status[data-state="ready"] .pdf-viewer-spinner,
-.pdf-viewer-status[data-state="error"] .pdf-viewer-spinner {
-  display: none;
-}
-
-.pdf-viewer-status[data-state="ready"] {
-  color: var(--ok);
-}
-
-.pdf-viewer-status[data-state="error"] {
-  color: var(--danger);
-}
-
-.pdf-pages {
-  display: grid;
-  position: relative;
-  gap: 14px;
-  height: clamp(420px, 58vh, 660px);
-  height: clamp(420px, 58svh, 660px);
-  padding: 14px;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  scrollbar-gutter: stable;
-  scroll-padding-top: 14px;
-  scroll-snap-type: y proximity;
-  background: #cbd5e1;
-}
-
-.pdf-page {
-  position: relative;
-  display: grid;
-  width: 100%;
-  min-width: 0;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(100, 116, 139, 0.42);
-  background: white;
-  aspect-ratio: 210 / 297;
-  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.16);
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-.pdf-page-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  background: white;
-}
-
-.pdf-page-number {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  padding: 4px 7px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.72);
-  color: white;
-  font-size: 9px;
-  font-weight: 750;
-  pointer-events: none;
-}
-
-.pdf-page-placeholder,
-.pdf-page-error,
-.pdf-viewer-error {
-  padding: 28px 18px;
-  color: #475569;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.65;
-  text-align: center;
-}
-
-.pdf-page-error {
-  min-height: 180px;
-  aspect-ratio: auto;
-}
-
-.pdf-viewer-error {
-  background: #f8fafc;
-  color: #b91c1c;
-}
-
 .pdf-fallback {
   margin: 12px 2px 0;
   color: var(--muted);
@@ -2063,98 +1942,174 @@ main {
   color: var(--info);
 }
 
-.translation-page-guide {
-  margin: 0 0 10px;
+.bilingual-reader {
+  scroll-margin-top: 88px;
+}
+
+.bilingual-reader:focus-visible {
+  outline: 3px solid var(--primary-soft);
+  outline-offset: 4px;
+}
+
+.bilingual-reader-heading {
+  align-items: end;
+}
+
+.bilingual-reader-heading > p {
+  max-width: 430px;
+  margin: 0;
   color: var(--muted);
   font-size: 11px;
   line-height: 1.6;
+  text-align: right;
 }
 
-.translation-page-status {
+.bilingual-pager {
   display: grid;
-  grid-template-columns: minmax(88px, 1fr) auto minmax(88px, 1fr);
-  gap: 10px;
+  grid-template-columns: minmax(110px, 1fr) auto minmax(110px, 1fr);
+  gap: 12px;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 0 0 14px;
 }
 
-.translation-page-status-bottom {
-  margin: 10px 0 0;
+.bilingual-pager-bottom {
+  margin: 14px 0 0;
 }
 
-.translation-page-button {
-  min-height: 38px;
-  padding: 8px 12px;
+.bilingual-page-button {
+  min-height: 42px;
+  padding: 9px 14px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   background: var(--card-strong);
   color: var(--primary-strong);
   font: inherit;
   font-size: 12px;
-  font-weight: 750;
+  font-weight: 780;
   cursor: pointer;
 }
 
-.translation-page-button:last-child {
-  justify-self: stretch;
-}
-
-.translation-page-button:hover:not(:disabled) {
+.bilingual-page-button:hover:not(:disabled) {
   border-color: var(--primary);
   background: var(--primary-soft);
 }
 
-.translation-page-button:disabled {
+.bilingual-page-button:disabled {
   cursor: not-allowed;
-  opacity: 0.45;
+  opacity: 0.42;
 }
 
-.translation-page-counter {
-  padding: 5px 9px;
+.bilingual-page-counter {
+  padding: 6px 11px;
   border-radius: 999px;
   background: var(--primary-soft);
   color: var(--primary-strong);
   font-size: 11px;
+  white-space: nowrap;
   text-align: center;
 }
 
-.translation-pages {
-  display: block;
-  scroll-margin-top: 88px;
+.bilingual-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 16px;
+  align-items: start;
 }
 
-.translation-page {
+.bilingual-page-card {
+  min-width: 0;
   overflow: hidden;
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   background: var(--card-strong);
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.08);
 }
 
-.translation-page[hidden] {
-  display: none;
-}
-
-.translation-page.is-current {
-  border-color: color-mix(in srgb, var(--primary) 56%, var(--hairline));
-  box-shadow: 0 0 0 2px var(--primary-soft);
-}
-
-.translation-page h3 {
-  margin: 0;
-  padding: 10px 14px;
+.bilingual-card-heading {
+  display: flex;
+  min-height: 62px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 14px;
   border-bottom: 1px solid var(--hairline);
-  background: var(--primary-soft);
-  color: var(--primary-strong);
-  font-size: 12px;
+  background: var(--bg);
 }
 
-.translation-text {
-  padding: 16px;
+.bilingual-card-heading span {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--primary);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bilingual-card-heading h3 {
+  margin: 0;
   color: var(--ink);
-  font-size: 13px;
-  line-height: 1.78;
+  font-family: var(--font-serif);
+  font-size: 19px;
+}
+
+.bilingual-card-heading > strong {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.translation-card-heading {
+  background: var(--primary-soft);
+}
+
+.original-image-stage {
+  position: relative;
+  display: grid;
+  min-height: 420px;
+  place-items: center;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+#original-page-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.original-page-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: white;
+}
+
+.original-image-message {
+  padding: 42px 24px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.original-image-message.is-error {
+  color: var(--danger);
+}
+
+.bilingual-translation-text {
+  min-height: 420px;
+  padding: 22px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.82;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
+}
+
+.bilingual-reader .translation-notice {
+  margin: 14px 0 0;
 }
 
 /* ---------------- 响应式 ---------------- */
@@ -2165,14 +2120,21 @@ main {
     overflow-x: auto;
   }
 
-  .syllabus-layout {
+}
+
+@media (max-width: 900px) {
+  .bilingual-page-grid {
     grid-template-columns: 1fr;
   }
 
-  .pdf-pages {
-    height: clamp(420px, 64vh, 660px);
-    height: clamp(420px, 64svh, 660px);
-    overscroll-behavior-y: auto;
+  .bilingual-reader-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bilingual-reader-heading > p {
+    max-width: none;
+    text-align: left;
   }
 }
 
@@ -2286,9 +2248,13 @@ main {
     padding: 22px;
   }
 
-  .pdf-pages {
-    gap: 10px;
-    padding: 10px;
+  .bilingual-pager {
+    grid-template-columns: minmax(92px, 1fr) auto minmax(92px, 1fr);
+    gap: 8px;
+  }
+
+  .bilingual-page-button {
+    padding: 9px 10px;
   }
 
   .source-review-header {
@@ -2355,34 +2321,36 @@ main {
     gap: 8px;
   }
 
-  .pdf-viewer-status {
-    align-items: flex-start;
-  }
-
-  .pdf-pages {
-    gap: 8px;
-    padding: 8px;
-  }
-
-  .translation-text {
-    padding: 14px;
-    font-size: 12px;
-  }
-
-  .translation-page-status {
+  .bilingual-pager {
     grid-template-columns: minmax(78px, 1fr) auto minmax(78px, 1fr);
-    gap: 7px;
+    gap: 6px;
   }
 
-  .translation-page-button {
-    padding: 8px;
+  .bilingual-page-button {
+    padding: 8px 6px;
     font-size: 11px;
   }
 
-  .pdf-pages {
-    height: clamp(340px, 64vh, 520px);
-    height: clamp(340px, 64svh, 520px);
+  .bilingual-page-counter {
+    padding: 5px 8px;
+    font-size: 10px;
   }
+
+  .bilingual-card-heading {
+    min-height: 56px;
+    padding: 9px 11px;
+  }
+
+  .original-image-stage,
+  .bilingual-translation-text {
+    min-height: 300px;
+  }
+
+  .bilingual-translation-text {
+    padding: 16px;
+    font-size: 13px;
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

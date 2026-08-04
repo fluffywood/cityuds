@@ -1,16 +1,24 @@
 # CityU MSDS 选课板
 
-面向 City University of Hong Kong（CityU）MSDS 学生的静态选课参考工具，用于浏览课程、比较班次、组合每周课表，并集中查看课程事实与往届学生经验。
+面向 City University of Hong Kong（CityU）MSDS 学生的静态选课参考工具，用于浏览课程、比较班次、组合每周课表，并集中查看课程事实与往届学生经验。项目同时提供可部署到 GitHub Pages 的网页版，以及位于 `wechat/` 的微信原生小程序版。
 
 > 当前数据适用于 **Semester A 2026/27**。课表快照时间为 **2026-08-04 16:48（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
 
 ## 在线访问
 
-部署完成后可通过以下地址访问：
+网页版部署完成后可通过以下地址访问：
 
 **https://fluffywood.github.io/cityuds/**
 
-## 主要功能
+微信小程序版需要使用微信开发者工具导入 `wechat/` 目录；将源码推送到 GitHub 不等于发布小程序，正式上线仍需在微信开发者工具上传并通过微信公众平台审核。
+
+## 双版本说明
+
+- **网页版：**仓库根目录中的原生 HTML、CSS 和 JavaScript 静态网站，无需后端或数据库，可直接部署到 GitHub Pages。
+- **微信小程序版：**`wechat/` 中的微信原生工程，不使用 `web-view`，包含课程、课表、详情和中英文课程介绍页面。
+- 两个版本使用同一份课程快照与翻译资料，但分别维护展示资源和发布流程；任一版本的发布都不会自动更新另一个平台。
+
+## 网页版主要功能
 
 ### 课程浏览与筛选
 
@@ -37,16 +45,26 @@
 ### 详细课程文件与中文翻译
 
 - 对当前网站中有对应文件的 16 门课程提供“查看详细课程介绍”入口。
-- 使用项目内置的 PDF.js 在独立页面逐页显示英文 PDF 原文，无需访客预先下载本地文件。
-- 按 PDF 页码展示完整中文翻译，便于和英文内容逐页核对。
-- 手机浏览器直接在网页中加载 PDF，不再由原生 PDF iframe 自动跳转到下载页面。
-- 提供原文件和下载 PDF 的备用入口；PDF.js 许可证见 `assets/vendor/pdfjs/LICENSE`。
+- 将 16 份英文 PDF 转换为 106 张网页页图，访客无需预先下载本地文件。
+- 英文页图与对应中文翻译使用同一组上一页/下一页按钮同步切换。
+- 电脑端左右对照，手机端上下对照；点击英文页图可单独放大查看。
+- 网页不再依赖 PDF.js 或浏览器内置 PDF 阅读器，原 PDF 仅作为备用和下载入口。
 
 ### 本地保存与界面适配
 
 - 选课结果保存在浏览器 `localStorage`，刷新或再次访问后仍会保留。
 - 不需要账号、数据库或后端服务，选课记录不会上传到服务器，也不会跨设备同步。
 - 支持响应式布局、键盘操作和跟随系统设置的深色模式。
+
+## 微信小程序版
+
+- 使用微信原生页面实现课程列表、搜索筛选、课表规划、课程详情和项目说明。
+- 16 份课程 PDF 已转换为 106 张离线 JPEG 页图，英文原文与对应中文翻译使用同一个翻页器同步切换。
+- 课程文档按课程拆分为 16 个独立分包，进入对应课程介绍时才加载该分包。
+- 当前验证结果为 24 门课程、16 份课程文档、106 页；主包约 284.9 KiB，源码合计约 15.12 MiB。
+- 小程序工程不包含 AppSecret 或服务端密钥；开发者工具的本地私有配置不应提交到仓库。
+
+详细的导入、分包和发布说明见 [`wechat/README.md`](wechat/README.md)。
 
 ## 当前数据范围
 
@@ -55,9 +73,9 @@
 - 班次数据来自 CityU AIMS 的 Semester A 2026/27 快照。
 - 学生经验包含 30 条公开小红书来源记录；当前有来源评价的课程为其中一部分。
 - `docs/` 收录 32 份课程 PDF；当前网站课程中有 16 门已完成 PDF 映射和中文翻译。
-- 所有数据均由仓库内的静态 JSON 和 PDF 提供，项目不包含 CityU 或小红书爬虫，也不会自动更新数据。
+- 所有数据均由仓库内的静态 JSON、PDF 和预生成页图提供，项目不包含 CityU 或小红书爬虫，也不会自动更新数据。
 
-## 本地运行
+## 网页版本地运行
 
 项目使用原生 HTML、CSS 和 JavaScript，无需安装依赖或执行构建。
 
@@ -77,6 +95,14 @@ http://127.0.0.1:8088/
 
 请通过 HTTP 服务访问，不建议直接双击 `index.html`。页面使用 `fetch` 读取本地 JSON，直接以 `file://` 打开时可能被浏览器阻止。
 
+## 导入微信开发者工具
+
+1. 安装并打开微信开发者工具，选择“小程序”与“导入项目”。
+2. 项目目录选择仓库中的 `wechat/`，不要直接选择 `wechat/miniprogram/`。
+3. 在开发者工具中确认 `project.config.json` 的 AppID 属于你要发布的小程序；若使用自己的小程序，请替换为自己的 AppID。
+4. 编译后检查课程列表、课表、课程详情、文档分包下载以及中英文同步翻页。
+5. 真机预览和正式上传前，重新运行 `node wechat\tools\validate-project.mjs` 并在开发者工具中复核实际包体。
+
 ## 项目结构
 
 ```text
@@ -90,15 +116,23 @@ cityuds/
 │   ├── planner.js             # 课程筛选、选课和课表逻辑
 │   ├── course.js              # 课程详情渲染逻辑
 │   ├── syllabus.js            # 课程文件与翻译渲染逻辑
-│   └── vendor/pdfjs/          # 网页内 PDF 渲染库与许可证
+│   └── course-pages/          # 16 门课程的 106 张英文原文页图
 ├── data/
 │   ├── courses/index.json     # 学期、培养要求和课程索引
-│   ├── course-documents/      # PDF 映射与逐页中文翻译
+│   ├── course-documents/      # PDF 映射、页图索引与逐页中文翻译
 │   ├── sections/              # 各课程班次数据
 │   ├── reviews/               # 各课程评价摘要
 │   ├── source-reviews/        # 按来源整理的课程评价原文
 │   └── sources.json           # 评价来源及原文链接
-└── docs/                      # 课程 PDF 资料
+├── docs/                      # 课程 PDF 资料
+├── tools/
+│   └── build-web-course-images.mjs # 同步网页版课程页图及索引
+└── wechat/                    # 微信原生小程序工程
+    ├── project.config.json    # 微信开发者工具项目配置
+    ├── README.md              # 小程序导入、分包与发布说明
+    ├── generated/             # PDF 页图清单
+    ├── miniprogram/           # 小程序源码、数据与文档分包
+    └── tools/                 # 数据生成、PDF 转图和项目校验脚本
 ```
 
 ## 数据更新说明
@@ -109,10 +143,23 @@ cityuds/
 2. 在 `data/sections/<课程编号>.json` 更新班次、时间、教师和注册信息。
 3. 在 `data/reviews/<课程编号>.json` 更新评价摘要和来源 ID。
 4. 在 `data/sources.json` 与 `data/source-reviews/` 中同步维护来源信息。
+5. 根数据发生变化后，运行 `node wechat\tools\build-data.mjs` 同步小程序数据。
+6. 课程 PDF 发生变化后，依次运行以下命令重新生成小程序分包和网页版页图：
+
+```powershell
+python wechat\tools\render-pdf-pages.py
+node wechat\tools\build-document-packages.mjs
+node tools\build-web-course-images.mjs
+node wechat\tools\validate-project.mjs
+```
+
+PDF 转图脚本需要本机安装 `PyMuPDF` 与 `Pillow`；普通浏览、部署或导入已生成的小程序工程不需要这些 Python 依赖。
 
 修改后请通过本地 HTTP 服务检查课程列表、详情页、课表布局和冲突检测。
 
-## 部署
+## 发布
+
+### 网页版：GitHub Pages
 
 仓库通过 GitHub Pages 直接发布 `main` 分支根目录。仓库设置应保持为 `Settings → Pages → Deploy from a branch → main → /(root)`；推送到 `main` 后会自动更新线上网站。
 
@@ -124,6 +171,15 @@ git push
 ```
 
 可在仓库的 [Pages 设置](https://github.com/fluffywood/cityuds/settings/pages)查看发布状态和线上地址。
+
+### 微信小程序
+
+GitHub 仅保存小程序源码，不会自动将小程序发布到微信。更新仓库后，还需要在微信开发者工具中完成以下步骤：
+
+1. 使用真实 AppID 编译并完成 iOS、Android 真机预览。
+2. 点击“上传”，填写版本号和功能说明。
+3. 登录微信公众平台，将上传版本提交审核。
+4. 审核通过后发布，并再次进行真机回归测试。
 
 ## 使用提示与免责声明
 

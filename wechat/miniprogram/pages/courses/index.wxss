@@ -1,0 +1,140 @@
+.courses-page {
+  padding-bottom: calc(36rpx + env(safe-area-inset-bottom));
+}
+
+.hero {
+  padding: 10rpx 4rpx 28rpx;
+}
+
+.hero-eyebrow {
+  margin-bottom: 10rpx;
+  color: #2855d9;
+  font-size: 21rpx;
+  font-weight: 800;
+  letter-spacing: 1rpx;
+  text-transform: uppercase;
+}
+
+.snapshot {
+  margin-top: 16rpx;
+  color: #7a8699;
+  font-size: 21rpx;
+}
+
+.search-panel {
+  margin-bottom: 28rpx;
+  padding: 22rpx;
+}
+
+.search-box {
+  display: flex;
+  height: 80rpx;
+  align-items: center;
+  border: 1rpx solid #d7dfeb;
+  border-radius: 18rpx;
+  background: #f8faff;
+}
+
+.search-icon {
+  padding-left: 22rpx;
+  color: #667085;
+  font-size: 34rpx;
+  line-height: 1;
+}
+
+.search-input {
+  box-sizing: border-box;
+  height: 80rpx;
+  min-width: 0;
+  flex: 1;
+  padding: 0 18rpx;
+  color: #1a2438;
+  font-size: 25rpx;
+}
+
+.clear-search {
+  width: 64rpx;
+  min-width: 64rpx;
+  height: 64rpx;
+  margin: 0 8rpx 0 0;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #7a8699;
+  font-size: 34rpx;
+  line-height: 64rpx;
+}
+
+.filter-label {
+  margin: 24rpx 2rpx 12rpx;
+  color: #526078;
+  font-size: 21rpx;
+  font-weight: 750;
+}
+
+.day-label {
+  margin-top: 20rpx;
+}
+
+.filter-row,
+.day-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.day-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.day-row {
+  display: inline-flex;
+  padding-bottom: 2rpx;
+}
+
+.filter-chip {
+  min-width: 112rpx;
+  height: 62rpx;
+  margin: 0;
+  padding: 0 22rpx;
+  border: 1rpx solid #d5deeb;
+  border-radius: 999rpx;
+  background: #ffffff;
+  color: #536178;
+  font-size: 22rpx;
+  font-weight: 650;
+  line-height: 60rpx;
+}
+
+.filter-chip.is-active {
+  border-color: #2855d9;
+  background: #2855d9;
+  color: #ffffff;
+}
+
+.day-chip {
+  min-width: auto;
+  flex: none;
+}
+
+.list-summary {
+  display: flex;
+  margin: 0 4rpx 18rpx;
+  align-items: center;
+  justify-content: space-between;
+  color: #59667a;
+  font-size: 22rpx;
+  font-weight: 650;
+}
+
+.selected-summary {
+  color: #2855d9;
+}
+
+.empty-title {
+  margin-bottom: 8rpx;
+  color: #37445b;
+  font-size: 28rpx;
+  font-weight: 800;
+}

@@ -1,0 +1,74 @@
+<view class="page-shell" wx:if="{{course}}">
+  <view class="detail-hero surface">
+    <view class="code-row">
+      <text class="course-code">{{course.code}}</text>
+      <text class="type-badge {{course.requirement_type}}">{{course.requirementLabel}}</text>
+    </view>
+    <view class="course-title">{{course.programme_title}}</view>
+    <view class="course-subtitle">{{course.credits}} 学分 · {{course.remarks}} · {{course.titleNote}}</view>
+
+    <view class="actions">
+      <button class="{{added ? 'secondary-button' : 'primary-button'}}" bindtap="toggleCourse">
+        {{added ? '已加入课表' : '加入课表'}}
+      </button>
+      <button class="secondary-button" bindtap="openTimetable">查看课表</button>
+      <button wx:if="{{documentRoute}}" class="document-button" bindtap="openDocument">查看详细课程介绍</button>
+    </view>
+  </view>
+
+  <view class="section-heading">学生经验摘要</view>
+  <view class="review-card surface level-{{recommendation.level}}">
+    <text class="review-verdict">{{recommendation.verdict}}</text>
+    <text class="review-summary">{{recommendation.summary}}</text>
+    <view class="tags" wx:if="{{recommendation.tags.length}}">
+      <text wx:for="{{recommendation.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="section-heading">课程事实</view>
+  <view class="fact-grid">
+    <view class="fact surface" wx:for="{{facts}}" wx:key="label">
+      <text>{{item.label}}</text>
+      <text>{{item.value}}</text>
+    </view>
+  </view>
+
+  <view class="section-heading">可选班次</view>
+  <view class="section-list" wx:if="{{sections.length}}">
+    <view class="section-card surface" wx:for="{{sections}}" wx:key="key">
+      <view class="section-card-head">
+        <view>
+          <text class="section-name">{{item.section}}</text>
+          <text class="section-kind">{{item.typeLabel}}</text>
+        </view>
+        <text class="registration {{item.web === 'Y' ? 'available' : ''}}">{{item.webLabel}}</text>
+      </view>
+      <view class="section-time">{{item.dayLabel}} · {{item.time}}</view>
+      <view class="section-meta">{{item.location}} · CRN {{item.crn}}</view>
+      <view class="section-meta">教师：{{item.instructor || '待公布'}}</view>
+      <view class="section-meta">名额快照：{{item.seatText}} · {{item.date}}</view>
+      <view class="section-note" wx:for="{{item.notes}}" wx:key="*this">{{item}}</view>
+    </view>
+  </view>
+  <view class="surface empty-state" wx:else>当前课表快照中没有可展示班次。</view>
+
+  <view class="section-heading">原始来源与评价原文</view>
+  <view class="source-intro">以下评价对应往届课程，考核方式、教师和难度可能变化。点击“复制原文链接”后可在浏览器查看。</view>
+  <view class="source-list" wx:if="{{sources.length}}">
+    <view class="source-card surface" wx:for="{{sources}}" wx:key="sourceId">
+      <view class="source-head">
+        <view>
+          <view class="source-title">{{item.title}}</view>
+          <view class="source-platform">{{item.platform}} · 学生经验</view>
+        </view>
+        <button class="copy-link" data-url="{{item.url}}" bindtap="copySource">复制原文链接</button>
+      </view>
+      <text class="source-text" user-select="{{true}}">{{item.text}}</text>
+    </view>
+  </view>
+  <view class="surface empty-state" wx:else>本地资料暂未找到可核对的学生评价来源。</view>
+
+  <view class="data-note">课表快照：2026-08-04 16:48（Asia/Beijing）。名额和注册状态会变化，请以 CityU 系统为准。</view>
+</view>
+
+<view class="empty-state" wx:else>缺少课程编号，或没有找到这门课程。</view>

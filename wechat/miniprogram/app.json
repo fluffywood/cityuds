@@ -1,0 +1,138 @@
+{
+  "pages": [
+    "pages/courses/index",
+    "pages/timetable/index",
+    "pages/about/index"
+  ],
+  "subPackages": [
+    {
+      "root": "packages/course",
+      "pages": [
+        "pages/detail/index"
+      ]
+    },
+    {
+      "root": "packages/doc-cs5285",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-cs5487",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-cs6290",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-cs6493",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc5001",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc5002",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc5003",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6004",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6006",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6008",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6011",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6012",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6013",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6016",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6017",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6018",
+      "pages": [
+        "pages/index/index"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "CityU MSDS 选课板",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7a8699",
+    "selectedColor": "#2855d9",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/courses/index",
+        "text": "课程"
+      },
+      {
+        "pagePath": "pages/timetable/index",
+        "text": "课表"
+      },
+      {
+        "pagePath": "pages/about/index",
+        "text": "说明"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

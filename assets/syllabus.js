@@ -3,10 +3,6 @@
 
   const detail = document.getElementById("syllabus-detail");
   const code = new URLSearchParams(window.location.search).get("code")?.trim().toUpperCase();
-  const pdfJsBaseUrl = new URL("assets/vendor/pdfjs/", document.baseURI);
-  const pdfJsModuleUrl = new URL("pdf.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
-  const pdfJsWorkerUrl = new URL("pdf.worker.min.mjs?v=6.2.108", pdfJsBaseUrl).href;
-  let displayTranslationPage = null;
 
   function getJson(url) {
     return fetch(url).then((response) => {
@@ -15,94 +11,75 @@
     });
   }
 
-  function renderPage(page) {
+  function renderPager(pageCount, isBottom = false) {
     return `
-      <article class="translation-page" data-page-number="${MSDS.escapeHtml(page.page)}">
-        <h3>第 ${MSDS.escapeHtml(page.page)} 页</h3>
-        <div class="translation-text">${MSDS.escapeHtml(page.text)}</div>
-      </article>`;
-  }
-
-  function renderTranslationPager(pageCount, isBottom = false) {
-    return `
-      <div class="translation-page-status${isBottom ? " translation-page-status-bottom" : ""}">
-        <button class="translation-page-button" type="button" data-translation-action="previous" aria-label="查看上一页中文翻译">← 上一页</button>
-        <strong class="translation-page-counter" aria-live="polite">第 1 / ${pageCount} 页</strong>
-        <button class="translation-page-button" type="button" data-translation-action="next" aria-label="查看下一页中文翻译">下一页 →</button>
+      <div class="bilingual-pager${isBottom ? " bilingual-pager-bottom" : ""}">
+        <button class="bilingual-page-button" type="button" data-bilingual-action="previous" aria-label="查看上一页中英文课程介绍">← 上一页</button>
+        <strong class="bilingual-page-counter" aria-live="polite">第 1 / ${pageCount} 页</strong>
+        <button class="bilingual-page-button" type="button" data-bilingual-action="next" aria-label="查看下一页中英文课程介绍">下一页 →</button>
       </div>`;
   }
 
-  function trackCurrentPage(container, pages, onChange) {
-    let animationFrame = 0;
-    let currentPageNumber = 0;
-
-    function update() {
-      animationFrame = 0;
-      const containerTop = container.getBoundingClientRect().top;
-      const anchor = containerTop + Math.min(container.clientHeight * 0.2, 120);
-      const currentPage = pages.reduce((nearest, page) => {
-        const pageRect = page.getBoundingClientRect();
-        const nearestRect = nearest.getBoundingClientRect();
-        const pageDistance = anchor < pageRect.top
-          ? pageRect.top - anchor
-          : Math.max(0, anchor - pageRect.bottom);
-        const nearestDistance = anchor < nearestRect.top
-          ? nearestRect.top - anchor
-          : Math.max(0, anchor - nearestRect.bottom);
-        return pageDistance < nearestDistance ? page : nearest;
-      });
-      const pageNumber = Number(currentPage.dataset.pageNumber);
-
-      if (pageNumber === currentPageNumber) return;
-      currentPageNumber = pageNumber;
-      pages.forEach((page) => page.classList.toggle("is-current", page === currentPage));
-      onChange(pageNumber);
-    }
-
-    container.addEventListener("scroll", () => {
-      if (!animationFrame) animationFrame = window.requestAnimationFrame(update);
-    }, { passive: true });
-    update();
-  }
-
-  function setTranslationPage(pageNumber) {
-    if (displayTranslationPage) displayTranslationPage(pageNumber, false);
-  }
-
-  function setupTranslationPager() {
-    const pagesContainer = document.getElementById("translation-pages");
-    if (!pagesContainer) return;
-    const pages = Array.from(pagesContainer.querySelectorAll(".translation-page"));
-    const pageCounters = Array.from(document.querySelectorAll(".translation-page-counter"));
-    const previousButtons = Array.from(document.querySelectorAll('[data-translation-action="previous"]'));
-    const nextButtons = Array.from(document.querySelectorAll('[data-translation-action="next"]'));
-    if (!pages.length) return;
-
+  function setupBilingualPager(course, pageImages, translationPages) {
+    const reader = document.getElementById("bilingual-reader");
+    const imageStage = document.getElementById("original-image-stage");
+    const imageLink = document.getElementById("original-page-link");
+    const image = document.getElementById("original-page-image");
+    const imageLoading = document.getElementById("original-image-loading");
+    const imageError = document.getElementById("original-image-error");
+    const translationText = document.getElementById("bilingual-translation-text");
+    const pageLabels = Array.from(document.querySelectorAll(".bilingual-current-page"));
+    const pageCounters = Array.from(document.querySelectorAll(".bilingual-page-counter"));
+    const previousButtons = Array.from(document.querySelectorAll('[data-bilingual-action="previous"]'));
+    const nextButtons = Array.from(document.querySelectorAll('[data-bilingual-action="next"]'));
     let currentIndex = 0;
 
-    function showPage(pageNumber, moveViewport) {
-      const nextIndex = pages.findIndex((page) => Number(page.dataset.pageNumber) === Number(pageNumber));
-      if (nextIndex < 0) return;
-
+    function showPage(nextIndex, moveViewport) {
+      if (nextIndex < 0 || nextIndex >= translationPages.length) return;
       currentIndex = nextIndex;
-      pages.forEach((page, index) => {
-        const isCurrent = index === currentIndex;
-        page.hidden = !isCurrent;
-        page.classList.toggle("is-current", isCurrent);
-        if (isCurrent) page.removeAttribute("aria-hidden");
-        else page.setAttribute("aria-hidden", "true");
-      });
 
-      const currentPageNumber = pages[currentIndex].dataset.pageNumber;
+      const page = translationPages[currentIndex];
+      const imageUrl = new URL(pageImages[currentIndex], document.baseURI).href;
+      const pageNumber = Number(page.page) || currentIndex + 1;
+
+      imageStage.dataset.imageState = "loading";
+      image.hidden = true;
+      imageLoading.hidden = false;
+      imageError.hidden = true;
+      image.alt = `${course.code} 英文课程介绍第 ${pageNumber} 页`;
+      imageLink.href = imageUrl;
+      translationText.textContent = page.text || "本页暂时没有中文翻译。";
+
+      image.onload = () => {
+        if (currentIndex !== nextIndex) return;
+        imageStage.dataset.imageState = "ready";
+        image.hidden = false;
+        imageLoading.hidden = true;
+      };
+      image.onerror = () => {
+        if (currentIndex !== nextIndex) return;
+        imageStage.dataset.imageState = "error";
+        image.hidden = true;
+        imageLoading.hidden = true;
+        imageError.hidden = false;
+      };
+      image.src = imageUrl;
+
+      pageLabels.forEach((label) => { label.textContent = `第 ${pageNumber} 页`; });
       pageCounters.forEach((counter) => {
-        counter.textContent = `第 ${currentPageNumber} / ${pages.length} 页`;
+        counter.textContent = `第 ${pageNumber} / ${translationPages.length} 页`;
       });
       previousButtons.forEach((button) => { button.disabled = currentIndex === 0; });
-      nextButtons.forEach((button) => { button.disabled = currentIndex === pages.length - 1; });
+      nextButtons.forEach((button) => { button.disabled = currentIndex === translationPages.length - 1; });
+
+      if (currentIndex + 1 < pageImages.length) {
+        const nextImage = new Image();
+        nextImage.src = new URL(pageImages[currentIndex + 1], document.baseURI).href;
+      }
 
       if (moveViewport) {
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        pagesContainer.scrollIntoView({
+        reader.scrollIntoView({
           block: "start",
           behavior: reducedMotion ? "auto" : "smooth"
         });
@@ -110,136 +87,35 @@
     }
 
     previousButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        if (currentIndex > 0) showPage(pages[currentIndex - 1].dataset.pageNumber, true);
-      });
+      button.addEventListener("click", () => showPage(currentIndex - 1, true));
     });
     nextButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        if (currentIndex < pages.length - 1) showPage(pages[currentIndex + 1].dataset.pageNumber, true);
-      });
+      button.addEventListener("click", () => showPage(currentIndex + 1, true));
+    });
+    reader.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        showPage(currentIndex - 1, false);
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        showPage(currentIndex + 1, false);
+      }
     });
 
-    displayTranslationPage = showPage;
-    showPage(pages[0].dataset.pageNumber, false);
+    showPage(0, false);
   }
 
-  function setPdfStatus(message, state = "loading") {
-    const status = document.getElementById("pdf-viewer-status");
-    if (!status) return;
-    status.dataset.state = state;
-    status.querySelector(".pdf-viewer-status-text").textContent = message;
-  }
-
-  async function renderPdfPage(pdf, pageElement) {
-    if (pageElement.dataset.renderState !== "idle") return;
-    pageElement.dataset.renderState = "loading";
-    pageElement.setAttribute("aria-busy", "true");
-    const pageNumber = Number(pageElement.dataset.pageNumber);
-
-    try {
-      const page = await pdf.getPage(pageNumber);
-      const baseViewport = page.getViewport({ scale: 1 });
-      const availableWidth = Math.max(1, pageElement.clientWidth - 2);
-      const viewport = page.getViewport({ scale: availableWidth / baseViewport.width });
-      const maxPixelRatio = availableWidth > 700 ? 1.5 : 2;
-      const outputScale = Math.min(window.devicePixelRatio || 1, maxPixelRatio);
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d", { alpha: false });
-      if (!context) throw new Error("当前浏览器不支持 Canvas PDF 渲染");
-
-      canvas.className = "pdf-page-canvas";
-      canvas.width = Math.floor(viewport.width * outputScale);
-      canvas.height = Math.floor(viewport.height * outputScale);
-      canvas.setAttribute("role", "img");
-      canvas.setAttribute("aria-label", `PDF 第 ${pageNumber} 页`);
-
-      await page.render({
-        canvas,
-        canvasContext: context,
-        transform: outputScale === 1 ? null : [outputScale, 0, 0, outputScale, 0, 0],
-        viewport
-      }).promise;
-
-      const pageLabel = document.createElement("span");
-      pageLabel.className = "pdf-page-number";
-      pageLabel.textContent = `第 ${pageNumber} 页`;
-      pageElement.style.aspectRatio = `${viewport.width} / ${viewport.height}`;
-      pageElement.replaceChildren(canvas, pageLabel);
-      pageElement.dataset.renderState = "rendered";
-      pageElement.setAttribute("aria-busy", "false");
-      page.cleanup();
-    } catch (error) {
-      pageElement.dataset.renderState = "error";
-      pageElement.setAttribute("aria-busy", "false");
-      pageElement.classList.add("pdf-page-error");
-      pageElement.textContent = `第 ${pageNumber} 页加载失败，请使用上方原文件入口。`;
-      console.error(`PDF page ${pageNumber} render failed`, error);
-    }
-  }
-
-  function observePdfPages(pdf, pageElements, pagesContainer) {
-    if (!("IntersectionObserver" in window)) {
-      pageElements.reduce(
-        (sequence, pageElement) => sequence.then(() => renderPdfPage(pdf, pageElement)),
-        Promise.resolve()
-      );
-      return;
+  function render(course, courseDocument, translation, imageDocument) {
+    const pageImages = imageDocument?.pages || [];
+    const translationPages = translation.pages || [];
+    if (!pageImages.length || pageImages.length !== translationPages.length) {
+      throw new Error("课程页图与中文翻译页数不一致");
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        observer.unobserve(entry.target);
-        renderPdfPage(pdf, entry.target);
-      });
-    }, { root: pagesContainer, rootMargin: "700px 0px" });
-
-    pageElements.forEach((pageElement) => observer.observe(pageElement));
-  }
-
-  async function loadPdfViewer(pdfUrl) {
-    const pagesContainer = document.getElementById("pdf-pages");
-    if (!pagesContainer) return;
-
-    try {
-      const pdfjsLib = await import(pdfJsModuleUrl);
-      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfJsWorkerUrl;
-      const loadingTask = pdfjsLib.getDocument({ url: pdfUrl });
-      loadingTask.onProgress = ({ loaded, total }) => {
-        if (!total) return;
-        setPdfStatus(`正在加载英文 PDF… ${Math.round((loaded / total) * 100)}%`);
-      };
-      const pdf = await loadingTask.promise;
-      const pageElements = Array.from({ length: pdf.numPages }, (_, index) => {
-        const pageNumber = index + 1;
-        const pageElement = document.createElement("article");
-        pageElement.className = "pdf-page";
-        pageElement.dataset.pageNumber = String(pageNumber);
-        pageElement.dataset.renderState = "idle";
-        pageElement.setAttribute("aria-label", `英文 PDF 第 ${pageNumber} 页`);
-        pageElement.setAttribute("aria-busy", "true");
-        pageElement.innerHTML = `<span class="pdf-page-placeholder">第 ${pageNumber} 页等待显示…</span>`;
-        return pageElement;
-      });
-
-      pagesContainer.replaceChildren(...pageElements);
-      setPdfStatus(`英文 PDF 已加载，共 ${pdf.numPages} 页；向下滚动时自动显示。`, "ready");
-      trackCurrentPage(pagesContainer, pageElements, setTranslationPage);
-      observePdfPages(pdf, pageElements, pagesContainer);
-    } catch (error) {
-      setPdfStatus("英文 PDF 暂时无法在页面内显示。", "error");
-      const errorMessage = document.createElement("div");
-      errorMessage.className = "pdf-viewer-error";
-      errorMessage.textContent = "请使用上方“原文件备用入口”查看课程文件。";
-      pagesContainer.replaceChildren(errorMessage);
-      console.error("PDF viewer initialization failed", error);
-    }
-  }
-
-  function render(course, courseDocument, translation) {
     const pdfUrl = new URL(courseDocument.pdf, window.location.href).href;
     const backUrl = `course.html?code=${encodeURIComponent(course.code)}`;
+    const pageCount = translationPages.length;
 
     document.title = `${course.code} 详细课程介绍 · MSDS 选课板`;
     detail.innerHTML = `
@@ -252,51 +128,56 @@
             <span class="document-badge">课程文件</span>
           </div>
           <h1>${MSDS.escapeHtml(translation.title_zh)}</h1>
-          <p>${MSDS.escapeHtml(translation.title_en)} · ${translation.pages.length} 页</p>
+          <p>${MSDS.escapeHtml(translation.title_en)} · ${pageCount} 页</p>
         </div>
         <div class="syllabus-actions">
-          <a class="button button-primary" href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">原文件备用入口</a>
+          <a class="button button-primary" href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">原 PDF 备用入口</a>
           <a class="button button-quiet" href="${MSDS.escapeHtml(pdfUrl)}" download>下载 PDF</a>
         </div>
       </section>
 
       <nav class="syllabus-jump-links" aria-label="课程介绍内容导航">
-        <a href="#course-pdf">英文 PDF 原文</a>
-        <a href="#course-translation">中文翻译</a>
+        <a href="#bilingual-reader">中英逐页对照</a>
       </nav>
 
-      <div class="syllabus-layout">
-        <section id="course-pdf" class="document-panel pdf-panel">
-          <div class="document-panel-heading">
-            <div><span>Original document</span><h2>英文 PDF 原文</h2></div>
-            <a href="${MSDS.escapeHtml(pdfUrl)}" target="_blank" rel="noreferrer">单独打开原文件</a>
-          </div>
-          <div id="pdf-viewer" class="pdf-viewer" aria-label="${MSDS.escapeHtml(course.code)} 英文课程介绍 PDF">
-            <div id="pdf-viewer-status" class="pdf-viewer-status" data-state="loading" role="status" aria-live="polite">
-              <span class="pdf-viewer-spinner" aria-hidden="true"></span>
-              <span class="pdf-viewer-status-text">正在准备网页内 PDF 阅读器…</span>
+      <section id="bilingual-reader" class="document-panel bilingual-reader" tabindex="0" aria-label="${MSDS.escapeHtml(course.code)} 中英文逐页课程介绍">
+        <div class="document-panel-heading bilingual-reader-heading">
+          <div><span>Bilingual document</span><h2>中英逐页对照</h2></div>
+          <p>英文页图与中文翻译同步切换；点击英文图片可单独放大。</p>
+        </div>
+
+        ${renderPager(pageCount)}
+
+        <div class="bilingual-page-grid">
+          <article class="bilingual-page-card original-page-card">
+            <div class="bilingual-card-heading">
+              <div><span>Original document</span><h3>英文原文</h3></div>
+              <strong class="bilingual-current-page">第 1 页</strong>
             </div>
-            <div id="pdf-pages" class="pdf-pages"></div>
-          </div>
-          <p class="pdf-fallback">PDF 会直接绘制在当前网页中，不会自动跳转或下载；如渲染失败，可使用上方备用入口。</p>
-        </section>
+            <div id="original-image-stage" class="original-image-stage" data-image-state="loading">
+              <a id="original-page-link" href="#" target="_blank" rel="noreferrer" aria-label="单独打开当前英文原文页图">
+                <img id="original-page-image" class="original-page-image" alt="" decoding="async" hidden>
+              </a>
+              <div id="original-image-loading" class="original-image-message">正在加载英文原文页图…</div>
+              <div id="original-image-error" class="original-image-message is-error" hidden>本页图片加载失败，请使用上方原 PDF 备用入口。</div>
+            </div>
+          </article>
 
-        <section id="course-translation" class="document-panel translation-panel">
-          <div class="document-panel-heading">
-            <div><span>Chinese translation</span><h2>中文翻译</h2></div>
-          </div>
-          <div class="translation-notice"><strong>翻译说明：</strong>中文内容按英文 PDF 逐页整理，仅供理解与选课参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
-          <p class="translation-page-guide">使用“上一页 / 下一页”原地切换译文；英文 PDF 翻页时也会自动对齐到相同页码。</p>
-          ${renderTranslationPager(translation.pages.length)}
-          <div id="translation-pages" class="translation-pages" role="region" aria-label="中文翻译原地分页阅读区">
-            ${translation.pages.map(renderPage).join("")}
-          </div>
-          ${renderTranslationPager(translation.pages.length, true)}
-        </section>
-      </div>`;
+          <article class="bilingual-page-card translation-page-card">
+            <div class="bilingual-card-heading translation-card-heading">
+              <div><span>Chinese translation</span><h3>中文翻译</h3></div>
+              <strong class="bilingual-current-page">第 1 页</strong>
+            </div>
+            <div id="bilingual-translation-text" class="bilingual-translation-text"></div>
+          </article>
+        </div>
 
-    setupTranslationPager();
-    loadPdfViewer(pdfUrl);
+        <div class="translation-notice"><strong>阅读说明：</strong>中文内容按英文原文逐页整理，仅供理解与选课参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
+        ${renderPager(pageCount, true)}
+        <p class="pdf-fallback">网页默认加载课程页图，不再使用 PDF.js 或浏览器内置 PDF 阅读器；原 PDF 仅作为备用和下载入口。</p>
+      </section>`;
+
+    setupBilingualPager(course, pageImages, translationPages);
   }
 
   if (!code) {
@@ -306,14 +187,17 @@
 
   Promise.all([
     getJson("data/courses/index.json"),
-    getJson("data/course-documents/index.json")
-  ]).then(([courseIndex, courseDocuments]) => {
+    getJson("data/course-documents/index.json"),
+    getJson("data/course-documents/images.json")
+  ]).then(([courseIndex, courseDocuments, imageIndex]) => {
     const course = courseIndex.courses.find((item) => item.code === code);
     if (!course) throw new Error("没有找到这门课程");
     const courseDocument = courseDocuments[course.code];
     if (!courseDocument) throw new Error("这门课程暂时没有详细课程文件");
+    const imageDocument = imageIndex.courses?.[course.code];
+    if (!imageDocument) throw new Error("这门课程暂时没有可用的网页页图");
     return getJson(courseDocument.translation)
-      .then((translation) => render(course, courseDocument, translation));
+      .then((translation) => render(course, courseDocument, translation, imageDocument));
   }).catch((error) => {
     const backUrl = code ? `course.html?code=${encodeURIComponent(code)}` : "index.html";
     detail.innerHTML = `<div class="error-state">${MSDS.escapeHtml(error.message)}<br><a class="text-link" href="${backUrl}">返回课程详情</a></div>`;

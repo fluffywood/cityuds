@@ -1,0 +1,40 @@
+<view class="document-shell" wx:if="{{document}}">
+  <view class="document-hero">
+    <text class="course-code">{{document.course_code}}</text>
+    <text class="title-zh">{{document.title_zh}}</text>
+    <text class="title-en">{{document.title_en}}</text>
+  </view>
+
+  <view class="pager">
+    <button class="pager-button" bindtap="previousPage" disabled="{{currentIndex === 0}}">← 上一页</button>
+    <text class="pager-count">第 {{currentIndex + 1}} / {{totalPages}} 页</text>
+    <button class="pager-button" bindtap="nextPage" disabled="{{currentIndex === totalPages - 1}}">下一页 →</button>
+  </view>
+
+  <view class="original-card">
+    <view class="card-heading">
+      <text>Original document</text>
+      <text>第 {{currentIndex + 1}} 页 · 轻触放大</text>
+    </view>
+    <image class="original-image" src="{{currentImage}}" mode="widthFix" lazy-load="{{true}}" show-menu-by-longpress="{{true}}" bindtap="previewOriginal" binderror="handleImageError" />
+    <view class="image-error" wx:if="{{imageError}}">该页图片暂时无法显示，请退出后重试。</view>
+  </view>
+
+  <view class="translation-card">
+    <view class="card-heading translation-heading">
+      <text>Chinese translation</text>
+      <text>中文翻译第 {{currentPage.page}} 页</text>
+    </view>
+    <text class="translation-text" user-select="{{true}}">{{currentPage.text}}</text>
+  </view>
+
+  <view class="notice">中文内容按英文课程文件逐页整理，仅供理解和选课参考；课程要求及考核规则以英文原文为准。</view>
+
+  <view class="pager pager-bottom">
+    <button class="pager-button" bindtap="previousPage" disabled="{{currentIndex === 0}}">← 上一页</button>
+    <text class="pager-count">第 {{currentIndex + 1}} / {{totalPages}} 页</text>
+    <button class="pager-button" bindtap="nextPage" disabled="{{currentIndex === totalPages - 1}}">下一页 →</button>
+  </view>
+</view>
+
+<view class="empty-state" wx:else>课程文档数据暂时不可用。</view>

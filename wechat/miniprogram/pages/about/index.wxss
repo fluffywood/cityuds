@@ -1,0 +1,164 @@
+.about-page {
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.about-hero {
+  padding: 20rpx 4rpx 34rpx;
+}
+
+.hero-mark {
+  display: flex;
+  width: 104rpx;
+  height: 52rpx;
+  margin-bottom: 20rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  background: #2855d9;
+  color: #ffffff;
+  font-size: 21rpx;
+  font-weight: 850;
+  letter-spacing: 1rpx;
+}
+
+.snapshot-card {
+  padding: 28rpx;
+  background: linear-gradient(145deg, #ffffff 0%, #f1f5ff 100%);
+}
+
+.snapshot-label {
+  color: #68758a;
+  font-size: 21rpx;
+  font-weight: 700;
+}
+
+.snapshot-semester {
+  margin-top: 10rpx;
+  color: #1d2c4b;
+  font-size: 32rpx;
+  font-weight: 850;
+}
+
+.snapshot-time {
+  margin-top: 8rpx;
+  color: #657187;
+  font-size: 22rpx;
+}
+
+.stat-row {
+  display: flex;
+  margin-top: 28rpx;
+  gap: 18rpx;
+}
+
+.stat-item {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  padding: 20rpx;
+  flex-direction: column;
+  border-radius: 18rpx;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.stat-value {
+  color: #2855d9;
+  font-size: 38rpx;
+  font-weight: 850;
+}
+
+.stat-label {
+  margin-top: 4rpx;
+  color: #68758a;
+  font-size: 20rpx;
+}
+
+.feature-list {
+  padding: 4rpx 26rpx;
+}
+
+.feature-item {
+  display: flex;
+  padding: 26rpx 0;
+  gap: 20rpx;
+  align-items: flex-start;
+}
+
+.feature-item + .feature-item {
+  border-top: 1rpx solid #e6ebf2;
+}
+
+.feature-icon {
+  display: flex;
+  width: 62rpx;
+  min-width: 62rpx;
+  height: 62rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  font-size: 23rpx;
+  font-weight: 850;
+}
+
+.feature-icon.blue {
+  background: #e9efff;
+  color: #2855d9;
+}
+
+.feature-icon.green {
+  background: #e9f8ef;
+  color: #18794e;
+}
+
+.feature-icon.amber {
+  background: #fff4e5;
+  color: #b25e09;
+}
+
+.feature-title,
+.note-title {
+  color: #263550;
+  font-size: 26rpx;
+  font-weight: 800;
+}
+
+.feature-copy,
+.note-copy {
+  margin-top: 7rpx;
+  color: #697586;
+  font-size: 22rpx;
+  line-height: 1.65;
+}
+
+.note-card,
+.declaration-card {
+  padding: 28rpx;
+}
+
+.note-card {
+  border-color: #d7e2ff;
+  background: #f7f9ff;
+}
+
+.declaration-item {
+  position: relative;
+  padding-left: 28rpx;
+  color: #606d81;
+  font-size: 22rpx;
+  line-height: 1.72;
+}
+
+.declaration-item::before {
+  position: absolute;
+  top: 17rpx;
+  left: 2rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #8290a6;
+  content: "";
+}
+
+.declaration-item + .declaration-item {
+  margin-top: 18rpx;
+}

@@ -1,0 +1,99 @@
+<view class="page-shell">
+  <view class="header-row">
+    <view>
+      <view class="page-title">我的课表</view>
+      <view class="page-subtitle">按天查看日程，并可随时切换主课与 Tutorial。</view>
+    </view>
+    <button class="clear-button" bindtap="clearAll">清空</button>
+  </view>
+
+  <view class="summary-grid" wx:if="{{summary}}">
+    <view class="summary-card surface">
+      <text>{{summary.coreCount}}</text><text>核心课 · {{summary.coreCredits}} 分</text>
+    </view>
+    <view class="summary-card surface">
+      <text>{{summary.electiveCount}}</text><text>选修课 · {{summary.electiveCredits}} 分</text>
+    </view>
+    <view class="summary-card total surface">
+      <text>{{summary.totalCredits}}</text><text>总学分 · {{summary.totalCount}} 门</text>
+    </view>
+  </view>
+
+  <view class="conflict-banner {{conflictCourseCount ? 'has-conflict' : ''}}">
+    {{conflictCourseCount ? conflictCourseCount + ' 门课程存在时间冲突' : '当前已选课程暂无时间冲突'}}
+  </view>
+
+  <scroll-view class="day-tabs" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+    <view class="day-tab-row">
+      <button
+        wx:for="{{days}}"
+        wx:key="key"
+        class="day-tab {{activeDay === item.key ? 'active' : ''}}"
+        data-day="{{item.key}}"
+        bindtap="selectDay"
+      >{{item.label}}</button>
+    </view>
+  </scroll-view>
+
+  <view class="agenda surface">
+    <view class="agenda-heading">{{activeDayLabel}}</view>
+    <view class="event-list" wx:if="{{events.length}}">
+      <view
+        class="event-card {{item.conflict ? 'is-conflict' : ''}}"
+        wx:for="{{events}}"
+        wx:key="id"
+        data-code="{{item.courseCode}}"
+        bindtap="openCourse"
+      >
+        <view class="event-time">{{item.section.time}}</view>
+        <view class="event-main">
+          <view class="event-title">{{item.courseCode}} · {{item.section.section}}</view>
+          <view class="event-meta">{{item.typeLabel}} · {{item.room}}</view>
+          <view class="event-conflict" wx:if="{{item.conflict}}">{{item.conflictText}}</view>
+        </view>
+        <text class="event-arrow">›</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>这一天暂无课程。</view>
+  </view>
+
+  <view class="section-heading">已选课程与班次</view>
+  <view class="selected-list" wx:if="{{selectedCourses.length}}">
+    <view class="selected-card surface" wx:for="{{selectedCourses}}" wx:key="code">
+      <view class="selected-head">
+        <view data-code="{{item.code}}" bindtap="openCourse">
+          <view class="selected-code">{{item.code}}</view>
+          <view class="selected-title">{{item.title}}</view>
+        </view>
+        <button class="remove-button" data-code="{{item.code}}" bindtap="removeCourse">移除</button>
+      </view>
+      <picker
+        mode="selector"
+        range="{{item.primaryChoices}}"
+        range-key="label"
+        value="{{item.primaryIndex}}"
+        data-code="{{item.code}}"
+        bindchange="changePrimary"
+      >
+        <view class="picker-row"><text>主课</text><text>{{item.primaryLabel}} ›</text></view>
+      </picker>
+      <picker
+        wx:if="{{item.tutorialChoices.length > 1}}"
+        mode="selector"
+        range="{{item.tutorialChoices}}"
+        range-key="label"
+        value="{{item.tutorialIndex}}"
+        data-code="{{item.code}}"
+        bindchange="changeTutorial"
+      >
+        <view class="picker-row"><text>Tutorial</text><text>{{item.tutorialLabel}} ›</text></view>
+      </picker>
+    </view>
+  </view>
+  <view class="surface empty-selection" wx:else>
+    <text>还没有加入课程</text>
+    <button class="primary-button" bindtap="browseCourses">去浏览课程</button>
+  </view>
+
+  <view class="data-note">课表快照：2026-08-04 16:48（Asia/Beijing）。名额和注册状态会变化，请以 CityU 系统为准。</view>
+</view>

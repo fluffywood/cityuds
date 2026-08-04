@@ -1,0 +1,62 @@
+<view class="page-shell about-page">
+  <view class="about-hero">
+    <view class="hero-mark">MSDS</view>
+    <view class="page-title">CityU 选课助手</view>
+    <view class="page-subtitle">面向手机浏览的课程查询、选课比较与个人课表工具。</view>
+  </view>
+
+  <view class="surface snapshot-card">
+    <view class="snapshot-label">当前数据范围</view>
+    <view class="snapshot-semester">{{semester}}</view>
+    <view class="snapshot-time">课表快照：{{scheduleAsOf}}</view>
+    <view class="stat-row">
+      <view class="stat-item">
+        <text class="stat-value">{{courseCount}}</text>
+        <text class="stat-label">门课程</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{documentCount}}</text>
+        <text class="stat-label">门课程含介绍</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-heading">可以做什么</view>
+  <view class="surface feature-list">
+    <view class="feature-item">
+      <view class="feature-icon blue">课</view>
+      <view>
+        <view class="feature-title">筛选与查看课程</view>
+        <view class="feature-copy">按编号、名称、核心/选修与上课星期查找课程，并查看真实班次信息。</view>
+      </view>
+    </view>
+    <view class="feature-item">
+      <view class="feature-icon green">表</view>
+      <view>
+        <view class="feature-title">在本机安排课表</view>
+        <view class="feature-copy">加入、移除及调整班次；选择结果仅保存在当前微信设备中。</view>
+      </view>
+    </view>
+    <view class="feature-item">
+      <view class="feature-icon amber">译</view>
+      <view>
+        <view class="feature-title">中英文同页对照</view>
+        <view class="feature-copy">课程 PDF 已转换为离线页图，每一页英文原文下方紧跟对应中文翻译，支持逐页浏览。</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-heading">运行方式</view>
+  <view class="surface note-card">
+    <view class="note-title">适配个人主体，无需后端</view>
+    <view class="note-copy">小程序使用微信原生页面，课程数据、翻译和 PDF 页图随小程序发布，不依赖 web-view、外部服务器或本地部署。网页版保持为独立项目，可继续正常访问。</view>
+  </view>
+
+  <view class="section-heading">数据与内容声明</view>
+  <view class="surface declaration-card">
+    <view class="declaration-item">课程班次、余位与网页注册状态为 {{scheduleAsOf}} 的数据快照，后续可能发生变化，请以学校系统实时信息为准。</view>
+    <view class="declaration-item">课程评价来自公开经验整理，具有主观性，仅用于辅助比较，不构成选课或成绩保证。</view>
+    <view class="declaration-item">中文内容为辅助翻译；课程要求、考核方式及正式表述应以英文原始文件和学校发布内容为准。</view>
+    <view class="declaration-item">本工具为个人学习与选课辅助项目，不代表香港城市大学官方立场。</view>
+  </view>
+</view>

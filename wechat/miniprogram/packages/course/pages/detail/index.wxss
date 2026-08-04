@@ -1,0 +1,250 @@
+.detail-hero {
+  padding: 34rpx;
+}
+
+.code-row,
+.section-card-head,
+.source-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.course-code {
+  color: #2449b8;
+  font-size: 30rpx;
+  font-weight: 900;
+  letter-spacing: 2rpx;
+}
+
+.type-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  background: #eef2ff;
+  color: #3655b3;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.type-badge.core {
+  background: #e8f7ee;
+  color: #167047;
+}
+
+.course-title {
+  margin-top: 20rpx;
+  color: #14213d;
+  font-size: 42rpx;
+  font-weight: 850;
+  line-height: 1.3;
+}
+
+.course-subtitle {
+  margin-top: 16rpx;
+  color: #6b7588;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin-top: 30rpx;
+}
+
+.actions button {
+  margin: 0;
+}
+
+.document-button {
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 82rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  background: #172e73;
+  color: #ffffff;
+  font-size: 27rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.review-card {
+  padding: 30rpx;
+  border-left: 8rpx solid #d89e32;
+}
+
+.review-card.level-recommended {
+  border-left-color: #209565;
+}
+
+.review-card.level-caution {
+  border-left-color: #d47f2c;
+}
+
+.review-verdict,
+.review-summary,
+.source-text {
+  display: block;
+}
+
+.review-verdict {
+  color: #273858;
+  font-size: 28rpx;
+  font-weight: 850;
+}
+
+.review-summary {
+  margin-top: 14rpx;
+  color: #4a566d;
+  line-height: 1.75;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 22rpx;
+}
+
+.tags text {
+  padding: 8rpx 14rpx;
+  border-radius: 999rpx;
+  background: #eff3f9;
+  color: #536178;
+  font-size: 22rpx;
+}
+
+.fact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+}
+
+.fact {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 24rpx;
+}
+
+.fact text {
+  display: block;
+}
+
+.fact text:first-child {
+  color: #778196;
+  font-size: 22rpx;
+}
+
+.fact text:last-child {
+  margin-top: 10rpx;
+  color: #28344d;
+  font-size: 25rpx;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.section-list,
+.source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.section-card,
+.source-card {
+  padding: 28rpx;
+}
+
+.section-name {
+  display: block;
+  color: #1c2d52;
+  font-size: 32rpx;
+  font-weight: 850;
+}
+
+.section-kind,
+.section-meta,
+.source-platform {
+  display: block;
+  color: #778196;
+  font-size: 22rpx;
+  line-height: 1.6;
+}
+
+.registration {
+  max-width: 250rpx;
+  padding: 8rpx 12rpx;
+  border-radius: 10rpx;
+  background: #fff1f2;
+  color: #b42335;
+  font-size: 20rpx;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.registration.available {
+  background: #e8f7ee;
+  color: #18734b;
+}
+
+.section-time {
+  margin-top: 20rpx;
+  color: #263654;
+  font-weight: 800;
+}
+
+.section-meta {
+  margin-top: 7rpx;
+}
+
+.section-note {
+  margin-top: 12rpx;
+  padding: 12rpx;
+  border-radius: 10rpx;
+  background: #f6f8fb;
+  color: #6b7588;
+  font-size: 21rpx;
+}
+
+.source-intro,
+.data-note {
+  color: #737f93;
+  font-size: 23rpx;
+  line-height: 1.7;
+}
+
+.source-intro {
+  margin: -4rpx 0 18rpx;
+}
+
+.source-title {
+  color: #263654;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.copy-link {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0 16rpx;
+  background: #edf2ff;
+  color: #3153ad;
+  font-size: 20rpx;
+  line-height: 58rpx;
+}
+
+.source-text {
+  margin-top: 20rpx;
+  color: #48556d;
+  font-size: 25rpx;
+  line-height: 1.78;
+  white-space: pre-wrap;
+}
+
+.data-note {
+  margin: 38rpx 4rpx 16rpx;
+}

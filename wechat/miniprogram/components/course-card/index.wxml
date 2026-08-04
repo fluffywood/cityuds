@@ -1,0 +1,30 @@
+<view class="course-card" bindtap="openCourse">
+  <view class="course-card-head">
+    <view>
+      <view class="course-code-row">
+        <text class="course-code">{{course.code}}</text>
+        <text class="course-type {{course.requirementType}}">{{course.requirementLabel}}</text>
+      </view>
+      <view class="course-title">{{course.title}}</view>
+    </view>
+    <button class="add-button {{added ? 'is-added' : ''}}" catchtap="toggleCourse" aria-label="{{added ? '从课表移除' : '加入课表'}}">
+      {{added ? '✓' : '+'}}
+    </button>
+  </view>
+
+  <view class="course-meta">
+    <text>{{course.credits}} 学分</text>
+    <text>{{course.primaryCount}} 个班次</text>
+    <text>{{course.webLabel}}</text>
+  </view>
+  <view class="course-schedule">{{course.scheduleText || '暂无可展示班次'}}</view>
+
+  <view class="course-review">
+    <text class="review-verdict level-{{course.recommendation.level}}">{{course.recommendation.verdict}}</text>
+    <text class="review-summary">{{course.recommendation.summary}}</text>
+  </view>
+
+  <view class="tag-row" wx:if="{{course.displayTags.length}}">
+    <text class="tag" wx:for="{{course.displayTags}}" wx:key="*this">{{item}}</text>
+  </view>
+</view>
