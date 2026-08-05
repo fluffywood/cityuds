@@ -1,55 +1,61 @@
 <view class="page-shell home-page">
-  <view class="surface home-hero">
-    <image class="home-logo" src="/assets/home-logo.jpg" mode="aspectFit" aria-label="CityU DS Only Logo" />
-    <view class="home-eyebrow">{{semester}}</view>
-    <view class="home-title">CityU DS 选课助手</view>
-  </view>
-
-  <view class="home-stats">
-    <view class="surface home-stat">
-      <text class="home-stat-value">{{courseCount}}</text>
-      <text class="home-stat-label">门课程</text>
+  <view class="home-top">
+    <view class="surface home-hero">
+      <image class="home-logo" src="/assets/home-logo.jpg" mode="aspectFit" aria-label="CityU DS Only Logo" />
+      <view class="home-eyebrow">{{semester}}</view>
+      <view class="home-title">CityU DS 选课助手</view>
     </view>
-    <view class="surface home-stat">
-      <text class="home-stat-value">{{documentCount}}</text>
-      <text class="home-stat-label">门课程含介绍</text>
+
+    <view class="home-stats">
+      <view class="surface home-stat">
+        <text class="home-stat-value">{{courseCount}}</text>
+        <text class="home-stat-label">门课程</text>
+      </view>
+      <view class="surface home-stat">
+        <text class="home-stat-value">{{documentCount}}</text>
+        <text class="home-stat-label">门课程含介绍</text>
+      </view>
     </view>
   </view>
 
-  <view class="section-heading">快速开始</view>
-  <view class="quick-grid">
-    <button class="surface quick-card" bindtap="onOpenCourses">
-      <text class="quick-icon blue">课</text>
-      <view class="quick-copy">
-        <text class="quick-title">浏览课程</text>
-        <text class="quick-description">搜索、筛选并查看班次</text>
-      </view>
-      <text class="quick-arrow">›</text>
-    </button>
-    <button class="surface quick-card" bindtap="onOpenTimetable">
-      <text class="quick-icon green">表</text>
-      <view class="quick-copy">
-        <text class="quick-title">我的课表</text>
-        <text class="quick-description">调整班次并检查冲突</text>
-      </view>
-      <text class="quick-arrow">›</text>
-    </button>
-    <button class="surface quick-card" bindtap="onOpenAbout">
-      <text class="quick-icon amber">阅</text>
-      <view class="quick-copy">
-        <text class="quick-title">使用说明</text>
-        <text class="quick-description">数据范围、声明与项目支持</text>
-      </view>
-      <text class="quick-arrow">›</text>
-    </button>
+  <view class="home-section">
+    <view class="section-heading">快速开始</view>
+    <view class="quick-grid">
+      <button class="surface quick-card" bindtap="onOpenCourses">
+        <text class="quick-icon blue">课</text>
+        <view class="quick-copy">
+          <text class="quick-title">浏览课程</text>
+          <text class="quick-description">搜索、筛选并查看班次</text>
+        </view>
+        <text class="quick-arrow">›</text>
+      </button>
+      <button class="surface quick-card" bindtap="onOpenTimetable">
+        <text class="quick-icon green">表</text>
+        <view class="quick-copy">
+          <text class="quick-title">我的课表</text>
+          <text class="quick-description">调整班次并检查冲突</text>
+        </view>
+        <text class="quick-arrow">›</text>
+      </button>
+      <button class="surface quick-card" bindtap="onOpenAbout">
+        <text class="quick-icon amber">阅</text>
+        <view class="quick-copy">
+          <text class="quick-title">使用说明</text>
+          <text class="quick-description">数据范围、声明与项目支持</text>
+        </view>
+        <text class="quick-arrow">›</text>
+      </button>
+    </view>
   </view>
 
-  <view class="section-heading">PC 端访问</view>
-  <view class="surface desktop-card">
-    <view class="desktop-eyebrow">WEB VERSION</view>
-    <view class="desktop-title">PC端使用网页版更方便</view>
-    <view class="desktop-description">复制下面的地址，在电脑浏览器中打开即可使用网页版排课工具。</view>
-    <text class="desktop-url" selectable="{{true}}" user-select="{{true}}">{{webUrl}}</text>
-    <button class="secondary-button desktop-button" bindtap="onCopyWebUrl">复制网页版链接</button>
+  <view class="home-section">
+    <view class="section-heading">PC 端访问</view>
+    <view class="surface desktop-card">
+      <view class="desktop-eyebrow">WEB VERSION</view>
+      <view class="desktop-title">PC端使用网页版更方便</view>
+      <view class="desktop-description">复制下面的地址，在电脑浏览器中打开即可使用网页版排课工具。</view>
+      <text class="desktop-url" selectable="{{true}}" user-select="{{true}}">{{webUrl}}</text>
+      <button class="secondary-button desktop-button" bindtap="onCopyWebUrl">复制网页版链接</button>
+    </view>
   </view>
 </view>

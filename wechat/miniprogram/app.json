@@ -3,6 +3,7 @@
     "pages/home/index",
     "pages/courses/index",
     "pages/timetable/index",
+    "pages/timetable-overview/index",
     "pages/about/index"
   ],
   "subPackages": [

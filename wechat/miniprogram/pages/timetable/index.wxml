@@ -2,9 +2,12 @@
   <view class="header-row">
     <view>
       <view class="page-title">我的课表</view>
-      <view class="page-subtitle">按天查看日程，并可随时切换主课与 Tutorial。</view>
+      <view class="page-subtitle">查看整周安排，并可随时切换主课与 Tutorial。</view>
     </view>
-    <button class="clear-button" bindtap="clearAll">清空</button>
+    <view class="header-actions">
+      <button class="overview-button" bindtap="openOverview">完整课表概览</button>
+      <button class="clear-button" bindtap="clearAll">清空</button>
+    </view>
   </view>
 
   <view class="summary-grid" wx:if="{{summary}}">
@@ -20,42 +23,131 @@
   </view>
 
   <view class="conflict-banner {{conflictCourseCount ? 'has-conflict' : ''}}">
-    {{conflictCourseCount ? conflictCourseCount + ' 门课程存在时间冲突' : '当前已选课程暂无时间冲突'}}
+    <text>{{conflictPairCount ? '检测到 ' + conflictPairCount + ' 组时间冲突，涉及 ' + conflictCourseCount + ' 门课程' : '当前已选课程暂无时间冲突'}}</text>
   </view>
 
-  <scroll-view class="day-tabs" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
-    <view class="day-tab-row">
-      <button
-        wx:for="{{days}}"
-        wx:key="key"
-        class="day-tab {{activeDay === item.key ? 'active' : ''}}"
-        data-day="{{item.key}}"
-        bindtap="selectDay"
-      >{{item.label}}</button>
-    </view>
-  </scroll-view>
-
-  <view class="agenda surface">
-    <view class="agenda-heading">{{activeDayLabel}}</view>
-    <view class="event-list" wx:if="{{events.length}}">
-      <view
-        class="event-card {{item.conflict ? 'is-conflict' : ''}}"
-        wx:for="{{events}}"
-        wx:key="id"
-        data-code="{{item.courseCode}}"
-        bindtap="openCourse"
-      >
-        <view class="event-time">{{item.section.time}}</view>
-        <view class="event-main">
-          <view class="event-title">{{item.courseCode}} · {{item.section.section}}</view>
-          <view class="event-meta">{{item.typeLabel}} · {{item.room}}</view>
-          <view class="event-conflict" wx:if="{{item.conflict}}">{{item.conflictText}}</view>
-        </view>
-        <text class="event-arrow">›</text>
+  <view class="conflict-pair-list surface" wx:if="{{conflictPairs.length}}">
+    <view
+      class="conflict-pair"
+      wx:for="{{conflictPairs}}"
+      wx:for-index="pairIndex"
+      wx:key="id"
+    >
+      <view class="conflict-pair-time">⚠ {{item.dayLabel}} {{item.overlapText}}</view>
+      <view class="conflict-pair-courses">
+        <text>{{item.firstLabel}}</text>
+        <text class="conflict-pair-arrow">↔</text>
+        <text>{{item.secondLabel}}</text>
       </view>
+      <button
+        class="conflict-pair-action"
+        data-pair-index="{{pairIndex}}"
+        data-pair-id="{{item.id}}"
+        catchtap="openConflictPair"
+        aria-label="调整 {{item.firstLabel}} 与 {{item.secondLabel}} 的班次"
+      >调整班次和时间</button>
     </view>
-    <view class="empty-state" wx:else>这一天暂无课程。</view>
   </view>
+
+  <view class="week-heading-row">
+    <view class="section-heading week-heading">周课表</view>
+    <view class="week-scroll-hint">左右滑动查看更多日期</view>
+  </view>
+  <view class="week-card surface">
+    <view class="week-layout">
+      <view class="week-time-column">
+        <view class="week-corner" style="height:{{weekHeaderHeight}}rpx">GMT+8</view>
+        <view class="week-time-body" style="height:{{weekBodyHeight}}rpx">
+          <text
+            class="week-time-label {{item.edgeClass}}"
+            wx:for="{{weekTimeLabels}}"
+            wx:key="label"
+            style="{{item.style}}"
+          >{{item.label}}</text>
+        </view>
+      </view>
+      <scroll-view class="week-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+        <view class="week-grid" style="width:{{weekGridWidth}}rpx">
+          <view class="week-day-headings" style="height:{{weekHeaderHeight}}rpx">
+            <view
+              class="week-day-heading"
+              wx:for="{{weekDays}}"
+              wx:key="key"
+            >{{item.label}}</view>
+          </view>
+          <view class="week-day-columns" style="height:{{weekBodyHeight}}rpx">
+            <view
+              class="week-day-column"
+              wx:for="{{weekDays}}"
+              wx:for-item="day"
+              wx:key="key"
+              style="height:{{weekBodyHeight}}rpx"
+            >
+              <view
+                class="week-event {{event.conflict ? 'is-conflict' : ''}}"
+                wx:for="{{day.events}}"
+                wx:for-item="event"
+                wx:key="id"
+                style="{{event.style}}"
+                data-code="{{event.courseCode}}"
+                data-event-id="{{event.id}}"
+                bindtap="handleEventTap"
+                role="button"
+                aria-label="{{event.conflict ? '调整冲突课程 ' : '查看课程 '}}{{event.courseCode}} {{event.sectionCode}}"
+              >
+                <text class="week-event-code">{{event.courseCode}}</text>
+                <text class="week-event-section">{{event.sectionCode}}</text>
+                <text class="week-event-time" wx:if="{{!event.compact}}">{{event.time}}</text>
+                <text class="week-event-conflict" wx:if="{{event.conflict}}">!</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="week-empty" wx:if="{{!weekEventCount}}">加入课程后将在这里生成周课表</view>
+    </view>
+  </view>
+
+  <button class="agenda-toggle surface" bindtap="toggleDailyAgenda">
+    {{showDailyAgenda ? '收起按天详情' : '展开按天详情'}}
+  </button>
+
+  <block wx:if="{{showDailyAgenda}}">
+    <scroll-view class="day-tabs" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="day-tab-row">
+        <button
+          wx:for="{{days}}"
+          wx:key="key"
+          class="day-tab {{activeDay === item.key ? 'active' : ''}}"
+          data-day="{{item.key}}"
+          bindtap="selectDay"
+        >{{item.label}}</button>
+      </view>
+    </scroll-view>
+
+    <view class="agenda surface">
+      <view class="agenda-heading">{{activeDayLabel}}</view>
+      <view class="event-list" wx:if="{{events.length}}">
+        <view
+          class="event-card {{item.conflict ? 'is-conflict' : ''}}"
+          wx:for="{{events}}"
+          wx:key="id"
+          data-code="{{item.courseCode}}"
+          data-event-id="{{item.id}}"
+          bindtap="handleEventTap"
+        >
+          <view class="event-time">{{item.section.time}}</view>
+          <view class="event-main">
+            <view class="event-title">{{item.courseCode}} · {{item.section.section}}</view>
+            <view class="event-meta">{{item.typeLabel}} · {{item.room}}</view>
+            <view class="event-conflict" wx:if="{{item.conflict}}">{{item.conflictText}}</view>
+          </view>
+          <text class="event-arrow">›</text>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>这一天暂无课程。</view>
+    </view>
+  </block>
 
   <view class="section-heading">已选课程与班次</view>
   <view class="selected-list" wx:if="{{selectedCourses.length}}">
@@ -108,4 +200,67 @@
   </view>
 
   <view class="data-note">课表快照：2026-08-04 16:48（Asia/Beijing）。名额和注册状态会变化，请以 CityU 系统为准。</view>
+
+  <view class="conflict-editor-mask" wx:if="{{conflictEditorVisible}}" catchtouchmove="stopTouch">
+    <view class="conflict-editor" role="dialog" aria-label="调整冲突班次">
+      <view class="conflict-editor-head">
+        <view class="conflict-editor-title">调整冲突班次</view>
+        <view class="conflict-editor-overlap">当前冲突 · {{conflictEditorOverlap}}</view>
+        <picker
+          wx:if="{{conflictEditorPairChoices.length > 1}}"
+          mode="selector"
+          range="{{conflictEditorPairChoices}}"
+          range-key="label"
+          value="{{conflictEditorPairIndex}}"
+          bindchange="changeConflictPair"
+        >
+          <view class="conflict-editor-pair-choice">
+            <text class="conflict-editor-pair-caption">选择冲突组合</text>
+            <text class="conflict-editor-pair-value">{{conflictEditorPairLabel}} ⌄</text>
+          </view>
+        </picker>
+        <view class="conflict-editor-description">同时选择两条安排的新班次，确定后会立即更新课表。</view>
+      </view>
+
+      <scroll-view class="conflict-editor-body" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+        <view
+          class="conflict-editor-course"
+          wx:for="{{conflictEditorItems}}"
+          wx:for-item="editorItem"
+          wx:for-index="editorIndex"
+          wx:key="eventId"
+        >
+          <view class="conflict-editor-course-head">
+            <view class="conflict-editor-course-label">
+              <text class="conflict-editor-code">{{editorItem.courseCode}}</text>
+              <text class="conflict-editor-type">{{editorItem.typeLabel}}</text>
+            </view>
+            <text class="conflict-editor-course-title">{{editorItem.courseTitle}}</text>
+          </view>
+          <picker
+            mode="selector"
+            range="{{editorItem.choices}}"
+            range-key="label"
+            value="{{editorItem.choiceIndex}}"
+            data-item-index="{{editorIndex}}"
+            bindchange="changeConflictChoice"
+          >
+            <view class="conflict-editor-choice">
+              <view class="conflict-editor-choice-copy">
+                <text class="conflict-editor-choice-label">{{editorItem.choiceLabel}}</text>
+                <text class="conflict-editor-choice-hint">{{editorItem.hasAlternatives ? '点击选择其他班次和时间' : '当前没有其他可选班次'}}</text>
+              </view>
+              <text class="conflict-editor-choice-arrow">⌄</text>
+            </view>
+          </picker>
+        </view>
+        <view class="conflict-editor-more-note">若仍存在其他冲突，可保存后继续点击红色课程块调整。</view>
+      </scroll-view>
+
+      <view class="conflict-editor-actions">
+        <button class="conflict-editor-button cancel" bindtap="cancelConflictEditor">取消</button>
+        <button class="conflict-editor-button confirm" bindtap="confirmConflictChanges">确定并更新</button>
+      </view>
+    </view>
+  </view>
 </view>

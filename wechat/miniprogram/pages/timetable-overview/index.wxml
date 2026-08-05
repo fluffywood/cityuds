@@ -1,0 +1,58 @@
+<view class="overview-page">
+  <view class="status-row">
+    <text class="status-hint">{{events.length ? '点击课程块查看时间、地点与冲突详情' : '尚未选择课程'}}</text>
+    <text class="conflict-count {{conflictPairCount ? 'has-conflict' : ''}}">
+      {{conflictPairCount ? '⚠ ' + conflictPairCount + ' 组冲突' : '无时间冲突'}}
+    </text>
+  </view>
+
+  <view class="schedule">
+    <view class="time-corner">时间</view>
+    <view class="day-headings">
+      <view
+        class="day-heading {{item.alternate ? 'is-alternate' : ''}}"
+        wx:for="{{days}}"
+        wx:key="key"
+      >{{item.label}}</view>
+    </view>
+
+    <view class="time-axis">
+      <text
+        class="time-label {{item.edgeClass}}"
+        style="top:{{item.top}}%"
+        wx:for="{{timeLabels}}"
+        wx:key="label"
+      >{{item.label}}</text>
+    </view>
+
+    <view class="week-grid">
+      <view class="day-columns">
+        <view
+          class="day-column {{item.alternate ? 'is-alternate' : ''}}"
+          wx:for="{{days}}"
+          wx:key="key"
+        ></view>
+      </view>
+      <view
+        class="hour-line"
+        style="top:{{item.top}}%"
+        wx:for="{{timeLabels}}"
+        wx:key="label"
+      ></view>
+      <view class="empty-message" wx:if="{{!events.length}}">本周课表为空</view>
+      <view
+        class="course-block {{item.conflict ? 'is-conflict' : ''}} {{item.compact ? 'is-compact' : ''}}"
+        style="{{item.style}}"
+        data-id="{{item.id}}"
+        bindtap="openEvent"
+        hover-class="course-block-active"
+        wx:for="{{events}}"
+        wx:key="id"
+      >
+        <text class="conflict-badge" wx:if="{{item.conflict}}">⚠</text>
+        <text class="course-code">{{item.compact ? item.displayLabel : item.courseCode}}</text>
+        <text class="course-section" wx:if="{{!item.compact}}">{{item.secondaryLabel}}</text>
+      </view>
+    </view>
+  </view>
+</view>

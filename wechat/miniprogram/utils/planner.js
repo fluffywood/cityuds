@@ -8,6 +8,19 @@ const DAY_NAMES = Object.freeze({
   U: "周日"
 });
 
+const WEEK_DAYS = Object.freeze(["M", "T", "W", "R", "F", "S"]);
+const WEEK_START_MINUTES = 9 * 60;
+const WEEK_END_MINUTES = 22 * 60;
+const COURSE_COLORS = Object.freeze([
+  Object.freeze({ background: "#dceee6", accent: "#145f49", ink: "#0e4938" }),
+  Object.freeze({ background: "#e1ecf4", accent: "#275b83", ink: "#204c6c" }),
+  Object.freeze({ background: "#f8e9d7", accent: "#a45b16", ink: "#81440d" }),
+  Object.freeze({ background: "#ebe6f3", accent: "#65508d", ink: "#514071" }),
+  Object.freeze({ background: "#edf0d9", accent: "#6d7b25", ink: "#526018" }),
+  Object.freeze({ background: "#f2e4e8", accent: "#984a63", ink: "#77364c" })
+]);
+const COURSE_COLOR_PALETTE = COURSE_COLORS;
+
 function sectionsOf(course) {
   if (!course) return [];
   return course.eligible_sections || course.sections || [];
@@ -115,6 +128,16 @@ function parseTime(value) {
   return hours * 60 + minutes;
 }
 
+function formatMinutes(value) {
+  const totalMinutes = Number(value);
+  if (!Number.isFinite(totalMinutes) || totalMinutes < 0) return "";
+
+  const roundedMinutes = Math.round(totalMinutes);
+  const hours = Math.floor(roundedMinutes / 60);
+  const minutes = roundedMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
 function parseTimeRange(value) {
   const parts = String(value || "").trim().split(/\s*[-–—]\s*/);
   if (parts.length !== 2) return null;
@@ -204,6 +227,124 @@ function detectConflicts(events) {
   return { events: annotatedEvents, conflicts };
 }
 
+function assignEventLanes(events) {
+  const assignedEvents = (events || []).map((event) => ({
+    ...event,
+    lane: 0,
+    laneCount: 1
+  }));
+  const eventsByDay = Object.create(null);
+
+  assignedEvents.forEach((event) => {
+    const day = String(event.day || "");
+    if (!eventsByDay[day]) eventsByDay[day] = [];
+    eventsByDay[day].push(event);
+  });
+
+  Object.keys(eventsByDay).forEach((day) => {
+    const dayEvents = eventsByDay[day].slice().sort(
+      (left, right) => left.start - right.start || left.end - right.end
+    );
+    let cluster = [];
+    let clusterEnd = -Infinity;
+
+    const assignCluster = () => {
+      const laneEnds = [];
+      cluster.forEach((event) => {
+        let lane = laneEnds.findIndex((end) => end <= event.start);
+        if (lane === -1) lane = laneEnds.length;
+        laneEnds[lane] = event.end;
+        event.lane = lane;
+      });
+
+      const laneCount = Math.max(1, laneEnds.length);
+      cluster.forEach((event) => {
+        event.laneCount = laneCount;
+      });
+    };
+
+    dayEvents.forEach((event) => {
+      if (cluster.length && event.start >= clusterEnd) {
+        assignCluster();
+        cluster = [];
+        clusterEnd = -Infinity;
+      }
+      cluster.push(event);
+      clusterEnd = Math.max(clusterEnd, event.end);
+    });
+    if (cluster.length) assignCluster();
+  });
+
+  return assignedEvents;
+}
+
+function eventLabel(event) {
+  const sectionCode = event.sectionCode || (event.section && event.section.section) || "班次待定";
+  const typeLabel = event.typeLabel || (event.sectionType === "tutorial" ? "Tutorial" : "主课");
+  return `${event.courseCode} ${sectionCode}（${typeLabel}）`;
+}
+
+function buildTimetableModel(courses, selections = {}) {
+  const courseByCode = Object.create(null);
+  const colorByCode = Object.create(null);
+  (courses || []).forEach((course, index) => {
+    courseByCode[course.code] = course;
+    colorByCode[course.code] = COURSE_COLORS[index % COURSE_COLORS.length];
+  });
+
+  const detected = detectConflicts(buildSelectedEvents(courses, selections));
+  const laidOutEvents = assignEventLanes(detected.events);
+  const labelsById = Object.create(null);
+
+  laidOutEvents.forEach((event) => {
+    labelsById[event.id] = eventLabel(event);
+  });
+
+  const events = laidOutEvents.map((event) => {
+    const course = courseByCode[event.courseCode] || {};
+    const section = event.section || {};
+    const typeLabel = event.sectionType === "tutorial" ? "Tutorial" : "主课";
+    const sectionCode = section.section || "";
+    const paletteColor = colorByCode[event.courseCode] || COURSE_COLORS[0];
+    return {
+      ...event,
+      courseTitle: course.programme_title || course.schedule_title || event.courseCode,
+      sectionCode,
+      typeLabel,
+      room: [section.building, section.room].filter(Boolean).join(" ") || "地点待定",
+      time: section.time || `${formatMinutes(event.start)} - ${formatMinutes(event.end)}`,
+      conflictingEventIds: (event.conflictingEventIds || []).slice(),
+      conflictingLabels: (event.conflictingEventIds || [])
+        .map((id) => labelsById[id])
+        .filter(Boolean),
+      color: {
+        background: paletteColor.background,
+        accent: paletteColor.accent,
+        ink: paletteColor.ink
+      }
+    };
+  });
+
+  const conflictPairs = detected.conflicts.map((conflict) => ({
+    id: `${conflict.firstId}__${conflict.secondId}`,
+    firstId: conflict.firstId,
+    secondId: conflict.secondId,
+    firstLabel: labelsById[conflict.firstId] || conflict.firstId,
+    secondLabel: labelsById[conflict.secondId] || conflict.secondId,
+    day: conflict.day,
+    dayLabel: DAY_NAMES[conflict.day] || conflict.day,
+    start: conflict.start,
+    end: conflict.end,
+    overlapText: `${formatMinutes(conflict.start)}–${formatMinutes(conflict.end)}`
+  }));
+
+  return {
+    events,
+    conflictPairs,
+    conflicts: detected.conflicts
+  };
+}
+
 function getSelectedEvents(courses, selections = {}) {
   return detectConflicts(buildSelectedEvents(courses, selections)).events;
 }
@@ -235,11 +376,19 @@ function summarizeCredits(courses, selections = {}) {
 }
 
 module.exports = {
+  COURSE_COLORS,
+  COURSE_COLOR_PALETTE,
   DAY_NAMES,
+  WEEK_DAYS,
+  WEEK_END_MINUTES,
+  WEEK_START_MINUTES,
+  assignEventLanes,
   buildSelectedEvents,
+  buildTimetableModel,
   detectConflicts,
   filterCourses,
   findSection,
+  formatMinutes,
   getSelectedEvents,
   hasTimeConflict,
   makeDefaultSelection,

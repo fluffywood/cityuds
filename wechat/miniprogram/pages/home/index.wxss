@@ -1,19 +1,34 @@
 .home-page {
-  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+  display: flex;
+  box-sizing: border-box;
+  height: 100vh;
+  padding-top: 16rpx;
+  padding-right: 22rpx;
+  padding-bottom: calc(14rpx + env(safe-area-inset-bottom));
+  padding-left: 22rpx;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .home-hero {
-  padding: 26rpx 28rpx 34rpx;
+  padding: 14rpx 20rpx 18rpx;
   text-align: center;
   background: linear-gradient(160deg, #ffffff 0%, #fff8f5 100%);
+}
+
+.home-top,
+.home-section {
+  min-width: 0;
+  flex: 0 0 auto;
 }
 
 .home-logo {
   display: block;
   width: 100%;
-  height: 390rpx;
-  margin: 0 auto 8rpx;
-  border-radius: 20rpx;
+  height: 285rpx;
+  margin: 0 auto 2rpx;
+  border-radius: 16rpx;
 }
 
 .home-eyebrow {
@@ -25,9 +40,9 @@
 }
 
 .home-title {
-  margin-top: 10rpx;
+  margin-top: 6rpx;
   color: #172033;
-  font-size: 44rpx;
+  font-size: 42rpx;
   font-weight: 850;
 }
 
@@ -57,32 +72,43 @@
   font-size: 21rpx;
 }
 
+.home-page .section-heading {
+  margin: 24rpx 0 16rpx;
+  padding-left: 0.5em;
+  font-size: 28rpx;
+  line-height: 1.2;
+}
+
 .quick-grid {
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
+  gap: 8rpx;
 }
 
 .quick-card {
   display: flex;
   box-sizing: border-box;
   width: 100%;
+  min-width: 0;
+  flex: 0 0 auto;
   min-height: 112rpx;
   margin: 0;
-  padding: 22rpx 24rpx;
+  padding: 10rpx 16rpx;
   align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
   text-align: left;
 }
 
 .quick-icon {
   display: flex;
-  width: 64rpx;
-  min-width: 64rpx;
-  height: 64rpx;
+  width: 42rpx;
+  min-width: 42rpx;
+  height: 42rpx;
   align-items: center;
   justify-content: center;
-  border-radius: 18rpx;
-  font-size: 24rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
   font-weight: 850;
 }
 
@@ -105,76 +131,164 @@
   display: flex;
   min-width: 0;
   flex: 1;
-  margin-left: 20rpx;
+  margin: 0 0 0 14rpx;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .quick-title {
   color: #263550;
-  font-size: 27rpx;
+  font-size: 23rpx;
   font-weight: 800;
+  line-height: 1.5;
 }
 
 .quick-description {
-  margin-top: 5rpx;
+  display: block;
+  margin-top: 2rpx;
   color: #748095;
-  font-size: 21rpx;
+  font-size: 18rpx;
+  line-height: 1.5;
 }
 
 .quick-arrow {
-  margin-left: 14rpx;
+  display: block;
+  margin-left: 8rpx;
   color: #9aa5b5;
-  font-size: 42rpx;
+  font-size: 32rpx;
   font-weight: 400;
 }
 
 .desktop-card {
-  padding: 28rpx;
+  padding: 18rpx 20rpx;
   border-color: #d7e2ff;
   background: linear-gradient(145deg, #ffffff 0%, #f2f6ff 100%);
 }
 
 .desktop-eyebrow {
   color: #2855d9;
-  font-size: 19rpx;
+  font-size: 17rpx;
   font-weight: 850;
   letter-spacing: 1.5rpx;
 }
 
 .desktop-title {
-  margin-top: 9rpx;
+  margin-top: 5rpx;
   color: #263550;
-  font-size: 29rpx;
+  font-size: 25rpx;
   font-weight: 850;
 }
 
 .desktop-description {
-  margin-top: 10rpx;
+  margin-top: 6rpx;
   color: #697586;
-  font-size: 22rpx;
-  line-height: 1.65;
+  font-size: 19rpx;
+  line-height: 1.4;
 }
 
 .desktop-url {
   display: block;
-  margin-top: 18rpx;
-  padding: 17rpx 18rpx;
-  border-radius: 14rpx;
+  margin-top: 10rpx;
+  padding: 11rpx 12rpx;
+  border-radius: 12rpx;
   background: #ffffff;
   color: #2855d9;
-  font-size: 21rpx;
-  line-height: 1.45;
+  font-size: 18rpx;
+  line-height: 1.35;
   word-break: break-all;
 }
 
 .desktop-button {
   box-sizing: border-box;
   width: 100%;
-  margin: 18rpx 0 0;
+  min-height: 58rpx;
+  margin: 10rpx 0 0;
+  font-size: 22rpx;
 }
 
 @media (max-width: 340px) {
   .home-logo {
-    height: 330rpx;
+    height: 260rpx;
+  }
+}
+
+@media (max-height: 610px) {
+  .home-page {
+    padding-top: 10rpx;
+    padding-right: 18rpx;
+    padding-bottom: calc(8rpx + env(safe-area-inset-bottom));
+    padding-left: 18rpx;
+  }
+
+  .home-hero {
+    padding: 8rpx 14rpx 10rpx;
+  }
+
+  .home-logo {
+    height: 260rpx;
+  }
+
+  .home-eyebrow {
+    font-size: 20rpx;
+  }
+
+  .home-title {
+    margin-top: 2rpx;
+    font-size: 38rpx;
+  }
+
+  .home-page .section-heading {
+    margin: 24rpx 0 16rpx;
+    font-size: 24rpx;
+  }
+
+  .quick-grid {
+    gap: 6rpx;
+  }
+
+  .quick-card {
+    min-height: 88rpx;
+    padding: 9rpx 12rpx;
+  }
+
+  .quick-icon {
+    width: 36rpx;
+    min-width: 36rpx;
+    height: 36rpx;
+    font-size: 17rpx;
+  }
+
+  .quick-copy {
+    margin-left: 10rpx;
+  }
+
+  .quick-title {
+    font-size: 20rpx;
+  }
+
+  .quick-description {
+    display: none;
+  }
+
+  .quick-arrow {
+    font-size: 28rpx;
+  }
+
+  .desktop-card {
+    padding: 12rpx 14rpx;
+  }
+
+  .desktop-description {
+    display: none;
+  }
+
+  .desktop-url {
+    margin-top: 6rpx;
+    padding: 8rpx 10rpx;
+  }
+
+  .desktop-button {
+    min-height: 50rpx;
+    margin-top: 6rpx;
   }
 }

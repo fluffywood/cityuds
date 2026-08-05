@@ -1,0 +1,244 @@
+page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.overview-page {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  padding: 6px 8px 8px;
+  overflow: hidden;
+  background: #f4f7fb;
+  color: #172033;
+  font-size: 12px;
+}
+
+.status-row {
+  display: flex;
+  height: 25px;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.status-hint {
+  overflow: hidden;
+  color: #667085;
+  font-size: 11px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conflict-count {
+  flex: none;
+  color: #477055;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.conflict-count.has-conflict {
+  color: #b42335;
+}
+
+.schedule {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 46px minmax(0, 1fr);
+  grid-template-rows: 28px minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #cfd8e7;
+  border-radius: 7px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(39, 54, 85, 0.08);
+}
+
+.time-corner,
+.day-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #cfd8e7;
+  background: #f8faff;
+  color: #40506b;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.time-corner {
+  border-right: 1px solid #cfd8e7;
+}
+
+.day-headings {
+  display: flex;
+  min-width: 0;
+}
+
+.day-heading {
+  box-sizing: border-box;
+  min-width: 0;
+  flex: 1;
+  border-right: 1px solid #dce3ee;
+}
+
+.day-heading:last-child {
+  border-right: 0;
+}
+
+.day-heading.is-alternate {
+  background: #f4f7fc;
+}
+
+.time-axis {
+  position: relative;
+  min-height: 0;
+  border-right: 1px solid #cfd8e7;
+  background: #fbfcfe;
+}
+
+.time-label {
+  position: absolute;
+  right: 5px;
+  transform: translateY(-50%);
+  color: #778399;
+  font-size: 9px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.time-label.is-first {
+  transform: none;
+}
+
+.time-label.is-last {
+  transform: translateY(-100%);
+}
+
+.week-grid {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.day-columns {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+}
+
+.day-column {
+  box-sizing: border-box;
+  min-width: 0;
+  flex: 1;
+  border-right: 1px solid #e2e8f1;
+}
+
+.day-column:last-child {
+  border-right: 0;
+}
+
+.day-column.is-alternate {
+  background: rgba(244, 247, 252, 0.55);
+}
+
+.hour-line {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: #e6ebf3;
+  pointer-events: none;
+}
+
+.empty-message {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  padding: 6px 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #7a8699;
+  font-size: 11px;
+}
+
+.course-block {
+  position: absolute;
+  z-index: 3;
+  box-sizing: border-box;
+  display: flex;
+  min-height: 14px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2px 3px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-left-width: 3px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(35, 48, 74, 0.12);
+  line-height: 1.05;
+}
+
+.course-block.is-conflict {
+  border-width: 2px;
+  border-left-width: 3px;
+  box-shadow: 0 0 0 1px rgba(198, 40, 40, 0.12);
+}
+
+.course-block-active {
+  opacity: 0.72;
+}
+
+.course-code,
+.course-section {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.course-code {
+  padding-right: 9px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.course-section {
+  margin-top: 1px;
+  font-size: 8px;
+  font-weight: 650;
+  opacity: 0.88;
+}
+
+.course-block.is-compact {
+  justify-content: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.course-block.is-compact .course-code {
+  font-size: 8px;
+}
+
+.conflict-badge {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  color: #b42335;
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1;
+}
