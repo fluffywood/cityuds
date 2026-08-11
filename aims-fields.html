@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CityU AIMS 选课字段中文解释，涵盖 CRN、Section、WEB、名额、时间与授课信息">
+    <title>CityU 选课字段解释 · MSDS 选课板</title>
+    <link rel="stylesheet" href="assets/styles.css?v=20260811b">
+  </head>
+  <body data-page="fields">
+    <a class="skip-link" href="#main-content">跳到字段解释</a>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="index.html" aria-label="MSDS 选课板首页">
+          <img class="brand-logo" src="assets/cityu-ds-logo.jpg" alt="" width="40" height="40">
+          <span class="brand-copy"><strong>MSDS 选课板</strong><small>Semester A · 2026/27</small></span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a class="support-link" href="https://github.com/fluffywood/cityuds" target="_blank" rel="noopener noreferrer" aria-label="前往 GitHub 支持项目并求 Star">
+            <span class="support-star" aria-hidden="true">★</span>
+            <span class="support-desktop-text">求赞赏 · 求 Star</span>
+            <span class="support-mobile-text">求 Star</span>
+          </a>
+          <a href="index.html">课程表</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="course-detail fields-detail">
+      <a class="back-link" href="index.html">← 返回自助排课台</a>
+
+      <section class="detail-hero fields-hero" aria-labelledby="fields-title">
+        <div>
+          <h1 id="fields-title">CityU 选课字段解释</h1>
+          <p>集中说明 Master Class Schedule 与 AIMS 中常见的 16 项字段。这里解释字段的通用含义，并标出本站尚未采集的信息。</p>
+        </div>
+      </section>
+
+      <section class="detail-section fields-section" aria-labelledby="fields-table-heading">
+        <div class="detail-section-heading fields-section-heading">
+          <div>
+            <h2 id="fields-table-heading">字段对照表</h2>
+            <p>选班次时优先核对注册编号、剩余名额和完整上课时间。</p>
+          </div>
+        </div>
+
+        <p class="fields-important-note"><strong>容易混淆：</strong><span lang="en">CRN</span> 是教学班注册编号；<span lang="en">Section</span> 是班次编号；<span lang="en">WEB</span> 表示网页注册权限，不代表线上授课。</p>
+        <p id="fields-scroll-hint" class="fields-scroll-hint">可左右滑动查看完整说明，第一列会保持可见。</p>
+
+        <div class="section-table-wrap fields-table-wrap" role="region" aria-labelledby="fields-table-heading" aria-describedby="fields-scroll-hint" tabindex="0">
+          <table class="section-table fields-table">
+            <caption class="section-table-caption">CityU Master Class Schedule 常见字段的中文含义与选课说明</caption>
+            <colgroup>
+              <col class="fields-term-column">
+              <col class="fields-meaning-column">
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">英文字段</th>
+                <th scope="col">中文含义</th>
+                <th scope="col">说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="fields-group-row">
+                <th scope="rowgroup" colspan="3">课程与注册</th>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">CRN</span><small lang="en">Course Reference Number</small></th>
+                <td>课程注册号 / 教学班注册编号</td>
+                <td>指定学期内唯一对应一个教学班，选课或退课时用于识别班次；它不是 SDSC5001 这类课程代码。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Section</span></th>
+                <td>教学班 / 班次编号</td>
+                <td>通常为 3 位代码，例如 C61。首字母表示教学活动类型，例如 C 为主课、T 为 Tutorial、L 为 Laboratory；它不是 Semester A 或 Semester B。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Credit</span></th>
+                <td>学分</td>
+                <td>课程对应的 Credit Units。学分通常显示在可计分的主课班次；关联的 Tutorial 或 Laboratory 可能显示为 0。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Campus</span></th>
+                <td>课程开设 / 授课校区</td>
+                <td>表示课程开设或授课所在的校区，不能仅根据教学楼字段推断。本站当前未采集此字段。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">WEB</span></th>
+                <td>网页注册权限</td>
+                <td>Y 表示通常可通过 Web Add/Drop 加退选；N 表示不能按一般网页流程注册，通常需要联系课程或学术单位处理。它不表示线上课程。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Level</span></th>
+                <td>适用学生层级</td>
+                <td>表示哪些学生层级可以选修，例如 UG 或 PG。它不是本站学生评价中的推荐等级。本站当前未采集此字段。</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr class="fields-group-row">
+                <th scope="rowgroup" colspan="3">名额与候补</th>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Avail</span></th>
+                <td>剩余可注册名额</td>
+                <td>快照时点单个 Section 尚余的名额。数值会变化，也不代表学生一定满足课程或项目注册限制。本站班次数据按单个 Section 存储，课程索引中的 summary 为各班次合计。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Cap</span></th>
+                <td>教学班容量</td>
+                <td>单个 Section 允许注册的最大人数。本站班次数据按单个 Section 存储，课程索引中的 summary 为各班次合计。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Waitlist Avail</span></th>
+                <td>候补是否可用 / 剩余候补容量</td>
+                <td>课程级可能显示 Y、N 或 FULL；班次级可能显示数字、N 或 FULL。数字表示该班次剩余候补名额，Y 只表示课程可加入候补，不是人数。本站当前未采集此字段。</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr class="fields-group-row">
+                <th scope="rowgroup" colspan="3">上课安排</th>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Date</span></th>
+                <td>上课日期范围</td>
+                <td>表示该教学班实际授课的起止日期，不是选课开放日期或加退选截止日期。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Day</span></th>
+                <td>上课星期</td>
+                <td>例如 M / T / W / R / F / S，本站分别显示为周一至周六；其中 R 表示星期四。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Time</span></th>
+                <td>上课时间</td>
+                <td>例如 09:00 - 11:50。本站课表以香港时间 GMT+8 展示。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Bldg</span><small lang="en">Building</small></th>
+                <td>教学楼</td>
+                <td>Building 的缩写，显示教学楼名称或代码，例如 BOC、LI、LAU。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Room</span></th>
+                <td>教室</td>
+                <td>具体教室或房间编号，例如 R4057、3505。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Instructor</span></th>
+                <td>授课教师</td>
+                <td>任课教师姓名；可能同时列出多位教师，TBA 表示尚未公布。</td>
+              </tr>
+              <tr>
+                <th scope="row"><span lang="en">Medium of Instruction</span></th>
+                <td>授课语言 / 教学媒介</td>
+                <td>例如 English 或 Chinese。Master Class Schedule 中的信息用于一般参考，具体要求以课程 syllabus 为准。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="fields-source-note" aria-labelledby="fields-source-heading">
+          <h2 id="fields-source-heading">使用时请注意</h2>
+          <p>字段解释参考 CityU 官方资料，核对日期为 2026-08-11。课程名额和注册状态会持续变化，最终请以 AIMS 为准。</p>
+          <ul class="fields-source-list">
+            <li><a href="https://www.cityu.edu.hk/sgs/student/masters/coursereg/abbreviations" target="_blank" rel="noopener noreferrer">字段缩写与 Section 类型说明</a></li>
+            <li><a href="https://www.cityu.edu.hk/sgs/student/masters/coursereg/schedule/" target="_blank" rel="noopener noreferrer">Master Class Schedule 说明</a></li>
+            <li><a href="https://www.cityu.edu.hk/arro/creg/wadp_wlst.htm" target="_blank" rel="noopener noreferrer">候补状态与名额说明</a></li>
+          </ul>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
