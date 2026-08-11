@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "format": "jpeg",
-  "course_count": 16,
-  "page_count": 106,
-  "total_package_bytes": 15539173,
+  "course_count": 17,
+  "page_count": 114,
+  "total_package_bytes": 16704386,
   "limits": {
     "course_bytes": 2097152,
     "total_bytes": 31457280
@@ -16,7 +16,7 @@
       "page_count": 7,
       "package": "packages/doc-cs5285",
       "asset_bytes": 1029414,
-      "package_bytes": 1029414,
+      "package_bytes": 1030215,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -81,7 +81,7 @@
       "page_count": 9,
       "package": "packages/doc-cs5487",
       "asset_bytes": 1341040,
-      "package_bytes": 1341040,
+      "package_bytes": 1341933,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -160,7 +160,7 @@
       "page_count": 7,
       "package": "packages/doc-cs6290",
       "asset_bytes": 1242728,
-      "package_bytes": 1242728,
+      "package_bytes": 1243529,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -225,7 +225,7 @@
       "page_count": 7,
       "package": "packages/doc-cs6493",
       "asset_bytes": 1015075,
-      "package_bytes": 1015075,
+      "package_bytes": 1015876,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -284,13 +284,13 @@
       ]
     },
     {
-      "course_code": "DSC5001",
+      "course_code": "SDSC5001",
       "source_pdf": "docs/SDSC5001.pdf",
       "source_sha256": "f9a125b3f497218dae5d4cfd51909b904e8cfc6e2a6d208bbf1e37d2b8cd09d8",
       "page_count": 6,
-      "package": "packages/doc-dsc5001",
+      "package": "packages/doc-sdsc5001",
       "asset_bytes": 713993,
-      "package_bytes": 713993,
+      "package_bytes": 714768,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -299,42 +299,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc5001/assets/page-001.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-001.jpg",
           "bytes": 96529,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc5001/assets/page-002.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-002.jpg",
           "bytes": 229989,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc5001/assets/page-003.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-003.jpg",
           "bytes": 108840,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc5001/assets/page-004.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-004.jpg",
           "bytes": 97447,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc5001/assets/page-005.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-005.jpg",
           "bytes": 145968,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc5001/assets/page-006.jpg",
+          "path": "packages/doc-sdsc5001/assets/page-006.jpg",
           "bytes": 35220,
           "width": 1275,
           "height": 1650
@@ -342,13 +342,13 @@
       ]
     },
     {
-      "course_code": "DSC5002",
+      "course_code": "SDSC5002",
       "source_pdf": "docs/SDSC5002.pdf",
       "source_sha256": "5104b58959e9f053c0a517c8665da264ba49ea3283ecb3b93e6b41f072d27a65",
       "page_count": 7,
-      "package": "packages/doc-dsc5002",
+      "package": "packages/doc-sdsc5002",
       "asset_bytes": 1137262,
-      "package_bytes": 1137262,
+      "package_bytes": 1138085,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -357,49 +357,49 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc5002/assets/page-001.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-001.jpg",
           "bytes": 103854,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc5002/assets/page-002.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-002.jpg",
           "bytes": 271983,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc5002/assets/page-003.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-003.jpg",
           "bytes": 129310,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc5002/assets/page-004.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-004.jpg",
           "bytes": 158299,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc5002/assets/page-005.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-005.jpg",
           "bytes": 148418,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc5002/assets/page-006.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-006.jpg",
           "bytes": 125984,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 7,
-          "path": "packages/doc-dsc5002/assets/page-007.jpg",
+          "path": "packages/doc-sdsc5002/assets/page-007.jpg",
           "bytes": 199414,
           "width": 1275,
           "height": 1650
@@ -407,13 +407,13 @@
       ]
     },
     {
-      "course_code": "DSC5003",
+      "course_code": "SDSC5003",
       "source_pdf": "docs/SDSC5003.pdf",
       "source_sha256": "0a60739e7d8b30fc7bfb4a7f167628cd2d19ce7fbdbc0953cc26400711e6e7fc",
       "page_count": 6,
-      "package": "packages/doc-dsc5003",
+      "package": "packages/doc-sdsc5003",
       "asset_bytes": 805226,
-      "package_bytes": 805226,
+      "package_bytes": 806001,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -422,42 +422,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc5003/assets/page-001.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-001.jpg",
           "bytes": 95870,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc5003/assets/page-002.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-002.jpg",
           "bytes": 229402,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc5003/assets/page-003.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-003.jpg",
           "bytes": 162832,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc5003/assets/page-004.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-004.jpg",
           "bytes": 104571,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc5003/assets/page-005.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-005.jpg",
           "bytes": 97453,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc5003/assets/page-006.jpg",
+          "path": "packages/doc-sdsc5003/assets/page-006.jpg",
           "bytes": 115098,
           "width": 1275,
           "height": 1650
@@ -465,13 +465,13 @@
       ]
     },
     {
-      "course_code": "DSC6004",
+      "course_code": "SDSC6004",
       "source_pdf": "docs/SDSC6004.pdf",
       "source_sha256": "1c99fb1d98a2a4df2d1c0985c76d96b870b25342b43cfe25ff71183f7303bfb8",
       "page_count": 6,
-      "package": "packages/doc-dsc6004",
+      "package": "packages/doc-sdsc6004",
       "asset_bytes": 969849,
-      "package_bytes": 969849,
+      "package_bytes": 970624,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -480,42 +480,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6004/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-001.jpg",
           "bytes": 105771,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6004/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-002.jpg",
           "bytes": 289597,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6004/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-003.jpg",
           "bytes": 143760,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6004/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-004.jpg",
           "bytes": 157861,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6004/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-005.jpg",
           "bytes": 138388,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6004/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6004/assets/page-006.jpg",
           "bytes": 134472,
           "width": 1275,
           "height": 1650
@@ -523,13 +523,13 @@
       ]
     },
     {
-      "course_code": "DSC6006",
+      "course_code": "SDSC6006",
       "source_pdf": "docs/SDSC6006.pdf",
       "source_sha256": "fb739a5966e78f603090ae2bf7e00342d50592ad38ad2f989366ff84b853a9ea",
       "page_count": 6,
-      "package": "packages/doc-dsc6006",
+      "package": "packages/doc-sdsc6006",
       "asset_bytes": 702791,
-      "package_bytes": 702791,
+      "package_bytes": 703566,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -538,42 +538,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6006/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-001.jpg",
           "bytes": 87043,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6006/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-002.jpg",
           "bytes": 246715,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6006/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-003.jpg",
           "bytes": 112317,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6006/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-004.jpg",
           "bytes": 88128,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6006/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-005.jpg",
           "bytes": 97305,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6006/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6006/assets/page-006.jpg",
           "bytes": 71283,
           "width": 1275,
           "height": 1650
@@ -581,13 +581,13 @@
       ]
     },
     {
-      "course_code": "DSC6008",
-      "source_pdf": "docs/SDSC6008.pdf",
-      "source_sha256": "864ae8f20514e21da64b83e9b6a6a714e9d69e5dbc5a2074d326ad5a4ad975bf",
-      "page_count": 7,
-      "package": "packages/doc-dsc6008",
-      "asset_bytes": 1028243,
-      "package_bytes": 1028243,
+      "course_code": "SDSC6007",
+      "source_pdf": "docs/SDSC6007.pdf",
+      "source_sha256": "6bcc00ef6e74ea508bcb2a152790a13e37348b0455461cb4dfb930b59345746d",
+      "page_count": 8,
+      "package": "packages/doc-sdsc6007",
+      "asset_bytes": 1151554,
+      "package_bytes": 1152425,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -596,49 +596,121 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6008/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6007/assets/page-001.jpg",
+          "bytes": 108563,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-sdsc6007/assets/page-002.jpg",
+          "bytes": 278127,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-sdsc6007/assets/page-003.jpg",
+          "bytes": 135913,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-sdsc6007/assets/page-004.jpg",
+          "bytes": 127412,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-sdsc6007/assets/page-005.jpg",
+          "bytes": 141478,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-sdsc6007/assets/page-006.jpg",
+          "bytes": 140078,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-sdsc6007/assets/page-007.jpg",
+          "bytes": 140553,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 8,
+          "path": "packages/doc-sdsc6007/assets/page-008.jpg",
+          "bytes": 79430,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "SDSC6008",
+      "source_pdf": "docs/SDSC6008.pdf",
+      "source_sha256": "864ae8f20514e21da64b83e9b6a6a714e9d69e5dbc5a2074d326ad5a4ad975bf",
+      "page_count": 7,
+      "package": "packages/doc-sdsc6008",
+      "asset_bytes": 1028243,
+      "package_bytes": 1029066,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-sdsc6008/assets/page-001.jpg",
           "bytes": 113292,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6008/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-002.jpg",
           "bytes": 255715,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6008/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-003.jpg",
           "bytes": 142360,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6008/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-004.jpg",
           "bytes": 152069,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6008/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-005.jpg",
           "bytes": 103295,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6008/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-006.jpg",
           "bytes": 168866,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 7,
-          "path": "packages/doc-dsc6008/assets/page-007.jpg",
+          "path": "packages/doc-sdsc6008/assets/page-007.jpg",
           "bytes": 92646,
           "width": 1275,
           "height": 1650
@@ -646,13 +718,13 @@
       ]
     },
     {
-      "course_code": "DSC6011",
+      "course_code": "SDSC6011",
       "source_pdf": "docs/SDSC6011.pdf",
       "source_sha256": "e5c941fd8bc4a7bafcecda237e46e5716b25c57f8543a4c14ef7c9d4447e9b43",
       "page_count": 5,
-      "package": "packages/doc-dsc6011",
+      "package": "packages/doc-sdsc6011",
       "asset_bytes": 671927,
-      "package_bytes": 671927,
+      "package_bytes": 672654,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -661,35 +733,35 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6011/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6011/assets/page-001.jpg",
           "bytes": 117549,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6011/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6011/assets/page-002.jpg",
           "bytes": 225631,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6011/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6011/assets/page-003.jpg",
           "bytes": 102663,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6011/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6011/assets/page-004.jpg",
           "bytes": 90538,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6011/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6011/assets/page-005.jpg",
           "bytes": 135546,
           "width": 1275,
           "height": 1650
@@ -697,13 +769,13 @@
       ]
     },
     {
-      "course_code": "DSC6012",
+      "course_code": "SDSC6012",
       "source_pdf": "docs/SDSC6012.pdf",
       "source_sha256": "2e90a7dbd977140f5d3443a0c0f65a9525fb57deb1b1909a4b363a9f8a9defd1",
       "page_count": 6,
-      "package": "packages/doc-dsc6012",
+      "package": "packages/doc-sdsc6012",
       "asset_bytes": 908187,
-      "package_bytes": 908187,
+      "package_bytes": 908962,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -712,42 +784,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6012/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-001.jpg",
           "bytes": 103463,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6012/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-002.jpg",
           "bytes": 256708,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6012/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-003.jpg",
           "bytes": 142081,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6012/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-004.jpg",
           "bytes": 144551,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6012/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-005.jpg",
           "bytes": 129964,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6012/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6012/assets/page-006.jpg",
           "bytes": 131420,
           "width": 1275,
           "height": 1650
@@ -755,13 +827,13 @@
       ]
     },
     {
-      "course_code": "DSC6013",
+      "course_code": "SDSC6013",
       "source_pdf": "docs/SDSC6013.pdf",
       "source_sha256": "329c3e9ce4c1bfb23f3ee3b1a0beb81078820cb7bc238db9138b5bd53d173b70",
       "page_count": 8,
-      "package": "packages/doc-dsc6013",
+      "package": "packages/doc-sdsc6013",
       "asset_bytes": 1244145,
-      "package_bytes": 1244145,
+      "package_bytes": 1245016,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -770,56 +842,56 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6013/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-001.jpg",
           "bytes": 105787,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6013/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-002.jpg",
           "bytes": 267083,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6013/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-003.jpg",
           "bytes": 140994,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6013/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-004.jpg",
           "bytes": 127889,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6013/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-005.jpg",
           "bytes": 138400,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6013/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-006.jpg",
           "bytes": 161701,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 7,
-          "path": "packages/doc-dsc6013/assets/page-007.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-007.jpg",
           "bytes": 146435,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 8,
-          "path": "packages/doc-dsc6013/assets/page-008.jpg",
+          "path": "packages/doc-sdsc6013/assets/page-008.jpg",
           "bytes": 155856,
           "width": 1275,
           "height": 1650
@@ -827,13 +899,13 @@
       ]
     },
     {
-      "course_code": "DSC6016",
+      "course_code": "SDSC6016",
       "source_pdf": "docs/SDSC6016.pdf",
       "source_sha256": "9bddde8ea2d2222e25e2215dedfc85ad422acfe80f2247e3219d1ba3ffa9930a",
       "page_count": 6,
-      "package": "packages/doc-dsc6016",
+      "package": "packages/doc-sdsc6016",
       "asset_bytes": 833986,
-      "package_bytes": 833986,
+      "package_bytes": 834761,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -842,42 +914,42 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6016/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-001.jpg",
           "bytes": 105414,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6016/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-002.jpg",
           "bytes": 275347,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6016/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-003.jpg",
           "bytes": 134737,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6016/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-004.jpg",
           "bytes": 107144,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6016/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-005.jpg",
           "bytes": 133483,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6016/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6016/assets/page-006.jpg",
           "bytes": 77861,
           "width": 1275,
           "height": 1650
@@ -885,13 +957,13 @@
       ]
     },
     {
-      "course_code": "DSC6017",
+      "course_code": "SDSC6017",
       "source_pdf": "docs/SDSC6017.pdf",
       "source_sha256": "8b13aa38e2bdfa4ea1e7f3a2b7b87dfc06641d986863aa44f0f6e6f11404b2e7",
       "page_count": 5,
-      "package": "packages/doc-dsc6017",
+      "package": "packages/doc-sdsc6017",
       "asset_bytes": 851913,
-      "package_bytes": 851913,
+      "package_bytes": 852640,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -900,35 +972,35 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6017/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6017/assets/page-001.jpg",
           "bytes": 117491,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6017/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6017/assets/page-002.jpg",
           "bytes": 311723,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6017/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6017/assets/page-003.jpg",
           "bytes": 176616,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6017/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6017/assets/page-004.jpg",
           "bytes": 152982,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6017/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6017/assets/page-005.jpg",
           "bytes": 93101,
           "width": 1275,
           "height": 1650
@@ -936,13 +1008,13 @@
       ]
     },
     {
-      "course_code": "DSC6018",
+      "course_code": "SDSC6018",
       "source_pdf": "docs/SDSC6018.pdf",
       "source_sha256": "fc952def366a3244b70d76c4793bf0579ed2d936b84cfd05598ef8ea9c7ce041",
       "page_count": 8,
-      "package": "packages/doc-dsc6018",
+      "package": "packages/doc-sdsc6018",
       "asset_bytes": 1043394,
-      "package_bytes": 1043394,
+      "package_bytes": 1044265,
       "render": {
         "format": "jpeg",
         "dpi": 150,
@@ -951,56 +1023,56 @@
       "pages": [
         {
           "page": 1,
-          "path": "packages/doc-dsc6018/assets/page-001.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-001.jpg",
           "bytes": 91498,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 2,
-          "path": "packages/doc-dsc6018/assets/page-002.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-002.jpg",
           "bytes": 263841,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 3,
-          "path": "packages/doc-dsc6018/assets/page-003.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-003.jpg",
           "bytes": 164681,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 4,
-          "path": "packages/doc-dsc6018/assets/page-004.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-004.jpg",
           "bytes": 122374,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 5,
-          "path": "packages/doc-dsc6018/assets/page-005.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-005.jpg",
           "bytes": 101789,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 6,
-          "path": "packages/doc-dsc6018/assets/page-006.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-006.jpg",
           "bytes": 90143,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 7,
-          "path": "packages/doc-dsc6018/assets/page-007.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-007.jpg",
           "bytes": 93255,
           "width": 1275,
           "height": 1650
         },
         {
           "page": 8,
-          "path": "packages/doc-dsc6018/assets/page-008.jpg",
+          "path": "packages/doc-sdsc6018/assets/page-008.jpg",
           "bytes": 115813,
           "width": 1275,
           "height": 1650

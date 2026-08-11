@@ -7,6 +7,7 @@ const {
 } = require("../../../../utils/planner");
 const {
   getStoredSelections,
+  normalizeCourseCode,
   saveSelections
 } = require("../../../../utils/storage");
 
@@ -45,7 +46,7 @@ Page({
   },
 
   onLoad(options) {
-    const code = String(options.code || "").toUpperCase();
+    const code = normalizeCourseCode(options.code);
     const course = courseByCode[code];
     if (!course) {
       wx.showToast({ title: "没有找到这门课程", icon: "none" });
@@ -55,6 +56,7 @@ Page({
     const instructors = unique(
       course.eligible_sections.map((section) => section.instructor)
     ).join("；");
+    const offered = course.offered_this_year !== false;
     const webAvailable = course.eligible_sections.some((section) => section.web === "Y");
     const facts = [
       { label: "课程类型", value: course.requirement_type === "core" ? "核心课" : "选修课" },
@@ -62,12 +64,18 @@ Page({
       { label: "互斥课程", value: textOrNone(course.exclusive_course) },
       { label: "授课语言", value: textOrNone(course.summary && course.summary.medium) },
       { label: "授课教师", value: instructors || "待公布" },
-      { label: "注册状态", value: webAvailable ? "有班次可网页注册" : "不可正常网页注册，请联系课程单位" }
+      {
+        label: "注册状态",
+        value: offered
+          ? (webAvailable ? "有班次可网页注册" : "不可正常网页注册，请联系课程单位")
+          : "本学年不开设"
+      }
     ];
 
     this.setData({
       course: {
         ...course,
+        offered,
         requirementLabel: course.requirement_type === "core" ? "核心课" : "选修课",
         titleNote: course.title_changed
           ? `本学期课表名称：${course.schedule_title}`
@@ -86,12 +94,18 @@ Page({
     if (!this.data.course) return;
     const selections = sanitizeSelections(courses, getStoredSelections());
     saveSelections(selections);
-    this.setData({ added: Boolean(selections[this.data.course.code]) });
+    this.setData({
+      added: this.data.course.offered && Boolean(selections[this.data.course.code])
+    });
   },
 
   toggleCourse() {
     const course = this.data.course;
     if (!course) return;
+    if (!course.offered) {
+      wx.showToast({ title: "本学年不开设", icon: "none" });
+      return;
+    }
     const selections = sanitizeSelections(courses, getStoredSelections());
     if (selections[course.code]) {
       delete selections[course.code];

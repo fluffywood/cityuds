@@ -70,6 +70,13 @@
   color: #18794e;
 }
 
+.add-button.is-unavailable {
+  background: #dc3545;
+  border: 1rpx solid #c52f3f;
+  color: #ffffff;
+  opacity: 1;
+}
+
 .course-meta {
   margin-top: 18rpx;
   color: #697586;

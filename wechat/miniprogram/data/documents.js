@@ -173,12 +173,12 @@ const documents = {
       ]
     }
   },
-  "DSC5001": {
-    "course_code": "DSC5001",
+  "SDSC5001": {
+    "course_code": "SDSC5001",
     "pdf": "docs/SDSC5001.pdf",
-    "translation_path": "data/course-documents/translations/DSC5001.json",
+    "translation_path": "data/course-documents/translations/SDSC5001.json",
     "translation": {
-      "course_code": "DSC5001",
+      "course_code": "SDSC5001",
       "source_pdf": "docs/SDSC5001.pdf",
       "title_en": "Statistical Machine Learning I",
       "title_zh": "统计机器学习 I",
@@ -210,12 +210,12 @@ const documents = {
       ]
     }
   },
-  "DSC5002": {
-    "course_code": "DSC5002",
+  "SDSC5002": {
+    "course_code": "SDSC5002",
     "pdf": "docs/SDSC5002.pdf",
-    "translation_path": "data/course-documents/translations/DSC5002.json",
+    "translation_path": "data/course-documents/translations/SDSC5002.json",
     "translation": {
-      "course_code": "DSC5002",
+      "course_code": "SDSC5002",
       "source_pdf": "docs/SDSC5002.pdf",
       "title_en": "Exploratory Data Analysis and Visualization",
       "title_zh": "探索性数据分析与可视化",
@@ -251,12 +251,12 @@ const documents = {
       ]
     }
   },
-  "DSC5003": {
-    "course_code": "DSC5003",
+  "SDSC5003": {
+    "course_code": "SDSC5003",
     "pdf": "docs/SDSC5003.pdf",
-    "translation_path": "data/course-documents/translations/DSC5003.json",
+    "translation_path": "data/course-documents/translations/SDSC5003.json",
     "translation": {
-      "course_code": "DSC5003",
+      "course_code": "SDSC5003",
       "source_pdf": "docs/SDSC5003.pdf",
       "title_en": "Storing and Retrieving Data",
       "title_zh": "数据存储与检索",
@@ -288,12 +288,12 @@ const documents = {
       ]
     }
   },
-  "DSC6004": {
-    "course_code": "DSC6004",
+  "SDSC6004": {
+    "course_code": "SDSC6004",
     "pdf": "docs/SDSC6004.pdf",
-    "translation_path": "data/course-documents/translations/DSC6004.json",
+    "translation_path": "data/course-documents/translations/SDSC6004.json",
     "translation": {
-      "course_code": "DSC6004",
+      "course_code": "SDSC6004",
       "source_pdf": "docs/SDSC6004.pdf",
       "title_en": "Topics of Artificial Intelligence for Smart Cities",
       "title_zh": "智慧城市人工智能专题",
@@ -325,12 +325,12 @@ const documents = {
       ]
     }
   },
-  "DSC6006": {
-    "course_code": "DSC6006",
+  "SDSC6006": {
+    "course_code": "SDSC6006",
     "pdf": "docs/SDSC6006.pdf",
-    "translation_path": "data/course-documents/translations/DSC6006.json",
+    "translation_path": "data/course-documents/translations/SDSC6006.json",
     "translation": {
-      "course_code": "DSC6006",
+      "course_code": "SDSC6006",
       "source_pdf": "docs/SDSC6006.pdf",
       "title_en": "Dissertation",
       "title_zh": "学位论文",
@@ -362,12 +362,57 @@ const documents = {
       ]
     }
   },
-  "DSC6008": {
-    "course_code": "DSC6008",
-    "pdf": "docs/SDSC6008.pdf",
-    "translation_path": "data/course-documents/translations/DSC6008.json",
+  "SDSC6007": {
+    "course_code": "SDSC6007",
+    "pdf": "docs/SDSC6007.pdf",
+    "translation_path": "data/course-documents/translations/SDSC6007.json",
     "translation": {
-      "course_code": "DSC6008",
+      "course_code": "SDSC6007",
+      "source_pdf": "docs/SDSC6007.pdf",
+      "title_en": "Dynamic Programming and Reinforcement Learning",
+      "title_zh": "动态规划与强化学习",
+      "pages": [
+        {
+          "page": 1,
+          "text": "SDSC6007：动态规划与强化学习\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：动态规划与强化学习\n学科代码：SDSC - 数据科学\n课程编号：6007\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文见下一页）"
+        },
+        {
+          "page": 2,
+          "text": "摘要\n本课程介绍动态规划，即不确定环境下序贯决策问题的基本模型与求解技术；以及强化学习，即自主智能体通过与环境不断试错互动，学习作出接近最优决策的框架。\n\n课程将涵盖动态规划与强化学习的基础内容，包括马尔可夫决策过程、价值函数、蒙特卡洛估计、动态规划、时序差分学习和函数近似。课程旨在帮助学生直观理解这些高级优化与学习方法和算法，熟悉其数学理论，并能够运用动态规划和强化学习技术解决现实问题。\n\n课程预期学习成果（CILOs）\n1. 解释动态规划与强化学习的基本思想、概念和原理。权重：10；DEC-A1：是；DEC-A2：是。\n2. 解释最优控制、动态规划与强化学习的理论和求解方法。权重：60；DEC-A1：是；DEC-A2：是；DEC-A3：是。\n3. 将各类问题表述为动态规划或强化学习问题，并实现正确的求解器。权重：15；DEC-A2：是。\n4. 对动态规划和强化学习在现实世界中的应用进行建模。权重：15；DEC-A1：是；DEC-A2：是；DEC-A3：是。\n\nA1 - 态度：培养探索、创新与创造的态度；其表现包括具有强烈好奇心、主动提问、质疑假设，或与教师共同开展探究。\nA2 - 能力：培养探索、创新与创造所需的能力或技能；其表现包括运用批判性思维评估观点、掌握研究技能、综合跨学科知识，或将学术知识应用于现实问题。\nA3 - 成果：通过创作或构建有创意的作品或新成果、提出现实问题的有效解决方案，或形成新流程，展示探索、创新与创造方面的成果。\n\n学习与教学活动（LTAs）\n1. 讲课：学生通过讲课学习本课程所涵盖的动态规划与强化学习方法的核心知识。对应 CILO：1、2、3、4。时数：每学期 29 小时。"
+        },
+        {
+          "page": 3,
+          "text": "学习与教学活动（续）\n2. 导修课：学生通过进一步讲解和练习熟悉课堂所学方法，并培养实现动态规划与强化学习算法的能力。对应 CILO：1、2、3、4。时数：每学期 10 小时。\n\n评核任务/活动（ATs）\n1. 课程项目：学生通过课程项目展示其解决动态规划与强化学习问题的能力。学生需要向同学展示项目，并为其他同学的展示撰写反馈，同时提交项目报告。选题可以包括先进的强化学习算法与理论，以及课堂未涵盖的强化学习高级主题。对应 CILO：1、2、3、4；权重：30%；备注：无；允许使用生成式人工智能：是。"
+        },
+        {
+          "page": 4,
+          "text": "评核任务/活动（续）\n2. 作业：学生需要解释课程知识，并运用课程所学方法解决问题。对应 CILO：1、2、3、4；权重：20%；备注：无；允许使用生成式人工智能：是。\n3. 期中考试：评估学生解释概念，并运用课堂所学方法与技术解决动态规划和强化学习问题的能力。对应 CILO：1、2、3、4；权重：20%；备注：无；允许使用生成式人工智能：否。\n\n持续评核：70%\n考试：30%\n考试时长：2 小时\n最低考试及格要求：30%\n\n评核准则（AR）\n评核任务：作业（适用于 2022/23 学年 A 学期以前入学，以及 2024/25 学年 A 学期及以后入学的学生）\n准则：根据提交的书面作业，评估学生解释课堂所学动态规划与强化学习知识的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B、B-，显著水平。\n尚可：C+、C、C-，中等水平。\n边缘及格：D，基础水平。"
+        },
+        {
+          "page": 5,
+          "text": "作业评核准则（续）\n不及格：F，甚至未达到边缘水平。\n\n评核任务：期中/课堂考试（适用于 2022/23 学年 A 学期以前入学，以及 2024/25 学年 A 学期及以后入学的学生）\n准则：根据提交的书面作答和程序代码，评估学生解释强化学习与动态规划核心概念，以及运用不同动态规划和强化学习算法的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B、B-，显著水平。\n尚可：C+、C、C-，中等水平。\n边缘及格：D，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：课程项目（适用于 2022/23 学年 A 学期以前入学，以及 2024/25 学年 A 学期及以后入学的学生）\n准则：根据提交的书面成果和口头展示，评估学生的知识综合能力和表达清晰度、对动态规划与强化学习的掌握程度，以及拓展相关知识的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B、B-，显著水平。\n尚可：C+、C、C-，中等水平。\n边缘及格：D，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：考试（准则见下一页）"
+        },
+        {
+          "page": 6,
+          "text": "评核任务：考试（适用于 2022/23 学年 A 学期以前入学，以及 2024/25 学年 A 学期及以后入学的学生）\n准则：运用基本方法解决强化学习与马尔可夫决策过程问题的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B、B-，显著水平。\n尚可：C+、C、C-，中等水平。\n边缘及格：D，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：作业（适用于 2022/23 学年 A 学期至 2024 年夏季学期入学的学生）\n准则：根据提交的书面作业，评估学生解释课堂所学动态规划与强化学习知识的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B，中等水平。\n边缘及格：B-、C+、C，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：期中/课堂考试（适用于 2022/23 学年 A 学期至 2024 年夏季学期入学的学生）\n准则：根据提交的书面作答和程序代码，评估学生解释强化学习与动态规划核心概念，以及运用不同动态规划和强化学习算法的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B，中等水平。"
+        },
+        {
+          "page": 7,
+          "text": "期中/课堂考试评核准则（续）\n边缘及格：B-、C+、C，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：课程项目（适用于 2022/23 学年 A 学期至 2024 年夏季学期入学的学生）\n准则：根据提交的书面成果和口头展示，评估学生的知识综合能力和表达清晰度、对动态规划与强化学习的掌握程度，以及拓展相关知识的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B，中等水平。\n边缘及格：B-、C+、C，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n评核任务：考试（适用于 2022/23 学年 A 学期至 2024 年夏季学期入学的学生）\n准则：运用基本方法解决强化学习与马尔可夫决策过程问题的能力。\n优秀：A+、A、A-，高水平。\n良好：B+、B，中等水平。\n边缘及格：B-、C+、C，基础水平。\n不及格：F，甚至未达到边缘水平。\n\n第三部分 其他信息\n关键词大纲\n- 动态规划\n- 马尔可夫决策过程\n- 时序差分学习\n- 价值函数近似\n- 策略近似\n- Q 学习\n- 多臂老虎机问题"
+        },
+        {
+          "page": 8,
+          "text": "阅读清单\n\n必读材料\n1. Richard S. Sutton 与 Andrew G. Barto，《Reinforcement Learning: An Introduction》（强化学习导论）。\n2. 讲义与课件。\n\n补充阅读\n1. Dimitris Bertsimas，《Dynamic Programming and Optimal Control》（动态规划与最优控制）。\n2. Csaba Czepesvári，《Algorithms for Reinforcement Learning》（强化学习算法）。\n3. Dimitris Bertsimas，《Reinforcement Learning and Optimal Control》（强化学习与最优控制）。"
+        }
+      ]
+    }
+  },
+  "SDSC6008": {
+    "course_code": "SDSC6008",
+    "pdf": "docs/SDSC6008.pdf",
+    "translation_path": "data/course-documents/translations/SDSC6008.json",
+    "translation": {
+      "course_code": "SDSC6008",
       "source_pdf": "docs/SDSC6008.pdf",
       "title_en": "Design of Experiments",
       "title_zh": "实验设计",
@@ -403,12 +448,12 @@ const documents = {
       ]
     }
   },
-  "DSC6011": {
-    "course_code": "DSC6011",
+  "SDSC6011": {
+    "course_code": "SDSC6011",
     "pdf": "docs/SDSC6011.pdf",
-    "translation_path": "data/course-documents/translations/DSC6011.json",
+    "translation_path": "data/course-documents/translations/SDSC6011.json",
     "translation": {
-      "course_code": "DSC6011",
+      "course_code": "SDSC6011",
       "source_pdf": "docs/SDSC6011.pdf",
       "title_en": "Optimization for Data Science",
       "title_zh": "数据科学优化方法",
@@ -436,12 +481,12 @@ const documents = {
       ]
     }
   },
-  "DSC6012": {
-    "course_code": "DSC6012",
+  "SDSC6012": {
+    "course_code": "SDSC6012",
     "pdf": "docs/SDSC6012.pdf",
-    "translation_path": "data/course-documents/translations/DSC6012.json",
+    "translation_path": "data/course-documents/translations/SDSC6012.json",
     "translation": {
-      "course_code": "DSC6012",
+      "course_code": "SDSC6012",
       "source_pdf": "docs/SDSC6012.pdf",
       "title_en": "Time Series and Recurrent Neural Networks",
       "title_zh": "时间序列与循环神经网络",
@@ -473,12 +518,12 @@ const documents = {
       ]
     }
   },
-  "DSC6013": {
-    "course_code": "DSC6013",
+  "SDSC6013": {
+    "course_code": "SDSC6013",
     "pdf": "docs/SDSC6013.pdf",
-    "translation_path": "data/course-documents/translations/DSC6013.json",
+    "translation_path": "data/course-documents/translations/SDSC6013.json",
     "translation": {
-      "course_code": "DSC6013",
+      "course_code": "SDSC6013",
       "source_pdf": "docs/SDSC6013.pdf",
       "title_en": "Topics in Financial Engineering and Technology",
       "title_zh": "金融工程与金融科技专题",
@@ -518,12 +563,12 @@ const documents = {
       ]
     }
   },
-  "DSC6016": {
-    "course_code": "DSC6016",
+  "SDSC6016": {
+    "course_code": "SDSC6016",
     "pdf": "docs/SDSC6016.pdf",
-    "translation_path": "data/course-documents/translations/DSC6016.json",
+    "translation_path": "data/course-documents/translations/SDSC6016.json",
     "translation": {
-      "course_code": "DSC6016",
+      "course_code": "SDSC6016",
       "source_pdf": "docs/SDSC6016.pdf",
       "title_en": "Predictive Analytics and Financial Applications",
       "title_zh": "预测分析与金融应用",
@@ -555,12 +600,12 @@ const documents = {
       ]
     }
   },
-  "DSC6017": {
-    "course_code": "DSC6017",
+  "SDSC6017": {
+    "course_code": "SDSC6017",
     "pdf": "docs/SDSC6017.pdf",
-    "translation_path": "data/course-documents/translations/DSC6017.json",
+    "translation_path": "data/course-documents/translations/SDSC6017.json",
     "translation": {
-      "course_code": "DSC6017",
+      "course_code": "SDSC6017",
       "source_pdf": "docs/SDSC6017.pdf",
       "title_en": "Internship Project",
       "title_zh": "实习项目",
@@ -588,12 +633,12 @@ const documents = {
       ]
     }
   },
-  "DSC6018": {
-    "course_code": "DSC6018",
+  "SDSC6018": {
+    "course_code": "SDSC6018",
     "pdf": "docs/SDSC6018.pdf",
-    "translation_path": "data/course-documents/translations/DSC6018.json",
+    "translation_path": "data/course-documents/translations/SDSC6018.json",
     "translation": {
-      "course_code": "DSC6018",
+      "course_code": "SDSC6018",
       "source_pdf": "docs/SDSC6018.pdf",
       "title_en": "Health Data Analytics",
       "title_zh": "健康数据分析",

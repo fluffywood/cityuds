@@ -828,6 +828,17 @@ main {
   font-size: 15px;
 }
 
+.add-course.is-unavailable,
+.add-course.is-unavailable:hover {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+  cursor: not-allowed;
+  opacity: 1;
+  transform: none;
+  box-shadow: none;
+}
+
 .mini-badge,
 .verdict-badge,
 .status-badge,
@@ -1098,6 +1109,17 @@ main {
 .button-quiet:hover {
   border-color: var(--primary);
   color: var(--primary);
+}
+
+.button-unavailable,
+.button-unavailable:hover {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+  cursor: not-allowed;
+  opacity: 1;
+  transform: none;
+  box-shadow: none;
 }
 
 .button-document {
@@ -1681,6 +1703,11 @@ main {
 .section-table td span {
   margin-top: 3px;
   color: var(--muted);
+}
+
+.section-table .section-empty-row td {
+  padding: 22px;
+  text-align: center;
 }
 
 .source-list {

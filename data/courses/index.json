@@ -16,7 +16,7 @@
   ],
   "courses": [
     {
-      "code": "DSC5001",
+      "code": "SDSC5001",
       "requirement_type": "core",
       "programme_title": "Statistical Machine Learning I",
       "schedule_title": "Statistical Machine Learning I",
@@ -34,7 +34,7 @@
       "section_count": 3
     },
     {
-      "code": "DSC5002",
+      "code": "SDSC5002",
       "requirement_type": "core",
       "programme_title": "Exploratory Data Analysis and Visualization",
       "schedule_title": "Exploratory Data Analysis and Visualization",
@@ -52,7 +52,7 @@
       "section_count": 2
     },
     {
-      "code": "DSC5003",
+      "code": "SDSC5003",
       "requirement_type": "core",
       "programme_title": "Storing and Retrieving Data",
       "schedule_title": "Storing and Retrieving Data",
@@ -70,7 +70,7 @@
       "section_count": 2
     },
     {
-      "code": "DSC6004",
+      "code": "SDSC6004",
       "requirement_type": "elective",
       "programme_title": "Topics of Artificial Intelligence for Smart Cities",
       "schedule_title": "Topics of Artificial Intelligence for Smart Cities",
@@ -88,7 +88,7 @@
       "section_count": 5
     },
     {
-      "code": "DSC6006",
+      "code": "SDSC6006",
       "requirement_type": "elective",
       "programme_title": "Dissertation",
       "schedule_title": "Dissertation",
@@ -106,7 +106,26 @@
       "section_count": 0
     },
     {
-      "code": "DSC6008",
+      "code": "SDSC6007",
+      "requirement_type": "elective",
+      "programme_title": "Dynamic Programming and Reinforcement Learning",
+      "schedule_title": "Dynamic Programming and Reinforcement Learning",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "offered_this_year": false,
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "SDSC6008",
       "requirement_type": "elective",
       "programme_title": "Design of Experiments",
       "schedule_title": "Design of Experiments",
@@ -124,7 +143,7 @@
       "section_count": 2
     },
     {
-      "code": "DSC6011",
+      "code": "SDSC6011",
       "requirement_type": "elective",
       "programme_title": "Optimization for Data Science",
       "schedule_title": "Optimization for Data Science",
@@ -142,7 +161,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6012",
+      "code": "SDSC6012",
       "requirement_type": "elective",
       "programme_title": "Time Series and Recurrent Neural Networks",
       "schedule_title": "Time Series and Recurrent Neural Networks",
@@ -160,7 +179,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6013",
+      "code": "SDSC6013",
       "requirement_type": "elective",
       "programme_title": "Topics in Financial Engineering and Technology",
       "schedule_title": "Topics in Financial Engineering and Technology",
@@ -178,7 +197,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6016",
+      "code": "SDSC6016",
       "requirement_type": "elective",
       "programme_title": "Predictive Analytics and Financial Applications",
       "schedule_title": "Predictive Analytics and Financial Applications",
@@ -196,7 +215,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6017",
+      "code": "SDSC6017",
       "requirement_type": "elective",
       "programme_title": "Internship Project",
       "schedule_title": "Internship Project",
@@ -214,7 +233,7 @@
       "section_count": 0
     },
     {
-      "code": "DSC6018",
+      "code": "SDSC6018",
       "requirement_type": "elective",
       "programme_title": "Health Data Analytics",
       "schedule_title": "Health Data Analytics",
@@ -232,7 +251,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6020",
+      "code": "SDSC6020",
       "requirement_type": "elective",
       "programme_title": "Artificial Intelligence for Scientific Knowledge Discovery",
       "schedule_title": "Artificial Intelligence for Scientific Knowledge Discovery",
@@ -250,7 +269,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6021",
+      "code": "SDSC6021",
       "requirement_type": "elective",
       "programme_title": "Generative Artificial Intelligence",
       "schedule_title": "Generative Artificial Intelligence",
@@ -268,7 +287,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC6026",
+      "code": "SDSC6026",
       "requirement_type": "elective",
       "programme_title": "Social Network Analysis",
       "schedule_title": "Social Network Analysis",
@@ -286,7 +305,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC8001",
+      "code": "SDSC8001",
       "requirement_type": "elective",
       "programme_title": "Seminars on Data Science I",
       "schedule_title": "Seminars on Data Science I",
@@ -304,7 +323,7 @@
       "section_count": 0
     },
     {
-      "code": "DSC8002",
+      "code": "SDSC8002",
       "requirement_type": "elective",
       "programme_title": "Seminars on Data Science II",
       "schedule_title": "Seminars on Data Science II",
@@ -322,7 +341,7 @@
       "section_count": 0
     },
     {
-      "code": "DSC8003",
+      "code": "SDSC8003",
       "requirement_type": "elective",
       "programme_title": "Machine Learning",
       "schedule_title": "Machine Learning",
@@ -340,7 +359,7 @@
       "section_count": 1
     },
     {
-      "code": "DSC8004",
+      "code": "SDSC8004",
       "requirement_type": "elective",
       "programme_title": "Advanced Statistics",
       "schedule_title": "Advanced Statistics",
@@ -358,7 +377,7 @@
       "section_count": 2
     },
     {
-      "code": "DSC8005",
+      "code": "SDSC8005",
       "requirement_type": "elective",
       "programme_title": "Optimization",
       "schedule_title": "Optimization",

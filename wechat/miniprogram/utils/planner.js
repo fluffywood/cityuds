@@ -63,6 +63,7 @@ function makeSelectionForPrimary(course, primaryKey) {
 }
 
 function makeDefaultSelection(course) {
+  if (!course || course.offered_this_year === false) return null;
   const primary = sectionsOf(course).find((section) => Number(section.credits) > 0);
   return primary ? makeSelectionForPrimary(course, sectionKey(primary)) : null;
 }
@@ -71,6 +72,7 @@ function sanitizeSelections(courses, selections = {}) {
   const sanitized = {};
 
   (courses || []).forEach((course) => {
+    if (course.offered_this_year === false) return;
     const existing = selections && selections[course.code];
     if (!existing || typeof existing !== "object") return;
 

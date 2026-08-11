@@ -23,7 +23,7 @@ except ImportError as exc:  # pragma: no cover - dependency guidance
     ) from exc
 
 
-EXPECTED_COURSE_COUNT = 16
+EXPECTED_COURSE_COUNT = 17
 COURSE_LIMIT_BYTES = 2 * 1024 * 1024
 COURSE_TARGET_BYTES = 1_800_000
 TOTAL_LIMIT_BYTES = 30 * 1024 * 1024

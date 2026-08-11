@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "MSDS-planner-selections-v1";
+  const LEGACY_COURSE_CODE_PATTERN = /^DSC(?=\d{4}$)/;
   const DAY_NAMES = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五", S: "周六", U: "周日" };
   let courseDataPromise;
 
@@ -57,17 +58,44 @@
     };
   }
 
+  function normalizeCourseCode(value) {
+    return String(value || "")
+      .trim()
+      .toUpperCase()
+      .replace(LEGACY_COURSE_CODE_PATTERN, "SDSC");
+  }
+
+  function normalizeSelections(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const normalized = {};
+    Object.entries(value).forEach(([courseCode, selection]) => {
+      const normalizedCode = normalizeCourseCode(courseCode);
+      if (!normalizedCode) return;
+      const isCanonicalKey = normalizedCode === String(courseCode).trim().toUpperCase();
+      if (!(normalizedCode in normalized) || isCanonicalKey) {
+        normalized[normalizedCode] = selection;
+      }
+    });
+    return normalized;
+  }
+
   function getStoredSelections() {
     try {
       const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      return parsed && typeof parsed === "object" ? parsed : {};
+      const normalized = normalizeSelections(parsed);
+      if (JSON.stringify(parsed) !== JSON.stringify(normalized)) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+      }
+      return normalized;
     } catch {
       return {};
     }
   }
 
   function saveSelections(selections) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+    const normalized = normalizeSelections(selections);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    return normalized;
   }
 
   function sectionKey(section) {
@@ -130,6 +158,7 @@
     getStoredSelections,
     loadCourseData,
     makeDefaultSelection,
+    normalizeCourseCode,
     recommendationBadge,
     saveSelections,
     sectionKey,

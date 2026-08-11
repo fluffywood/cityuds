@@ -51,6 +51,7 @@ const { metadata, courses } = require(path.join(miniProgramRoot, "data", "catalo
 const { documents } = require(path.join(miniProgramRoot, "data", "documents.js"));
 const { documentRoutes } = require(path.join(miniProgramRoot, "data", "document-routes.js"));
 const planner = require(path.join(miniProgramRoot, "utils", "planner.js"));
+const storage = require(path.join(miniProgramRoot, "utils", "storage.js"));
 
 assert(appConfig.pages[0] === "pages/home/index", "首页必须是小程序首个页面");
 assert(appConfig.tabBar?.list?.[0]?.pagePath === "pages/home/index", "首页必须是首个 TabBar 入口");
@@ -103,6 +104,46 @@ const aboutLogic = await readFile(path.join(miniProgramRoot, "pages", "about", "
 assert(aboutLogic.includes("https://github.com/fluffywood/cityuds"), "GitHub 项目地址不正确");
 assert(aboutLogic.includes("setClipboardData"), "GitHub 地址复制功能缺失");
 
+const courseCardMarkup = await readFile(
+  path.join(miniProgramRoot, "components", "course-card", "index.wxml"),
+  "utf8"
+);
+const courseCardLogic = await readFile(
+  path.join(miniProgramRoot, "components", "course-card", "index.js"),
+  "utf8"
+);
+const courseCardStyles = await readFile(
+  path.join(miniProgramRoot, "components", "course-card", "index.wxss"),
+  "utf8"
+);
+assert(
+  courseCardMarkup.includes('disabled="{{!course.offered}}"') &&
+    courseCardMarkup.includes("'is-unavailable'") &&
+    courseCardMarkup.includes("!course.offered ? '×'"),
+  "未开设课程的列表按钮必须禁用并显示红色 ×"
+);
+assert(
+  courseCardLogic.includes("course.offered === false") &&
+    /\.add-button\.is-unavailable\s*\{[^}]*#dc3545[^}]*#c52f3f/s.test(courseCardStyles),
+  "未开设课程的列表按钮缺少点击保护或红色样式"
+);
+
+const courseDetailMarkup = await readFile(
+  path.join(miniProgramRoot, "packages", "course", "pages", "detail", "index.wxml"),
+  "utf8"
+);
+const courseDetailLogic = await readFile(
+  path.join(miniProgramRoot, "packages", "course", "pages", "detail", "index.js"),
+  "utf8"
+);
+assert(
+  courseDetailMarkup.includes('disabled="{{!course.offered}}"') &&
+    courseDetailMarkup.includes("'unavailable-button'") &&
+    courseDetailMarkup.includes("!course.offered ? '本学年不开设'"),
+  "未开设课程的详情页必须禁用加入课表按钮"
+);
+assert(courseDetailLogic.includes("if (!course.offered)"), "课程详情缺少未开设课程的加课保护");
+
 const timetableMarkup = await readFile(path.join(miniProgramRoot, "pages", "timetable", "index.wxml"), "utf8");
 const timetableLogic = await readFile(path.join(miniProgramRoot, "pages", "timetable", "index.js"), "utf8");
 assert(
@@ -141,11 +182,33 @@ assert(timetableLogic.includes("handleEventTap(event)"), "课表页缺少冲突�
 assert(timetableLogic.includes("confirmConflictChanges()"), "课表页缺少冲突班次确认逻辑");
 assert(timetableLogic.includes("renderPlanner(selectionOverride)"), "课表重绘不支持已保存选择覆盖");
 
-assert(courses.length === 24, `应有 24 门课程，实际为 ${courses.length}`);
+assert(courses.length === 25, `应有 25 门课程，实际为 ${courses.length}`);
 assert(metadata.schedule_as_of === "2026-08-04 16:48 Asia/Beijing", "课表快照时间不正确");
-assert(manifest.course_count === 16, `应有 16 份文档，实际为 ${manifest.course_count}`);
+assert(manifest.course_count === 17, `应有 17 份文档，实际为 ${manifest.course_count}`);
+assert(manifest.page_count === 114, `应有 114 页文档，实际为 ${manifest.page_count}`);
 assert(Object.keys(documents).length === manifest.course_count, "文档数据与页图清单数量不一致");
 assert(Object.keys(documentRoutes).length === manifest.course_count, "文档路由与页图清单数量不一致");
+
+assert(courses.filter((course) => course.code.startsWith("SDSC")).length === 21, "21 门数据科学课程必须使用 SDSC 编号");
+const sdsc6007 = courses.find((course) => course.code === "SDSC6007");
+assert(sdsc6007, "课程目录缺少 SDSC6007");
+assert(sdsc6007.offered_this_year === false, "SDSC6007 必须标记为本学年不开设");
+assert(sdsc6007.eligible_sections.length === 0, "SDSC6007 本学年班次必须为 0");
+assert(planner.makeDefaultSelection(sdsc6007) === null, "SDSC6007 不得产生默认班次选择");
+
+const legacyCourseCode = ["D", "SC5001"].join("");
+const migratedSelections = storage.normalizeSelections({
+  [legacyCourseCode]: { primaryCrn: "legacy" }
+});
+assert(
+  migratedSelections.SDSC5001?.primaryCrn === "legacy" && !migratedSelections[legacyCourseCode],
+  "旧版课程编号的本地课表记录未迁移到 SDSC"
+);
+const canonicalSelections = storage.normalizeSelections({
+  SDSC5001: { primaryCrn: "canonical" },
+  [legacyCourseCode]: { primaryCrn: "legacy" }
+});
+assert(canonicalSelections.SDSC5001.primaryCrn === "canonical", "新旧课表键并存时必须保留 SDSC 记录");
 
 const expectedDocumentPackages = manifest.courses.map((course) => course.package).sort();
 const configuredDocumentPackages = appConfig.subPackages
@@ -258,8 +321,8 @@ const previousPageRegistration = globalThis.Page;
 const previousWx = globalThis.wx;
 const previousTimetablePageCache = require.cache[resolvedTimetablePagePath];
 const initialConflictSelections = {
-  DSC5001: { primaryCrn: "11599", tutorialCrn: null },
-  DSC5003: { primaryCrn: "11604", tutorialCrn: null }
+  SDSC5001: { primaryCrn: "11599", tutorialCrn: null },
+  SDSC5003: { primaryCrn: "11604", tutorialCrn: null }
 };
 let storedSelections = JSON.parse(JSON.stringify(initialConflictSelections));
 let storageWrites = 0;
@@ -300,10 +363,10 @@ try {
     }
   };
   timetablePage.renderPlanner();
-  assert(timetablePage.data.conflictPairCount === 1, "DSC5001 C61 与 DSC5003 C61 应产生一组冲突");
+  assert(timetablePage.data.conflictPairCount === 1, "SDSC5001 C61 与 SDSC5003 C61 应产生一组冲突");
 
   const firstConflictEvent = timetablePage.allEvents.find(
-    (event) => event.courseCode === "DSC5001" && event.conflict
+    (event) => event.courseCode === "SDSC5001" && event.conflict
   );
   assert(firstConflictEvent, "真实课程冲突事件未生成");
   const conflictTap = {
@@ -331,7 +394,7 @@ try {
   assert(JSON.stringify(storedSelections) === selectionsBeforeCancel, "取消后已选班次发生变化");
 
   timetablePage.handleEventTap(conflictTap);
-  const targetPrimaryCrns = { DSC5001: "15441", DSC5003: "13472" };
+  const targetPrimaryCrns = { SDSC5001: "15441", SDSC5003: "13472" };
   Object.entries(targetPrimaryCrns).forEach(([courseCode, primaryCrn]) => {
     const itemIndex = timetablePage.data.conflictEditorItems.findIndex(
       (item) => item.courseCode === courseCode
@@ -348,18 +411,18 @@ try {
   storageWrites = 0;
   timetablePage.confirmConflictChanges();
   assert(storageWrites === 1, "两门冲突课程的班次应在确认后统一保存一次");
-  assert(storedSelections.DSC5001.primaryCrn === "15441", "DSC5001 班次未按弹窗选择更新");
-  assert(storedSelections.DSC5003.primaryCrn === "13472", "DSC5003 班次未按弹窗选择更新");
+  assert(storedSelections.SDSC5001.primaryCrn === "15441", "SDSC5001 班次未按弹窗选择更新");
+  assert(storedSelections.SDSC5003.primaryCrn === "13472", "SDSC5003 班次未按弹窗选择更新");
   assert(timetablePage.data.conflictPairCount === 0, "调整后的真实课程班次不应继续冲突");
 
-  const nonConflictEvent = timetablePage.allEvents.find((event) => event.courseCode === "DSC5001");
+  const nonConflictEvent = timetablePage.allEvents.find((event) => event.courseCode === "SDSC5001");
   timetablePage.handleEventTap({
     currentTarget: {
       dataset: { eventId: nonConflictEvent.id, code: nonConflictEvent.courseCode }
     }
   });
   assert(
-    navigations.at(-1) === "/packages/course/pages/detail/index?code=DSC5001",
+    navigations.at(-1) === "/packages/course/pages/detail/index?code=SDSC5001",
     "点击非冲突课程应继续进入课程详情"
   );
 } finally {

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "SDSC6007 课程介绍",
+  "usingComponents": {
+    "document-viewer": "/components/document-viewer/index"
+  }
+}

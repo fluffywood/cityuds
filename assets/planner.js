@@ -15,9 +15,9 @@
 
   // 首次访问时默认选中的核心课程班次
   const DEFAULT_SELECTIONS = [
-    { code: "DSC5003", section: "C62" },
-    { code: "DSC5001", section: "C61" },
-    { code: "DSC5002", section: "C62" }
+    { code: "SDSC5003", section: "C62" },
+    { code: "SDSC5001", section: "C61" },
+    { code: "SDSC5002", section: "C62" }
   ];
 
   let courses = [];
@@ -56,9 +56,12 @@
 
     listElement.innerHTML = filtered.map((course) => {
       const rec = MSDS.getRecommendation(course);
-      const isAdded = Boolean(selections[course.code]);
+      const isOffered = course.offered_this_year !== false;
+      const isAdded = isOffered && Boolean(selections[course.code]);
       const primaries = course.eligible_sections.filter((item) => Number(item.credits) > 0);
-      const scheduleText = primaries.map((item) => `${MSDS.DAY_NAMES[item.day]} ${item.time}`).join(" / ");
+      const scheduleText = isOffered
+        ? primaries.map((item) => `${MSDS.DAY_NAMES[item.day]} ${item.time}`).join(" / ")
+        : "本学年不开设";
       const selectedPrimary = selections[course.code]?.primaryCrn;
       return `
         <article class="course-row">
@@ -76,7 +79,11 @@
             </div>
             ${primaries.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaries, selectedPrimary || MSDS.sectionKey(primaries[0]))}</select></label>` : ""}
           </div>
-          ${isAdded ? `<span class="add-course is-added" aria-label="${MSDS.escapeHtml(course.code)} 已在课表">✓</span>` : `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}">+</button>`}
+          ${!isOffered
+            ? `<button class="add-course is-unavailable" type="button" disabled title="本学年不开设" aria-label="${MSDS.escapeHtml(course.code)} 本学年不开设，无法加入课表">×</button>`
+            : isAdded
+              ? `<span class="add-course is-added" aria-label="${MSDS.escapeHtml(course.code)} 已在课表">✓</span>`
+              : `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}">+</button>`}
         </article>`;
     }).join("");
   }
@@ -287,6 +294,9 @@
     if (selections[code]) {
       delete selections[code];
       MSDS.showToast(`已移除 ${code}`);
+    } else if (course.offered_this_year === false) {
+      MSDS.showToast(`${code} 本学年不开设`);
+      return;
     } else {
       selections[code] = selectionForPrimary(course, primaryCrn);
       MSDS.showToast(`已加入 ${code}`);

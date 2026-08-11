@@ -1,4 +1,5 @@
 const STORAGE_KEY = "MSDS-planner-selections-v1";
+const LEGACY_COURSE_CODE_PATTERN = /^DSC(?=\d{4}$)/;
 
 function storageApi(providedApi) {
   if (providedApi) return providedApi;
@@ -16,7 +17,24 @@ function normalizeSelections(value) {
     }
   }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
-  return { ...parsed };
+
+  const normalized = {};
+  Object.keys(parsed).forEach((courseCode) => {
+    const normalizedCode = normalizeCourseCode(courseCode);
+    if (!normalizedCode) return;
+    const isCanonicalKey = normalizedCode === String(courseCode).trim().toUpperCase();
+    if (!(normalizedCode in normalized) || isCanonicalKey) {
+      normalized[normalizedCode] = parsed[courseCode];
+    }
+  });
+  return normalized;
+}
+
+function normalizeCourseCode(value) {
+  return String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(LEGACY_COURSE_CODE_PATTERN, "SDSC");
 }
 
 function getStoredSelections(providedApi) {
@@ -43,6 +61,7 @@ module.exports = {
   STORAGE_KEY,
   clearStoredSelections,
   getStoredSelections,
+  normalizeCourseCode,
   normalizeSelections,
   saveSelections
 };

@@ -16,6 +16,8 @@ Component({
     },
 
     toggleCourse() {
+      const course = this.properties.course || {};
+      if (course.offered === false) return;
       this.triggerEvent("toggle", { code: this.properties.course.code });
     }
   }

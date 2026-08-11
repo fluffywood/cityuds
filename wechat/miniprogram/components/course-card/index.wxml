@@ -7,8 +7,8 @@
       </view>
       <view class="course-title">{{course.title}}</view>
     </view>
-    <button class="add-button {{added ? 'is-added' : ''}}" catchtap="toggleCourse" aria-label="{{added ? '从课表移除' : '加入课表'}}">
-      {{added ? '✓' : '+'}}
+    <button class="add-button {{added ? 'is-added' : ''}} {{!course.offered ? 'is-unavailable' : ''}}" catchtap="toggleCourse" disabled="{{!course.offered}}" aria-label="{{!course.offered ? '本学年不开设' : (added ? '从课表移除' : '加入课表')}}">
+      {{!course.offered ? '×' : (added ? '✓' : '+')}}
     </button>
   </view>
 

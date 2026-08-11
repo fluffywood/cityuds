@@ -2,7 +2,7 @@
   "use strict";
 
   const detail = document.getElementById("course-detail");
-  const code = new URLSearchParams(window.location.search).get("code")?.toUpperCase();
+  const code = MSDS.normalizeCourseCode(new URLSearchParams(window.location.search).get("code"));
 
   function fact(label, value) {
     return `<div class="fact"><span>${MSDS.escapeHtml(label)}</span><strong>${MSDS.escapeHtml(value || "无")}</strong></div>`;
@@ -22,10 +22,31 @@
       };
     }).filter(Boolean);
     const selections = MSDS.getStoredSelections();
-    const isAdded = Boolean(selections[course.code]);
+    const isOffered = course.offered_this_year !== false;
+    const isAdded = isOffered && Boolean(selections[course.code]);
     const instructors = [...new Set(course.eligible_sections.map((section) => section.instructor).filter(Boolean))].join("；");
-    const webStatus = course.eligible_sections.some((section) => section.web === "Y") ? "有班次可网页注册" : "不可正常网页注册，请联系课程单位";
-    const titleNote = course.title_changed ? `本学期课表名称：${course.schedule_title}` : "课程名称与课表一致";
+    const webStatus = !isOffered
+      ? "本学年不开设"
+      : course.eligible_sections.some((section) => section.web === "Y")
+        ? "有班次可网页注册"
+        : "不可正常网页注册，请联系课程单位";
+    const titleNote = !isOffered
+      ? "本学年不开设"
+      : course.title_changed
+        ? `本学期课表名称：${course.schedule_title}`
+        : "课程名称与课表一致";
+    const addButtonClass = !isOffered ? "button-unavailable" : isAdded ? "button-quiet" : "button-primary";
+    const addButtonText = !isOffered ? "本学年不开设" : isAdded ? "已加入课表" : "加入课表";
+    const sectionRows = course.eligible_sections.length
+      ? course.eligible_sections.map((section) => `
+          <tr>
+            <td><strong>${MSDS.escapeHtml(section.section)}</strong><span>${Number(section.credits) === 0 ? "Tutorial · 0 学分" : `${section.credits} 学分`}</span></td>
+            <td><strong>${MSDS.escapeHtml(MSDS.DAY_NAMES[section.day] || section.day)} ${MSDS.escapeHtml(section.time)}</strong><span>${MSDS.escapeHtml(section.date)}</span></td>
+            <td><strong>${MSDS.escapeHtml([section.building, section.room].filter(Boolean).join(" "))}</strong></td>
+            <td><strong>${MSDS.escapeHtml(section.instructor)}</strong></td>
+            <td><strong>${MSDS.escapeHtml(section.crn)}</strong><span>${section.web === "Y" ? "可网页注册" : "WEB=N"}</span></td>
+          </tr>`).join("")
+      : '<tr class="section-empty-row"><td colspan="5"><strong>本学年不开设</strong><span>暂无可选班次</span></td></tr>';
 
     document.title = `${course.code} ${course.programme_title} · MSDS 选课板`;
     detail.innerHTML = `
@@ -40,7 +61,7 @@
           <p>${course.credits} 学分 · ${MSDS.escapeHtml(course.remarks)} · ${MSDS.escapeHtml(titleNote)}</p>
         </div>
         <div class="detail-actions">
-          <button id="detail-add" class="button ${isAdded ? "button-quiet" : "button-primary"}" type="button">${isAdded ? "已加入课表" : "加入课表"}</button>
+          <button id="detail-add" class="button ${addButtonClass}" type="button"${isOffered ? "" : " disabled"}>${addButtonText}</button>
           <a class="button button-quiet" href="index.html">查看课表</a>
           ${courseDocument ? `<a class="button button-document" href="syllabus.html?code=${encodeURIComponent(course.code)}">查看详细课程介绍</a>` : ""}
         </div>
@@ -74,14 +95,7 @@
             <div class="section-table-wrap">
               <table class="section-table">
                 <thead><tr><th>班次</th><th>时间</th><th>地点</th><th>教师</th><th>CRN / 注册</th></tr></thead>
-                <tbody>${course.eligible_sections.map((section) => `
-                  <tr>
-                    <td><strong>${MSDS.escapeHtml(section.section)}</strong><span>${Number(section.credits) === 0 ? "Tutorial · 0 学分" : `${section.credits} 学分`}</span></td>
-                    <td><strong>${MSDS.escapeHtml(MSDS.DAY_NAMES[section.day] || section.day)} ${MSDS.escapeHtml(section.time)}</strong><span>${MSDS.escapeHtml(section.date)}</span></td>
-                    <td><strong>${MSDS.escapeHtml([section.building, section.room].filter(Boolean).join(" "))}</strong></td>
-                    <td><strong>${MSDS.escapeHtml(section.instructor)}</strong></td>
-                    <td><strong>${MSDS.escapeHtml(section.crn)}</strong><span>${section.web === "Y" ? "可网页注册" : "WEB=N"}</span></td>
-                  </tr>`).join("")}</tbody>
+                <tbody>${sectionRows}</tbody>
               </table>
             </div>
           </section>
@@ -104,6 +118,8 @@
           </section>
         </div>
       </div>`;
+
+    if (!isOffered) return;
 
     document.getElementById("detail-add").addEventListener("click", () => {
       const current = MSDS.getStoredSelections();

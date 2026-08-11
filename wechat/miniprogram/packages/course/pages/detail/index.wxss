@@ -58,6 +58,12 @@
   margin: 0;
 }
 
+.unavailable-button {
+  background: #f4e8ea;
+  color: #a72d3c;
+  opacity: 1;
+}
+
 .document-button {
   grid-column: 1 / -1;
   display: flex;

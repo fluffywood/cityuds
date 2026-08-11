@@ -2,7 +2,7 @@
   "use strict";
 
   const detail = document.getElementById("syllabus-detail");
-  const code = new URLSearchParams(window.location.search).get("code")?.trim().toUpperCase();
+  const code = MSDS.normalizeCourseCode(new URLSearchParams(window.location.search).get("code"));
 
   function getJson(url) {
     return fetch(url).then((response) => {

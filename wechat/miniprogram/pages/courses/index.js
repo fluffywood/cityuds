@@ -54,6 +54,7 @@ function scheduleText(sections) {
 
 function displayCourse(course, selections) {
   const primary = primarySections(course);
+  const offered = course.offered_this_year !== false;
   const recommendation = course.recommendation || {
     level: "unknown",
     verdict: "暂无评价",
@@ -68,12 +69,15 @@ function displayCourse(course, selections) {
     credits: course.credits,
     requirementType: course.requirement_type,
     requirementLabel: course.requirement_type === "core" ? "核心" : "选修",
+    offered,
     primaryCount: primary.length,
-    webLabel: summary.web === "N" ? "非网页注册" : "可网页注册",
-    scheduleText: scheduleText(primary),
+    webLabel: offered
+      ? (summary.web === "N" ? "非网页注册" : "可网页注册")
+      : "本学年不开设",
+    scheduleText: offered ? scheduleText(primary) : "本学年不开设",
     recommendation,
     displayTags: (recommendation.tags || []).slice(0, 3),
-    added: Boolean(selections[course.code])
+    added: offered && Boolean(selections[course.code])
   };
 }
 
@@ -149,6 +153,10 @@ Page({
     const code = event.detail.code;
     const course = courseByCode[code];
     if (!course) return;
+    if (course.offered_this_year === false) {
+      wx.showToast({ title: "本学年不开设", icon: "none" });
+      return;
+    }
 
     const nextSelections = Object.assign({}, this.selections || {});
     if (nextSelections[code]) {

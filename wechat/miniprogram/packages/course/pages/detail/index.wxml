@@ -8,8 +8,8 @@
     <view class="course-subtitle">{{course.credits}} 学分 · {{course.remarks}} · {{course.titleNote}}</view>
 
     <view class="actions">
-      <button class="{{added ? 'secondary-button' : 'primary-button'}}" bindtap="toggleCourse">
-        {{added ? '已加入课表' : '加入课表'}}
+      <button class="{{!course.offered ? 'unavailable-button' : (added ? 'secondary-button' : 'primary-button')}}" bindtap="toggleCourse" disabled="{{!course.offered}}">
+        {{!course.offered ? '本学年不开设' : (added ? '已加入课表' : '加入课表')}}
       </button>
       <button class="secondary-button" bindtap="openTimetable">查看课表</button>
       <button wx:if="{{documentRoute}}" class="document-button" bindtap="openDocument">查看详细课程介绍</button>
@@ -50,7 +50,7 @@
       <view class="section-note" wx:for="{{item.notes}}" wx:key="*this">{{item}}</view>
     </view>
   </view>
-  <view class="surface empty-state" wx:else>当前课表快照中没有可展示班次。</view>
+  <view class="surface empty-state" wx:else>{{course.offered ? '当前课表快照中没有可展示班次。' : '本学年不开设，暂无可选班次。'}}</view>
 
   <view class="section-heading">原始来源与评价原文</view>
   <view class="source-intro">以下评价对应往届课程，考核方式、教师和难度可能变化。点击“复制原文链接”后可在浏览器查看。</view>
