@@ -134,13 +134,31 @@
     return `${section.section} · ${DAY_NAMES[section.day] || section.day} ${section.time}`;
   }
 
-  function showToast(message) {
+  function showToast(message, options = {}) {
     const toast = document.getElementById("toast");
     if (!toast) return;
-    toast.textContent = message;
+    const { actionLabel, onAction, duration = actionLabel ? 5000 : 2600 } = options;
+    toast.replaceChildren();
+
+    const messageElement = document.createElement("span");
+    messageElement.textContent = message;
+    toast.append(messageElement);
+
+    if (actionLabel && typeof onAction === "function") {
+      const actionButton = document.createElement("button");
+      actionButton.type = "button";
+      actionButton.textContent = actionLabel;
+      actionButton.addEventListener("click", () => {
+        window.clearTimeout(showToast.timer);
+        toast.classList.remove("show");
+        onAction();
+      }, { once: true });
+      toast.append(actionButton);
+    }
+
     toast.classList.add("show");
     window.clearTimeout(showToast.timer);
-    showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2200);
+    showToast.timer = window.setTimeout(() => toast.classList.remove("show"), duration);
   }
 
   function recommendationBadge(rec, small = false) {

@@ -3,6 +3,7 @@
 
   const detail = document.getElementById("syllabus-detail");
   const code = MSDS.normalizeCourseCode(new URLSearchParams(window.location.search).get("code"));
+  const mobileReaderQuery = window.matchMedia("(max-width: 900px)");
 
   function getJson(url) {
     return fetch(url).then((response) => {
@@ -12,11 +13,14 @@
   }
 
   function renderPager(pageCount, isBottom = false) {
+    const counterAttributes = isBottom
+      ? 'aria-hidden="true"'
+      : 'id="bilingual-page-status" role="status" aria-live="polite" aria-atomic="true"';
     return `
       <div class="bilingual-pager${isBottom ? " bilingual-pager-bottom" : ""}">
-        <button class="bilingual-page-button" type="button" data-bilingual-action="previous" aria-label="查看上一页中英文课程介绍">← 上一页</button>
-        <strong class="bilingual-page-counter" aria-live="polite">第 1 / ${pageCount} 页</strong>
-        <button class="bilingual-page-button" type="button" data-bilingual-action="next" aria-label="查看下一页中英文课程介绍">下一页 →</button>
+        <button class="bilingual-page-button" type="button" data-bilingual-action="previous" aria-controls="bilingual-page-content" aria-label="查看上一页中英文课程介绍">← 上一页</button>
+        <strong class="bilingual-page-counter" ${counterAttributes}>第 1 / ${pageCount} 页</strong>
+        <button class="bilingual-page-button" type="button" data-bilingual-action="next" aria-controls="bilingual-page-content" aria-label="查看下一页中英文课程介绍">下一页 →</button>
       </div>`;
   }
 
@@ -32,7 +36,29 @@
     const pageCounters = Array.from(document.querySelectorAll(".bilingual-page-counter"));
     const previousButtons = Array.from(document.querySelectorAll('[data-bilingual-action="previous"]'));
     const nextButtons = Array.from(document.querySelectorAll('[data-bilingual-action="next"]'));
+    const viewSwitcher = document.querySelector(".bilingual-view-switcher");
+    const viewButtons = Array.from(document.querySelectorAll("[data-bilingual-view]"));
+    const viewPanels = Array.from(document.querySelectorAll("[data-bilingual-view-panel]"));
     let currentIndex = 0;
+    let activeView = "original";
+
+    function syncReaderView() {
+      viewButtons.forEach((button) => {
+        const active = button.dataset.bilingualView === activeView;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      viewPanels.forEach((panel) => {
+        panel.hidden = mobileReaderQuery.matches
+          && panel.dataset.bilingualViewPanel !== activeView;
+      });
+    }
+
+    function showReaderView(view) {
+      if (!viewButtons.some((button) => button.dataset.bilingualView === view)) return;
+      activeView = view;
+      syncReaderView();
+    }
 
     function showPage(nextIndex, moveViewport) {
       if (nextIndex < 0 || nextIndex >= translationPages.length) return;
@@ -92,7 +118,27 @@
     nextButtons.forEach((button) => {
       button.addEventListener("click", () => showPage(currentIndex + 1, true));
     });
+    viewButtons.forEach((button) => {
+      button.addEventListener("click", () => showReaderView(button.dataset.bilingualView));
+    });
+    viewSwitcher.addEventListener("keydown", (event) => {
+      const currentButton = event.target.closest("[data-bilingual-view]");
+      if (!currentButton) return;
+      const currentButtonIndex = viewButtons.indexOf(currentButton);
+      let nextButtonIndex;
+      if (event.key === "ArrowLeft") nextButtonIndex = (currentButtonIndex - 1 + viewButtons.length) % viewButtons.length;
+      if (event.key === "ArrowRight") nextButtonIndex = (currentButtonIndex + 1) % viewButtons.length;
+      if (event.key === "Home") nextButtonIndex = 0;
+      if (event.key === "End") nextButtonIndex = viewButtons.length - 1;
+      if (nextButtonIndex === undefined) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextButton = viewButtons[nextButtonIndex];
+      showReaderView(nextButton.dataset.bilingualView);
+      nextButton.focus();
+    });
     reader.addEventListener("keydown", (event) => {
+      if (event.target !== reader) return;
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         showPage(currentIndex - 1, false);
@@ -102,7 +148,13 @@
         showPage(currentIndex + 1, false);
       }
     });
+    if (typeof mobileReaderQuery.addEventListener === "function") {
+      mobileReaderQuery.addEventListener("change", syncReaderView);
+    } else {
+      mobileReaderQuery.addListener(syncReaderView);
+    }
 
+    syncReaderView();
     showPage(0, false);
   }
 
@@ -136,10 +188,6 @@
         </div>
       </section>
 
-      <nav class="syllabus-jump-links" aria-label="课程介绍内容导航">
-        <a href="#bilingual-reader">中英逐页对照</a>
-      </nav>
-
       <section id="bilingual-reader" class="document-panel bilingual-reader" tabindex="0" aria-label="${MSDS.escapeHtml(course.code)} 中英文逐页课程介绍">
         <div class="document-panel-heading bilingual-reader-heading">
           <div><span>Bilingual document</span><h2>中英逐页对照</h2></div>
@@ -148,8 +196,13 @@
 
         ${renderPager(pageCount)}
 
-        <div class="bilingual-page-grid">
-          <article class="bilingual-page-card original-page-card">
+        <div class="bilingual-view-switcher" role="group" aria-label="移动端课程介绍视图">
+          <button class="bilingual-view-button is-active" type="button" data-bilingual-view="original" aria-controls="bilingual-original-panel" aria-pressed="true">英文原文</button>
+          <button class="bilingual-view-button" type="button" data-bilingual-view="translation" aria-controls="bilingual-translation-panel" aria-pressed="false">中文翻译</button>
+        </div>
+
+        <div id="bilingual-page-content" class="bilingual-page-grid">
+          <article id="bilingual-original-panel" class="bilingual-page-card original-page-card" data-bilingual-view-panel="original">
             <div class="bilingual-card-heading">
               <div><span>Original document</span><h3>英文原文</h3></div>
               <strong class="bilingual-current-page">第 1 页</strong>
@@ -163,7 +216,7 @@
             </div>
           </article>
 
-          <article class="bilingual-page-card translation-page-card">
+          <article id="bilingual-translation-panel" class="bilingual-page-card translation-page-card" data-bilingual-view-panel="translation">
             <div class="bilingual-card-heading translation-card-heading">
               <div><span>Chinese translation</span><h3>中文翻译</h3></div>
               <strong class="bilingual-current-page">第 1 页</strong>
