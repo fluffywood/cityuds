@@ -2,12 +2,19 @@
   "use strict";
 
   const detail = document.getElementById("syllabus-detail");
-  const code = MSDS.normalizeCourseCode(new URLSearchParams(window.location.search).get("code"));
+  const rawCode = new URLSearchParams(window.location.search).get("code");
+  const code = MSDS.normalizeCourseCode(rawCode);
+  if (code && rawCode && code !== rawCode.trim().toUpperCase()) {
+    const canonicalUrl = new URL(window.location.href);
+    canonicalUrl.searchParams.set("code", code);
+    window.history.replaceState(null, "", canonicalUrl);
+  }
   const mobileReaderQuery = window.matchMedia("(max-width: 900px)");
 
   function getJson(url) {
-    return fetch(url).then((response) => {
-      if (!response.ok) throw new Error(`数据读取失败：${url}`);
+    const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=20260811c`;
+    return fetch(requestUrl).then((response) => {
+      if (!response.ok) throw new Error(`数据读取失败：${requestUrl}`);
       return response.json();
     });
   }

@@ -2,7 +2,13 @@
   "use strict";
 
   const detail = document.getElementById("course-detail");
-  const code = MSDS.normalizeCourseCode(new URLSearchParams(window.location.search).get("code"));
+  const rawCode = new URLSearchParams(window.location.search).get("code");
+  const code = MSDS.normalizeCourseCode(rawCode);
+  if (code && rawCode && code !== rawCode.trim().toUpperCase()) {
+    const canonicalUrl = new URL(window.location.href);
+    canonicalUrl.searchParams.set("code", code);
+    window.history.replaceState(null, "", canonicalUrl);
+  }
 
   function fact(label, value) {
     return `<div class="fact"><dt>${MSDS.escapeHtml(label)}</dt><dd>${MSDS.escapeHtml(value || "无")}</dd></div>`;
@@ -291,7 +297,7 @@
 
   Promise.all([
     MSDS.loadCourseData(),
-    fetch("data/course-documents/index.json").then((response) => {
+    fetch("data/course-documents/index.json?v=20260811c").then((response) => {
       if (!response.ok) throw new Error("课程介绍索引读取失败");
       return response.json();
     })

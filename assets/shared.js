@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "MSDS-planner-selections-v1";
-  const LEGACY_COURSE_CODE_PATTERN = /^DSC(?=\d{4}$)/;
+  const DATA_VERSION = "20260811c";
+  const LEGACY_COURSE_CODE_PATTERN = /^SDSC(?=\d{4}$)/;
   const DAY_NAMES = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五", S: "周六", U: "周日" };
   let courseDataPromise;
 
@@ -17,10 +18,13 @@
 
   function loadCourseData() {
     if (!courseDataPromise) {
-      const getJson = (url) => fetch(url).then((response) => {
-        if (!response.ok) throw new Error(`数据读取失败：${url}`);
-        return response.json();
-      });
+      const getJson = (url) => {
+        const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=${DATA_VERSION}`;
+        return fetch(requestUrl).then((response) => {
+          if (!response.ok) throw new Error(`数据读取失败：${requestUrl}`);
+          return response.json();
+        });
+      };
       courseDataPromise = Promise.all([
         getJson("data/courses/index.json"),
         getJson("data/sources.json")
@@ -62,7 +66,7 @@
     return String(value || "")
       .trim()
       .toUpperCase()
-      .replace(LEGACY_COURSE_CODE_PATTERN, "SDSC");
+      .replace(LEGACY_COURSE_CODE_PATTERN, "DSC");
   }
 
   function normalizeSelections(value) {

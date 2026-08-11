@@ -144,7 +144,7 @@ const documents = {
       "pages": [
         {
           "page": 1,
-          "text": "CS6493：自然语言处理\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：自然语言处理\n学科代码：CS - 计算机科学\n课程编号：6493\n开课单位：计算机科学系（CS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程（满足其中一门）：CS5481 数据工程；CS5487 机器学习：原理与实践；CS5489 机器学习：算法与应用；CS5491 人工智能；SDSC5001 统计机器学习 I；SDSC6001 统计机器学习 II；SDSC8007 深度学习。\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无"
+          "text": "CS6493：自然语言处理\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：自然语言处理\n学科代码：CS - 计算机科学\n课程编号：6493\n开课单位：计算机科学系（CS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程（满足其中一门）：CS5481 数据工程；CS5487 机器学习：原理与实践；CS5489 机器学习：算法与应用；CS5491 人工智能；DSC5001 统计机器学习 I；DSC6001 统计机器学习 II；DSC8007 深度学习。\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无"
         },
         {
           "page": 2,
@@ -173,19 +173,19 @@ const documents = {
       ]
     }
   },
-  "SDSC5001": {
-    "course_code": "SDSC5001",
-    "pdf": "docs/SDSC5001.pdf",
-    "translation_path": "data/course-documents/translations/SDSC5001.json",
+  "DSC5001": {
+    "course_code": "DSC5001",
+    "pdf": "docs/DSC5001.pdf",
+    "translation_path": "data/course-documents/translations/DSC5001.json",
     "translation": {
-      "course_code": "SDSC5001",
-      "source_pdf": "docs/SDSC5001.pdf",
+      "course_code": "DSC5001",
+      "source_pdf": "docs/DSC5001.pdf",
       "title_en": "Statistical Machine Learning I",
       "title_zh": "统计机器学习 I",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC5001：统计机器学习 I\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：统计机器学习 I\n学科代码：SDSC - 数据科学\n课程编号：5001\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
+          "text": "DSC5001：统计机器学习 I\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：统计机器学习 I\n学科代码：DSC - 数据科学\n课程编号：5001\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
         },
         {
           "page": 2,
@@ -210,19 +210,19 @@ const documents = {
       ]
     }
   },
-  "SDSC5002": {
-    "course_code": "SDSC5002",
-    "pdf": "docs/SDSC5002.pdf",
-    "translation_path": "data/course-documents/translations/SDSC5002.json",
+  "DSC5002": {
+    "course_code": "DSC5002",
+    "pdf": "docs/DSC5002.pdf",
+    "translation_path": "data/course-documents/translations/DSC5002.json",
     "translation": {
-      "course_code": "SDSC5002",
-      "source_pdf": "docs/SDSC5002.pdf",
+      "course_code": "DSC5002",
+      "source_pdf": "docs/DSC5002.pdf",
       "title_en": "Exploratory Data Analysis and Visualization",
       "title_zh": "探索性数据分析与可视化",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC5002：探索性数据分析与可视化\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：探索性数据分析与可视化\n学科代码：SDSC - 数据科学\n课程编号：5002\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
+          "text": "DSC5002：探索性数据分析与可视化\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：探索性数据分析与可视化\n学科代码：DSC - 数据科学\n课程编号：5002\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
         },
         {
           "page": 2,
@@ -251,19 +251,19 @@ const documents = {
       ]
     }
   },
-  "SDSC5003": {
-    "course_code": "SDSC5003",
-    "pdf": "docs/SDSC5003.pdf",
-    "translation_path": "data/course-documents/translations/SDSC5003.json",
+  "DSC5003": {
+    "course_code": "DSC5003",
+    "pdf": "docs/DSC5003.pdf",
+    "translation_path": "data/course-documents/translations/DSC5003.json",
     "translation": {
-      "course_code": "SDSC5003",
-      "source_pdf": "docs/SDSC5003.pdf",
+      "course_code": "DSC5003",
+      "source_pdf": "docs/DSC5003.pdf",
       "title_en": "Storing and Retrieving Data",
       "title_zh": "数据存储与检索",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC5003：数据存储与检索\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：数据存储与检索\n学科代码：SDSC - 数据科学\n课程编号：5003\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
+          "text": "DSC5003：数据存储与检索\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：数据存储与检索\n学科代码：DSC - 数据科学\n课程编号：5003\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
         },
         {
           "page": 2,
@@ -288,19 +288,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6004": {
-    "course_code": "SDSC6004",
-    "pdf": "docs/SDSC6004.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6004.json",
+  "DSC6004": {
+    "course_code": "DSC6004",
+    "pdf": "docs/DSC6004.pdf",
+    "translation_path": "data/course-documents/translations/DSC6004.json",
     "translation": {
-      "course_code": "SDSC6004",
-      "source_pdf": "docs/SDSC6004.pdf",
+      "course_code": "DSC6004",
+      "source_pdf": "docs/DSC6004.pdf",
       "title_en": "Topics of Artificial Intelligence for Smart Cities",
       "title_zh": "智慧城市人工智能专题",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6004：智慧城市人工智能专题\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：智慧城市人工智能专题\n学科代码：SDSC - 数据科学\n课程编号：6004\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
+          "text": "DSC6004：智慧城市人工智能专题\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：智慧城市人工智能专题\n学科代码：DSC - 数据科学\n课程编号：6004\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
         },
         {
           "page": 2,
@@ -325,19 +325,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6006": {
-    "course_code": "SDSC6006",
-    "pdf": "docs/SDSC6006.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6006.json",
+  "DSC6006": {
+    "course_code": "DSC6006",
+    "pdf": "docs/DSC6006.pdf",
+    "translation_path": "data/course-documents/translations/DSC6006.json",
     "translation": {
-      "course_code": "SDSC6006",
-      "source_pdf": "docs/SDSC6006.pdf",
+      "course_code": "DSC6006",
+      "source_pdf": "docs/DSC6006.pdf",
       "title_en": "Dissertation",
       "title_zh": "学位论文",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6006：学位论文\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：学位论文\n学科代码：SDSC - 数据科学\n课程编号：6006\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：两个学期\n学分：0-6\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
+          "text": "DSC6006：学位论文\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：学位论文\n学科代码：DSC - 数据科学\n课程编号：6006\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：两个学期\n学分：0-6\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
         },
         {
           "page": 2,
@@ -362,19 +362,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6007": {
-    "course_code": "SDSC6007",
-    "pdf": "docs/SDSC6007.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6007.json",
+  "DSC6007": {
+    "course_code": "DSC6007",
+    "pdf": "docs/DSC6007.pdf",
+    "translation_path": "data/course-documents/translations/DSC6007.json",
     "translation": {
-      "course_code": "SDSC6007",
-      "source_pdf": "docs/SDSC6007.pdf",
+      "course_code": "DSC6007",
+      "source_pdf": "docs/DSC6007.pdf",
       "title_en": "Dynamic Programming and Reinforcement Learning",
       "title_zh": "动态规划与强化学习",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6007：动态规划与强化学习\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：动态规划与强化学习\n学科代码：SDSC - 数据科学\n课程编号：6007\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文见下一页）"
+          "text": "DSC6007：动态规划与强化学习\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：动态规划与强化学习\n学科代码：DSC - 数据科学\n课程编号：6007\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文见下一页）"
         },
         {
           "page": 2,
@@ -407,19 +407,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6008": {
-    "course_code": "SDSC6008",
-    "pdf": "docs/SDSC6008.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6008.json",
+  "DSC6008": {
+    "course_code": "DSC6008",
+    "pdf": "docs/DSC6008.pdf",
+    "translation_path": "data/course-documents/translations/DSC6008.json",
     "translation": {
-      "course_code": "SDSC6008",
-      "source_pdf": "docs/SDSC6008.pdf",
+      "course_code": "DSC6008",
+      "source_pdf": "docs/DSC6008.pdf",
       "title_en": "Design of Experiments",
       "title_zh": "实验设计",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6008：实验设计\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：实验设计\n学科代码：SDSC - 数据科学\n课程编号：6008\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要\n本课程旨在使学生理解实验设计与回归方法，培养其设计和分析物理实验及计算机实验的能力，并使其认识到……的价值（下页续）。"
+          "text": "DSC6008：实验设计\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：实验设计\n学科代码：DSC - 数据科学\n课程编号：6008\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要\n本课程旨在使学生理解实验设计与回归方法，培养其设计和分析物理实验及计算机实验的能力，并使其认识到……的价值（下页续）。"
         },
         {
           "page": 2,
@@ -448,19 +448,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6011": {
-    "course_code": "SDSC6011",
-    "pdf": "docs/SDSC6011.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6011.json",
+  "DSC6011": {
+    "course_code": "DSC6011",
+    "pdf": "docs/DSC6011.pdf",
+    "translation_path": "data/course-documents/translations/DSC6011.json",
     "translation": {
-      "course_code": "SDSC6011",
-      "source_pdf": "docs/SDSC6011.pdf",
+      "course_code": "DSC6011",
+      "source_pdf": "docs/DSC6011.pdf",
       "title_en": "Optimization for Data Science",
       "title_zh": "数据科学优化方法",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6011：数据科学优化方法\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：数据科学优化方法\n学科代码：SDSC - 数据科学\n课程编号：6011\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要\n本课程介绍优化方法及其在数据科学中的应用，并假定学生具备微积分和线性代数的基础知识。课程将介绍优化的理论基础与基本算法（正文续见第 2 页）。"
+          "text": "DSC6011：数据科学优化方法\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：数据科学优化方法\n学科代码：DSC - 数据科学\n课程编号：6011\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要\n本课程介绍优化方法及其在数据科学中的应用，并假定学生具备微积分和线性代数的基础知识。课程将介绍优化的理论基础与基本算法（正文续见第 2 页）。"
         },
         {
           "page": 2,
@@ -481,19 +481,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6012": {
-    "course_code": "SDSC6012",
-    "pdf": "docs/SDSC6012.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6012.json",
+  "DSC6012": {
+    "course_code": "DSC6012",
+    "pdf": "docs/DSC6012.pdf",
+    "translation_path": "data/course-documents/translations/DSC6012.json",
     "translation": {
-      "course_code": "SDSC6012",
-      "source_pdf": "docs/SDSC6012.pdf",
+      "course_code": "DSC6012",
+      "source_pdf": "docs/DSC6012.pdf",
       "title_en": "Time Series and Recurrent Neural Networks",
       "title_zh": "时间序列与循环神经网络",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6012：时间序列与循环神经网络\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：时间序列与循环神经网络\n学科代码：SDSC - 数据科学\n课程编号：6012\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
+          "text": "DSC6012：时间序列与循环神经网络\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：时间序列与循环神经网络\n学科代码：DSC - 数据科学\n课程编号：6012\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
         },
         {
           "page": 2,
@@ -518,19 +518,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6013": {
-    "course_code": "SDSC6013",
-    "pdf": "docs/SDSC6013.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6013.json",
+  "DSC6013": {
+    "course_code": "DSC6013",
+    "pdf": "docs/DSC6013.pdf",
+    "translation_path": "data/course-documents/translations/DSC6013.json",
     "translation": {
-      "course_code": "SDSC6013",
-      "source_pdf": "docs/SDSC6013.pdf",
+      "course_code": "DSC6013",
+      "source_pdf": "docs/DSC6013.pdf",
       "title_en": "Topics in Financial Engineering and Technology",
       "title_zh": "金融工程与金融科技专题",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6013：金融工程与金融科技专题\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：金融工程与金融科技专题\n学科代码：SDSC - 数据科学\n课程编号：6013\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
+          "text": "DSC6013：金融工程与金融科技专题\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：金融工程与金融科技专题\n学科代码：DSC - 数据科学\n课程编号：6013\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n预备课程：无\n同等课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要（正文续见第 2 页）"
         },
         {
           "page": 2,
@@ -563,19 +563,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6016": {
-    "course_code": "SDSC6016",
-    "pdf": "docs/SDSC6016.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6016.json",
+  "DSC6016": {
+    "course_code": "DSC6016",
+    "pdf": "docs/DSC6016.pdf",
+    "translation_path": "data/course-documents/translations/DSC6016.json",
     "translation": {
-      "course_code": "SDSC6016",
-      "source_pdf": "docs/SDSC6016.pdf",
+      "course_code": "DSC6016",
+      "source_pdf": "docs/DSC6016.pdf",
       "title_en": "Predictive Analytics and Financial Applications",
       "title_zh": "预测分析与金融应用",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6016：预测分析与金融应用\n\n生效学期：2025/26 学年 B 学期\n\n第一部分 课程概览\n课程名称：预测分析与金融应用\n学科代码：SDSC - 数据科学\n课程编号：6016\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
+          "text": "DSC6016：预测分析与金融应用\n\n生效学期：2025/26 学年 B 学期\n\n第一部分 课程概览\n课程名称：预测分析与金融应用\n学科代码：DSC - 数据科学\n课程编号：6016\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：一个学期\n学分：3\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修课程：无\n前置课程：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n摘要"
         },
         {
           "page": 2,
@@ -600,19 +600,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6017": {
-    "course_code": "SDSC6017",
-    "pdf": "docs/SDSC6017.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6017.json",
+  "DSC6017": {
+    "course_code": "DSC6017",
+    "pdf": "docs/DSC6017.pdf",
+    "translation_path": "data/course-documents/translations/DSC6017.json",
     "translation": {
-      "course_code": "SDSC6017",
-      "source_pdf": "docs/SDSC6017.pdf",
+      "course_code": "DSC6017",
+      "source_pdf": "docs/DSC6017.pdf",
       "title_en": "Internship Project",
       "title_zh": "实习项目",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6017：实习项目\n\n生效学期：2025/26 学年 B 学期\n\n第一部分 课程概览\n课程名称：实习项目\n学科代码：SDSC - 数据科学\n课程编号：6017\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：非标准时长\n其他课程时长说明：连续两个学期，第 1 个学期为 A 学期，第 2 个学期为 B 学期。\n学分：0-6\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修要求：实习应与所修课程项目相关，并须事先获得课程负责人批准。学生应已修毕至少 15 个学分，包括三门核心课程。\n前置课程：无\n等同课程：无\n互斥课程：SDSC6032 Internship Project (S)。"
+          "text": "DSC6017：实习项目\n\n生效学期：2025/26 学年 B 学期\n\n第一部分 课程概览\n课程名称：实习项目\n学科代码：DSC - 数据科学\n课程编号：6017\n开课学术单位：数据科学（DS）\n学院：计算学院（CC）\n课程时长：非标准时长\n其他课程时长说明：连续两个学期，第 1 个学期为 A 学期，第 2 个学期为 B 学期。\n学分：0-6\n程度：P5、P6 - 研究生学位课程\n授课语言：英语\n评核语言：英语\n先修要求：实习应与所修课程项目相关，并须事先获得课程负责人批准。学生应已修毕至少 15 个学分，包括三门核心课程。\n前置课程：无\n等同课程：无\n互斥课程：DSC6032 Internship Project (S)。"
         },
         {
           "page": 2,
@@ -633,19 +633,19 @@ const documents = {
       ]
     }
   },
-  "SDSC6018": {
-    "course_code": "SDSC6018",
-    "pdf": "docs/SDSC6018.pdf",
-    "translation_path": "data/course-documents/translations/SDSC6018.json",
+  "DSC6018": {
+    "course_code": "DSC6018",
+    "pdf": "docs/DSC6018.pdf",
+    "translation_path": "data/course-documents/translations/DSC6018.json",
     "translation": {
-      "course_code": "SDSC6018",
-      "source_pdf": "docs/SDSC6018.pdf",
+      "course_code": "DSC6018",
+      "source_pdf": "docs/DSC6018.pdf",
       "title_en": "Health Data Analytics",
       "title_zh": "健康数据分析",
       "pages": [
         {
           "page": 1,
-          "text": "SDSC6018：健康数据分析\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：健康数据分析\n学科代码：SDSC - 数据科学\n课程编号：6018\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
+          "text": "DSC6018：健康数据分析\n\n生效学期：2025/26 学年 A 学期\n\n第一部分 课程概览\n课程名称：健康数据分析\n学科代码：DSC - 数据科学\n课程编号：6018\n开课单位：数据科学系（DS）\n学院：计算学院（CC）\n课程时长：一学期\n学分：3\n级别：P5、P6 - 研究生学位课程\n授课语言：英语\n考核语言：英语\n先修课程：无\n前置课程（Precursors）：无\n等同课程：无\n互斥课程：无\n\n第二部分 课程详情\n课程简介（正文见下一页）"
         },
         {
           "page": 2,

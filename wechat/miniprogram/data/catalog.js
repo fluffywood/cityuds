@@ -20,7 +20,7 @@ const metadata = {
 
 const courses = [
   {
-    "code": "SDSC5001",
+    "code": "DSC5001",
     "requirement_type": "core",
     "programme_title": "Statistical Machine Learning I",
     "schedule_title": "Statistical Machine Learning I",
@@ -93,7 +93,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC5001",
+      "course_code": "DSC5001",
       "level": "neutral",
       "verdict": "适中可选",
       "summary": "没有 ML 基础也能跟上，但画图题易掉坑，树和 SVM 部分需认真学。项目很水给分挺高，但会 curve，部分同学不满意。考试有最低通过要求，闭卷考试。",
@@ -116,13 +116,13 @@ const courses = [
         "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
         "platform": "小红书",
-        "note": "DS SemA 课程体验汇总，涉及 SDSC5001/SDSC5002/SDSC5003/SDSC6012 等课程难度、给分与考核方式。"
+        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC5002",
+    "code": "DSC5002",
     "requirement_type": "core",
     "programme_title": "Exploratory Data Analysis and Visualization",
     "schedule_title": "Exploratory Data Analysis and Visualization",
@@ -177,7 +177,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC5002",
+      "course_code": "DSC5002",
       "level": "recommended",
       "verdict": "强烈推荐",
       "summary": "水课，强烈推荐！老师在变着法子送分。有项目要 pre，可视化内容不多，跟其他课有交叉。考核为考试+项目。",
@@ -200,13 +200,13 @@ const courses = [
         "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
         "platform": "小红书",
-        "note": "DS SemA 课程体验汇总，涉及 SDSC5001/SDSC5002/SDSC5003/SDSC6012 等课程难度、给分与考核方式。"
+        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC5003",
+    "code": "DSC5003",
     "requirement_type": "core",
     "programme_title": "Storing and Retrieving Data",
     "schedule_title": "Storing and Retrieving Data",
@@ -261,7 +261,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC5003",
+      "course_code": "DSC5003",
       "level": "recommended",
       "verdict": "基础友好",
       "summary": "跟本科数据库内容一致，多了 MapReduce 概念，不需搭环境。本科学过数据库则无压力。老师严格按原始分给分，不 curve。开卷考试。",
@@ -284,13 +284,13 @@ const courses = [
         "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
         "platform": "小红书",
-        "note": "DS SemA 课程体验汇总，涉及 SDSC5001/SDSC5002/SDSC5003/SDSC6012 等课程难度、给分与考核方式。"
+        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6004",
+    "code": "DSC6004",
     "requirement_type": "elective",
     "programme_title": "Topics of Artificial Intelligence for Smart Cities",
     "schedule_title": "Topics of Artificial Intelligence for Smart Cities",
@@ -389,7 +389,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6004",
+      "course_code": "DSC6004",
       "level": "recommended",
       "verdict": "推荐选择",
       "summary": "院主任授课，上课佛系口音舒服。讲基础 ML/DL 加智慧城市各方面知识。期末开卷，推荐选。可能有出勤分。",
@@ -412,13 +412,13 @@ const courses = [
         "title": "CityU DS SemB 分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
         "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 SDSC6004/SDSC6013/SDSC6016 等课程评价。"
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6006",
+    "code": "DSC6006",
     "requirement_type": "elective",
     "programme_title": "Dissertation",
     "schedule_title": "Dissertation",
@@ -436,7 +436,7 @@ const courses = [
     "section_count": 0,
     "eligible_sections": [],
     "recommendation": {
-      "course_code": "SDSC6006",
+      "course_code": "DSC6006",
       "level": "neutral",
       "verdict": "论文课程",
       "summary": "可以远程完成，时间看想做成什么水平。可以和 mentor 讨论投稿方向。考核为论文。",
@@ -458,13 +458,13 @@ const courses = [
         "title": "CityU 24Fall DS混子完结撒花 评论区 (晴可可)",
         "url": "https://www.xiaohongshu.com/explore/68b0296a000000001d010a16",
         "platform": "小红书",
-        "note": "DS 混子完结总结评论区，涉及 SDSC6006 论文课与 SDSC6007/SDSC8013 等课程评价。"
+        "note": "DS 混子完结总结评论区，涉及 DSC6006 论文课与 DSC6007/DSC8013 等课程评价。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6007",
+    "code": "DSC6007",
     "requirement_type": "elective",
     "programme_title": "Dynamic Programming and Reinforcement Learning",
     "schedule_title": "Dynamic Programming and Reinforcement Learning",
@@ -483,7 +483,7 @@ const courses = [
     "section_count": 0,
     "eligible_sections": [],
     "recommendation": {
-      "course_code": "SDSC6007",
+      "course_code": "DSC6007",
       "level": "unknown",
       "verdict": "暂无评价",
       "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
@@ -495,7 +495,7 @@ const courses = [
     "documentAvailable": true
   },
   {
-    "code": "SDSC6008",
+    "code": "DSC6008",
     "requirement_type": "elective",
     "programme_title": "Design of Experiments",
     "schedule_title": "Design of Experiments",
@@ -546,7 +546,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6008",
+      "course_code": "DSC6008",
       "level": "unknown",
       "verdict": "暂无评价",
       "summary": "含高斯过程建模，评估方式均衡分散。",
@@ -562,7 +562,7 @@ const courses = [
     "documentAvailable": true
   },
   {
-    "code": "SDSC6011",
+    "code": "DSC6011",
     "requirement_type": "elective",
     "programme_title": "Optimization for Data Science",
     "schedule_title": "Optimization for Data Science",
@@ -597,7 +597,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6011",
+      "course_code": "DSC6011",
       "level": "caution",
       "verdict": "建议避雷",
       "summary": "考试占比 80%，需扎实数学基础。有学生明确建议避开此课（避雷）。考核以考试为主。",
@@ -619,13 +619,13 @@ const courses = [
         "title": "球CityU DS专业选课推荐 评论区",
         "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
         "platform": "小红书",
-        "note": "DS 选课推荐评论区，涉及 SDSC6011 避雷、SDSC6012/SDSC6013 等课程讨论。"
+        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6012",
+    "code": "DSC6012",
     "requirement_type": "elective",
     "programme_title": "Time Series and Recurrent Neural Networks",
     "schedule_title": "Time Series and Recurrent Neural Networks",
@@ -660,7 +660,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6012",
+      "course_code": "DSC6012",
       "level": "recommended",
       "verdict": "给分友好",
       "summary": "比王燕老师讲的时间序列简单，统计专业无压力。神经网络部分讲 RNN/LSTM/GRU，难度不大。作者数学一般也拿了 B+，给分友好。闭卷考试。",
@@ -684,7 +684,7 @@ const courses = [
         "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
         "platform": "小红书",
-        "note": "DS SemA 课程体验汇总，涉及 SDSC5001/SDSC5002/SDSC5003/SDSC6012 等课程难度、给分与考核方式。"
+        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
       },
       {
         "sourceId": "xhs_ds_qiu_zhu",
@@ -692,13 +692,13 @@ const courses = [
         "title": "港硕26届ds选课求助 评论区 (RUI)",
         "url": "https://www.xiaohongshu.com/explore/6a6832680000000001002c0e",
         "platform": "小红书",
-        "note": "DS 选课求助评论区，涉及 SDSC6012 时间序列课程评价。"
+        "note": "DS 选课求助评论区，涉及 DSC6012 时间序列课程评价。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6013",
+    "code": "DSC6013",
     "requirement_type": "elective",
     "programme_title": "Topics in Financial Engineering and Technology",
     "schedule_title": "Topics in Financial Engineering and Technology",
@@ -733,7 +733,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6013",
+      "course_code": "DSC6013",
       "level": "neutral",
       "verdict": "项目制但难度上升",
       "summary": "适合非商科背景，老师讲得比较慢。老师之前在雷曼兄弟工作，风格随意，喜欢交流市场。固收基础加风险基础，no exam 纯项目制。注意：2025 年底有学生反馈难度大增，不再是纯水课。",
@@ -757,7 +757,7 @@ const courses = [
         "title": "CityU DS SemB 分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
         "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 SDSC6004/SDSC6013/SDSC6016 等课程评价。"
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
       },
       {
         "sourceId": "xhs_ds_xuanke_buyao",
@@ -765,13 +765,13 @@ const courses = [
         "title": "球CityU DS专业选课推荐 评论区",
         "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
         "platform": "小红书",
-        "note": "DS 选课推荐评论区，涉及 SDSC6011 避雷、SDSC6012/SDSC6013 等课程讨论。"
+        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6016",
+    "code": "DSC6016",
     "requirement_type": "elective",
     "programme_title": "Predictive Analytics and Financial Applications",
     "schedule_title": "Predictive Analytics and Financial Applications",
@@ -806,10 +806,10 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6016",
+      "course_code": "DSC6016",
       "level": "neutral",
       "verdict": "无回放需注意",
-      "summary": "老师宾大本硕加芝加哥博，口音很舒服。Mid 很简单，学过 SDSC6012 或本科时间序列可裸考。注意：没有 Zoom 没有 Recording，不适合远程上课。闭卷考试。",
+      "summary": "老师宾大本硕加芝加哥博，口音很舒服。Mid 很简单，学过 DSC6012 或本科时间序列可裸考。注意：没有 Zoom 没有 Recording，不适合远程上课。闭卷考试。",
       "tags": [
         "难度适中",
         "闭卷考试",
@@ -825,17 +825,17 @@ const courses = [
     "sourceReviews": [
       {
         "sourceId": "xhs_ds_semb_gawin",
-        "text": "老师宾大本硕加芝加哥博，口音很舒服。Mid很简单，学过SDSC6012或本科时间序列可裸考。注意没有Zoom没有Recording，不适合远程上课。闭卷考试。",
+        "text": "老师宾大本硕加芝加哥博，口音很舒服。Mid很简单，学过DSC6012或本科时间序列可裸考。注意没有Zoom没有Recording，不适合远程上课。闭卷考试。",
         "title": "CityU DS SemB 分享 (一只Gawin)",
         "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
         "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 SDSC6004/SDSC6013/SDSC6016 等课程评价。"
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
       }
     ],
     "documentAvailable": true
   },
   {
-    "code": "SDSC6017",
+    "code": "DSC6017",
     "requirement_type": "elective",
     "programme_title": "Internship Project",
     "schedule_title": "Internship Project",
@@ -853,7 +853,7 @@ const courses = [
     "section_count": 0,
     "eligible_sections": [],
     "recommendation": {
-      "course_code": "SDSC6017",
+      "course_code": "DSC6017",
       "level": null,
       "verdict": "暂无评价",
       "summary": "实习项目课程：学生在数据科学相关行业机构完成一段实习，将课堂所学应用于真实业务场景，积累实际数据分析项目经验，并按课程要求提交实习项目报告与成果。本地暂未收集到往届学生评价。",
@@ -868,7 +868,7 @@ const courses = [
     "documentAvailable": true
   },
   {
-    "code": "SDSC6018",
+    "code": "DSC6018",
     "requirement_type": "elective",
     "programme_title": "Health Data Analytics",
     "schedule_title": "Health Data Analytics",
@@ -903,7 +903,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6018",
+      "course_code": "DSC6018",
       "level": null,
       "verdict": "暂无评价",
       "summary": "健康数据分析课程：聚焦医疗与健康领域的数据科学应用，涉及电子健康记录、临床与公共卫生数据的统计分析和机器学习建模，支持疾病预测、临床决策与健康管理。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -919,7 +919,7 @@ const courses = [
     "documentAvailable": true
   },
   {
-    "code": "SDSC6020",
+    "code": "DSC6020",
     "requirement_type": "elective",
     "programme_title": "Artificial Intelligence for Scientific Knowledge Discovery",
     "schedule_title": "Artificial Intelligence for Scientific Knowledge Discovery",
@@ -954,7 +954,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6020",
+      "course_code": "DSC6020",
       "level": null,
       "verdict": "暂无评价",
       "summary": "人工智能科学知识发现课程（AI for Science）：将人工智能与机器学习技术应用于科学数据（如实验、观测与多源科学数据）的分析与建模，用于自动发现科学规律、加速科研流程。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -969,7 +969,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC6021",
+    "code": "DSC6021",
     "requirement_type": "elective",
     "programme_title": "Generative Artificial Intelligence",
     "schedule_title": "Generative Artificial Intelligence",
@@ -1004,7 +1004,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6021",
+      "course_code": "DSC6021",
       "level": null,
       "verdict": "暂无评价",
       "summary": "生成式人工智能课程：系统介绍生成式 AI 的原理与技术，涵盖生成对抗网络（GAN）、变分自编码器、扩散模型以及大规模生成模型（如大语言模型）等，并探讨其在文本、图像、代码等生成任务中的应用。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -1020,7 +1020,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC6026",
+    "code": "DSC6026",
     "requirement_type": "elective",
     "programme_title": "Social Network Analysis",
     "schedule_title": "Social Network Analysis",
@@ -1055,7 +1055,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC6026",
+      "course_code": "DSC6026",
       "level": null,
       "verdict": "暂无评价",
       "summary": "社交网络分析课程：研究社交网络数据的表示与分析方法，涵盖网络结构度量、社区发现、传播模型与图机器学习（图神经网络）等技术，并应用于社交平台、推荐系统与舆情分析等场景。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -1070,7 +1070,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC8001",
+    "code": "DSC8001",
     "requirement_type": "elective",
     "programme_title": "Seminars on Data Science I",
     "schedule_title": "Seminars on Data Science I",
@@ -1088,7 +1088,7 @@ const courses = [
     "section_count": 0,
     "eligible_sections": [],
     "recommendation": {
-      "course_code": "SDSC8001",
+      "course_code": "DSC8001",
       "level": null,
       "verdict": "暂无评价",
       "summary": "数据科学系列研讨会 I：以专题研讨形式邀请学术界或行业专家分享数据科学前沿研究与实际应用，学生通过参与讲座、阅读材料与课堂讨论，拓展对数据科学各方向的视野。本地暂未收集到往届学生评价。",
@@ -1103,7 +1103,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC8002",
+    "code": "DSC8002",
     "requirement_type": "elective",
     "programme_title": "Seminars on Data Science II",
     "schedule_title": "Seminars on Data Science II",
@@ -1121,7 +1121,7 @@ const courses = [
     "section_count": 0,
     "eligible_sections": [],
     "recommendation": {
-      "course_code": "SDSC8002",
+      "course_code": "DSC8002",
       "level": null,
       "verdict": "暂无评价",
       "summary": "数据科学系列研讨会 II：延续系列研讨会形式，围绕数据科学前沿议题组织专家讲座与研讨，学生参与讨论并可能进行小组展示或报告。本地暂未收集到往届学生评价。",
@@ -1136,7 +1136,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC8003",
+    "code": "DSC8003",
     "requirement_type": "elective",
     "programme_title": "Machine Learning",
     "schedule_title": "Machine Learning",
@@ -1171,7 +1171,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC8003",
+      "course_code": "DSC8003",
       "level": null,
       "verdict": "暂无评价",
       "summary": "机器学习课程：系统讲授机器学习的核心理论与方法，涵盖监督学习（回归、分类）、无监督学习、模型评估与选择、核方法以及深度神经网络等基础内容，强调算法原理与实现能力。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -1187,7 +1187,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC8004",
+    "code": "DSC8004",
     "requirement_type": "elective",
     "programme_title": "Advanced Statistics",
     "schedule_title": "Advanced Statistics",
@@ -1238,7 +1238,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC8004",
+      "course_code": "DSC8004",
       "level": null,
       "verdict": "暂无评价",
       "summary": "高级统计学课程：在基础统计推断之上深入讲授更高级的统计理论与方法，涉及多元统计分析、贝叶斯方法、非参数方法、广义线性模型等，培养严格统计思维与数据分析能力。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
@@ -1254,7 +1254,7 @@ const courses = [
     "documentAvailable": false
   },
   {
-    "code": "SDSC8005",
+    "code": "DSC8005",
     "requirement_type": "elective",
     "programme_title": "Optimization",
     "schedule_title": "Optimization",
@@ -1305,7 +1305,7 @@ const courses = [
       }
     ],
     "recommendation": {
-      "course_code": "SDSC8005",
+      "course_code": "DSC8005",
       "level": null,
       "verdict": "暂无评价",
       "summary": "优化课程：讲授最优化理论与算法的核心内容，涵盖凸优化、线性与非线性规划、对偶理论、梯度类方法与数值算法，及其在机器学习和数据科学问题中的应用。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",

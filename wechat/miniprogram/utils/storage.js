@@ -1,5 +1,5 @@
 const STORAGE_KEY = "MSDS-planner-selections-v1";
-const LEGACY_COURSE_CODE_PATTERN = /^DSC(?=\d{4}$)/;
+const LEGACY_COURSE_CODE_PATTERN = /^SDSC(?=\d{4}$)/;
 
 function storageApi(providedApi) {
   if (providedApi) return providedApi;
@@ -34,7 +34,7 @@ function normalizeCourseCode(value) {
   return String(value || "")
     .trim()
     .toUpperCase()
-    .replace(LEGACY_COURSE_CODE_PATTERN, "SDSC");
+    .replace(LEGACY_COURSE_CODE_PATTERN, "DSC");
 }
 
 function getStoredSelections(providedApi) {

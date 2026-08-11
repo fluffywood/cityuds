@@ -16,9 +16,9 @@
 
   // 首次访问时默认选中的核心课程班次
   const DEFAULT_SELECTIONS = [
-    { code: "SDSC5003", section: "C62" },
-    { code: "SDSC5001", section: "C61" },
-    { code: "SDSC5002", section: "C62" }
+    { code: "DSC5003", section: "C62" },
+    { code: "DSC5001", section: "C61" },
+    { code: "DSC5002", section: "C62" }
   ];
 
   let courses = [];
