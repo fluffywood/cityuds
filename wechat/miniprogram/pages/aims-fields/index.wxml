@@ -1,0 +1,29 @@
+<view class="page-shell fields-page">
+  <view class="fields-hero">
+    <view class="page-title">选课字段解释</view>
+    <view class="page-subtitle">集中说明 Master Class Schedule 与 AIMS 中常见的 16 项字段。</view>
+  </view>
+
+  <view class="important-note">
+    <text>容易混淆</text>
+    <view>CRN 是教学班注册编号；Section 是班次编号；WEB 表示网页注册权限，不代表线上授课。</view>
+  </view>
+
+  <view class="field-group" wx:for="{{fieldGroups}}" wx:for-item="group" wx:key="title">
+    <view class="section-heading">{{group.title}}</view>
+    <view class="surface field-list">
+      <view class="field-item" wx:for="{{group.fields}}" wx:for-item="field" wx:key="term">
+        <view class="field-head">
+          <view class="field-term">
+            <text>{{field.term}}</text>
+            <text wx:if="{{field.fullName}}">{{field.fullName}}</text>
+          </view>
+          <view class="field-meaning">{{field.meaning}}</view>
+        </view>
+        <view class="field-description">{{field.description}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="source-note">字段解释用于辅助阅读课程班次。课程名额和注册状态会持续变化，最终请以 AIMS 为准。</view>
+</view>

@@ -71,9 +71,14 @@
 }
 
 .add-button.is-unavailable {
-  background: #dc3545;
-  border: 1rpx solid #c52f3f;
-  color: #ffffff;
+  background: #eef1f5;
+  color: #7b8494;
+  opacity: 1;
+}
+
+.add-button.is-ineligible {
+  background: #fff1e7;
+  color: #b54708;
   opacity: 1;
 }
 
@@ -94,6 +99,75 @@
   color: #44526a;
   font-size: 23rpx;
   line-height: 1.55;
+}
+
+.course-schedule-picker {
+  display: block;
+  margin-top: 10rpx;
+}
+
+.course-schedule-selector {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 88rpx;
+  padding: 8rpx 14rpx;
+  border-radius: 14rpx;
+  align-items: center;
+  justify-content: space-between;
+  background: #f4f7fc;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.course-schedule-selector:active {
+  background: #eaf0fb;
+  transform: scale(0.99);
+}
+
+.course-schedule-value {
+  min-width: 0;
+  color: #44526a;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.course-schedule-action {
+  flex: 0 0 auto;
+  margin-left: 16rpx;
+  color: #2855d9;
+  font-size: 21rpx;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.course-eligibility {
+  margin-top: 14rpx;
+  padding: 14rpx 16rpx;
+  border-radius: 14rpx;
+  background: #fff5eb;
+  color: #98520b;
+  font-size: 21rpx;
+  line-height: 1.55;
+}
+
+.course-eligibility.is-met {
+  background: #eaf7ef;
+  color: #18734b;
+}
+
+.eligibility-confirmation {
+  display: flex;
+  margin-top: 14rpx;
+  align-items: flex-start;
+  color: #44526a;
+  font-size: 22rpx;
+  line-height: 1.55;
+}
+
+.eligibility-confirmation checkbox {
+  flex: 0 0 auto;
+  margin: 1rpx 10rpx 0 0;
+  transform: scale(0.82);
+  transform-origin: left top;
 }
 
 .course-review {

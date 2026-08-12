@@ -2,7 +2,7 @@
 
 const metadata = {
   "programme": "MSDS",
-  "semester": "Semester A 2026/27",
+  "semester": "Academic Year 2026/27 · A / B / S",
   "schedule_as_of": "2026-08-04 16:48 Asia/Beijing",
   "graduation_credit_units": 30,
   "requirement_credit_units": {
@@ -11,10 +11,29 @@ const metadata = {
   },
   "source_url": "https://banweb.cityu.edu.hk/pls/PROD/hwscrssh_cityu.P_GetCrse",
   "notes": [
-    "班次时间与名额数据采集自 CityU AIMS 系统（Semester A 2026/27），仅供参考。",
+    "课程与班次数据按 CityU AIMS 2026/27 学年 A、B、S 学期课表手动整理，仅供参考。",
     "Availability and capacity are a snapshot from the schedule timestamp and may change.",
     "WEB=N means the section is listed but is not available for normal web registration; contact the programme or academic unit for registration arrangements.",
     "Zero-credit section components are retained because some courses require registration in both lecture and tutorial components."
+  ],
+  "academic_year": "2026/27",
+  "default_term": "A",
+  "terms": [
+    {
+      "code": "A",
+      "label": "Semester A",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
+    },
+    {
+      "code": "B",
+      "label": "Semester B",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
+    },
+    {
+      "code": "S",
+      "label": "Summer Term",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
+    }
   ]
 };
 
@@ -31,19 +50,26 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "154",
-      "capacity": "800",
+      "available": "23",
+      "capacity": "500",
       "medium": "English"
     },
-    "section_count": 3,
+    "section_count": 2,
+    "offered_terms": [
+      "A"
+    ],
     "eligible_sections": [
       {
+        "term": "A",
         "crn": "11599",
         "section": "C61",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "19",
+        "level": "P",
+        "available": "12",
         "capacity": "250",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 05/12/2026",
         "day": "S",
         "time": "13:00 - 15:50",
@@ -51,45 +77,27 @@ const courses = [
         "room": "R4057",
         "instructor": "YIN Max",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
+        "notes": []
       },
       {
+        "term": "A",
         "crn": "13470",
         "section": "C62",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "16",
+        "level": "P",
+        "available": "11",
         "capacity": "250",
-        "date": "31/08/2026 - 05/12/2026",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
         "day": "S",
         "time": "09:00 - 11:50",
         "building": "LAU",
         "room": "LT-501",
         "instructor": "MO Zhenling",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
-      },
-      {
-        "crn": "15441",
-        "section": "C63",
-        "credits": 3,
-        "web": "Y",
-        "available": "119",
-        "capacity": "300",
-        "date": "31/08/2026 - 05/12/2026",
-        "day": "S",
-        "time": "13:00 - 15:50",
-        "building": "LI",
-        "room": "3505",
-        "instructor": "ZENG Li",
-        "medium": "English",
-        "notes": [
-          "only for Programme: MSAIFS"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -133,19 +141,26 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "54",
-      "capacity": "500",
+      "available": "Full",
+      "capacity": "516",
       "medium": "English"
     },
     "section_count": 2,
+    "offered_terms": [
+      "A"
+    ],
     "eligible_sections": [
       {
+        "term": "A",
         "crn": "11603",
         "section": "C61",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "29",
-        "capacity": "250",
+        "level": "P",
+        "available": "58",
+        "capacity": "300",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 28/11/2026",
         "day": "F",
         "time": "19:00 - 21:50",
@@ -153,17 +168,19 @@ const courses = [
         "room": "LT401",
         "instructor": "WANG Lijia",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
+        "notes": []
       },
       {
+        "term": "A",
         "crn": "13471",
         "section": "C62",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "25",
-        "capacity": "250",
+        "level": "P",
+        "available": "Full",
+        "capacity": "216",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 28/11/2026",
         "day": "F",
         "time": "19:00 - 21:50",
@@ -171,9 +188,7 @@ const courses = [
         "room": "3508",
         "instructor": "LI Xinke",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -217,19 +232,26 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "54",
+      "available": "42",
       "capacity": "500",
       "medium": "English"
     },
     "section_count": 2,
+    "offered_terms": [
+      "A"
+    ],
     "eligible_sections": [
       {
+        "term": "A",
         "crn": "11604",
         "section": "C61",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "29",
+        "level": "P",
+        "available": "30",
         "capacity": "250",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 05/12/2026",
         "day": "S",
         "time": "13:00 - 15:50",
@@ -237,17 +259,19 @@ const courses = [
         "room": "2450",
         "instructor": "YANG Yu, CHAN Yu Wing",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
+        "notes": []
       },
       {
+        "term": "A",
         "crn": "13472",
         "section": "C62",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "25",
+        "level": "P",
+        "available": "12",
         "capacity": "250",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 05/12/2026",
         "day": "S",
         "time": "09:00 - 11:50",
@@ -255,9 +279,7 @@ const courses = [
         "room": "LT401",
         "instructor": "CHAN Yu Wing, YANG Yu",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS1"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -290,1041 +312,142 @@ const courses = [
     "documentAvailable": true
   },
   {
-    "code": "DSC6004",
-    "requirement_type": "elective",
-    "programme_title": "Topics of Artificial Intelligence for Smart Cities",
-    "schedule_title": "Topics of Artificial Intelligence for Smart Cities",
-    "title_changed": false,
+    "code": "DSC6001",
+    "requirement_type": "core",
     "credits": 3,
     "remarks": "SD",
     "prerequisites": "Nil",
     "exclusive_course": "Nil",
+    "programme_title": "Statistical Machine Learning II",
+    "schedule_title": "Statistical Machine Learning II",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
     "summary": {
       "web": "Y",
-      "available": "300",
-      "capacity": "300",
+      "available": "500",
+      "capacity": "500",
       "medium": "English"
     },
-    "section_count": 5,
+    "section_count": 2,
     "eligible_sections": [
       {
-        "crn": "15821",
-        "section": "C01",
+        "term": "B",
+        "crn": "11460",
+        "section": "C61",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "165",
-        "capacity": "165",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
+        "level": "P",
+        "available": "250",
+        "capacity": "250",
+        "waitlist_available": "50",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "S",
         "time": "13:00 - 15:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "WU Jiaman",
+        "building": "MMW",
+        "room": "2450",
+        "instructor": "ZHAO Xiangyu",
         "medium": "English",
         "notes": []
       },
       {
-        "crn": "15831",
-        "section": "C02",
+        "term": "B",
+        "crn": "13388",
+        "section": "C62",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "10",
-        "capacity": "10",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "13:00 - 15:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "WU Jiaman",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "15832",
-        "section": "C03",
-        "credits": 3,
-        "web": "Y",
-        "available": "15",
-        "capacity": "15",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "13:00 - 15:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "WU Jiaman",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "15833",
-        "section": "C04",
-        "credits": 3,
-        "web": "Y",
-        "available": "10",
-        "capacity": "10",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "13:00 - 15:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "WU Jiaman",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "15834",
-        "section": "C05",
-        "credits": 3,
-        "web": "Y",
-        "available": "100",
-        "capacity": "100",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "13:00 - 15:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "WU Jiaman",
+        "level": "P",
+        "available": "250",
+        "capacity": "250",
+        "waitlist_available": "50",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "M",
+        "time": "19:00 - 21:50",
+        "building": "LAU",
+        "room": "LT-501",
+        "instructor": "ZHAO Xiangyu",
         "medium": "English",
         "notes": []
       }
     ],
     "recommendation": {
-      "course_code": "DSC6004",
-      "level": "recommended",
-      "verdict": "推荐选择",
-      "summary": "院主任授课，上课佛系口音舒服。讲基础 ML/DL 加智慧城市各方面知识。期末开卷，推荐选。可能有出勤分。",
-      "tags": [
-        "难度简单",
-        "作业适中",
-        "开卷考试",
-        "佛系风格",
-        "可能有出勤分"
-      ],
-      "source_ids": [
-        "xhs_ds_semb_gawin"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_semb_gawin",
-        "text": "院主任授课，上课佛系口音舒服。讲基础ML/DL加智慧城市各方面知识。期末开卷，推荐选。可能有出勤分。",
-        "title": "CityU DS SemB 分享 (一只Gawin)",
-        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
-        "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
-      }
-    ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6006",
-    "requirement_type": "elective",
-    "programme_title": "Dissertation",
-    "schedule_title": "Dissertation",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "N",
-      "available": "0",
-      "capacity": "0",
-      "medium": "English"
-    },
-    "section_count": 0,
-    "eligible_sections": [],
-    "recommendation": {
-      "course_code": "DSC6006",
-      "level": "neutral",
-      "verdict": "论文课程",
-      "summary": "可以远程完成，时间看想做成什么水平。可以和 mentor 讨论投稿方向。考核为论文。",
-      "tags": [
-        "学位论文",
-        "可远程",
-        "灵活安排",
-        "无考试"
-      ],
-      "source_ids": [
-        "xhs_ds_hunzi_qing"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_hunzi_qing",
-        "text": "可以远程完成，时间看想做成什么水平。可以和mentor讨论投稿方向。考核为论文。",
-        "title": "CityU 24Fall DS混子完结撒花 评论区 (晴可可)",
-        "url": "https://www.xiaohongshu.com/explore/68b0296a000000001d010a16",
-        "platform": "小红书",
-        "note": "DS 混子完结总结评论区，涉及 DSC6006 论文课与 DSC6007/DSC8013 等课程评价。"
-      }
-    ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6007",
-    "requirement_type": "elective",
-    "programme_title": "Dynamic Programming and Reinforcement Learning",
-    "schedule_title": "Dynamic Programming and Reinforcement Learning",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "offered_this_year": false,
-    "summary": {
-      "web": "N",
-      "available": "0",
-      "capacity": "0",
-      "medium": "English"
-    },
-    "section_count": 0,
-    "eligible_sections": [],
-    "recommendation": {
-      "course_code": "DSC6007",
+      "course_code": "DSC6001",
       "level": "unknown",
       "verdict": "暂无评价",
       "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
       "tags": [],
       "source_ids": [],
-      "last_updated": "2026-08-06"
+      "last_updated": "2026-08-11"
     },
     "sourceReviews": [],
     "documentAvailable": true
   },
   {
-    "code": "DSC6008",
-    "requirement_type": "elective",
-    "programme_title": "Design of Experiments",
-    "schedule_title": "Design of Experiments",
-    "title_changed": false,
+    "code": "DSC6002",
+    "requirement_type": "core",
     "credits": 3,
     "remarks": "SD",
     "prerequisites": "Nil",
     "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "300",
-      "medium": "English"
-    },
-    "section_count": 2,
-    "eligible_sections": [
-      {
-        "crn": "15420",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "50",
-        "capacity": "250",
-        "date": "31/08/2026 - 05/12/2026",
-        "day": "S",
-        "time": "16:00 - 18:50",
-        "building": "YEUNG",
-        "room": "LT-2",
-        "instructor": "TBA",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "15799",
-        "section": "C62",
-        "credits": 3,
-        "web": "Y",
-        "available": "50",
-        "capacity": "50",
-        "date": "31/08/2026 - 05/12/2026",
-        "day": "S",
-        "time": "16:00 - 18:50",
-        "building": "YEUNG",
-        "room": "LT-2",
-        "instructor": "TBA",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6008",
-      "level": "unknown",
-      "verdict": "暂无评价",
-      "summary": "含高斯过程建模，评估方式均衡分散。",
-      "tags": [
-        "实验设计",
-        "高斯过程",
-        "均衡评估"
-      ],
-      "source_ids": [],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6011",
-    "requirement_type": "elective",
-    "programme_title": "Optimization for Data Science",
-    "schedule_title": "Optimization for Data Science",
+    "programme_title": "Research Projects for Data Science",
+    "schedule_title": "Research Projects for Data Science",
     "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "190",
-      "capacity": "190",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "11607",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "190",
-        "capacity": "190",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "F",
-        "time": "13:00 - 15:50",
-        "building": "LI",
-        "room": "3505",
-        "instructor": "WANG Jun",
-        "medium": "English",
-        "notes": []
-      }
+    "offered_terms": [
+      "B",
+      "S"
     ],
-    "recommendation": {
-      "course_code": "DSC6011",
-      "level": "caution",
-      "verdict": "建议避雷",
-      "summary": "考试占比 80%，需扎实数学基础。有学生明确建议避开此课（避雷）。考核以考试为主。",
-      "tags": [
-        "考试占比高",
-        "数学要求高",
-        "避雷",
-        "考试为主"
-      ],
-      "source_ids": [
-        "xhs_ds_xuanke_buyao"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_xuanke_buyao",
-        "text": "考试占比80%，需扎实数学基础。有学生明确建议避开此课（避雷）。考核以考试为主。",
-        "title": "球CityU DS专业选课推荐 评论区",
-        "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
-        "platform": "小红书",
-        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
-      }
+    "allow_without_section_terms": [
+      "S"
     ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6012",
-    "requirement_type": "elective",
-    "programme_title": "Time Series and Recurrent Neural Networks",
-    "schedule_title": "Time Series and Recurrent Neural Networks",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "250",
-      "capacity": "250",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "13508",
-        "section": "C01",
-        "credits": 3,
-        "web": "Y",
-        "available": "250",
-        "capacity": "250",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "R",
-        "time": "12:00 - 14:50",
-        "building": "ICP",
-        "room": "B-101",
-        "instructor": "WANG Linlin",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6012",
-      "level": "recommended",
-      "verdict": "给分友好",
-      "summary": "比王燕老师讲的时间序列简单，统计专业无压力。神经网络部分讲 RNN/LSTM/GRU，难度不大。作者数学一般也拿了 B+，给分友好。闭卷考试。",
-      "tags": [
-        "难度适中",
-        "给分大方",
-        "闭卷考试",
-        "时间序列",
-        "RNN/LSTM"
-      ],
-      "source_ids": [
-        "xhs_ds_sema_gawin",
-        "xhs_ds_qiu_zhu"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_sema_gawin",
-        "text": "比王燕老师讲的时间序列简单，统计专业无压力。神经网络部分讲RNN/LSTM/GRU，难度不大。作者数学一般也拿了B+，给分友好。闭卷考试。",
-        "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
-        "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
-        "platform": "小红书",
-        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
-      },
-      {
-        "sourceId": "xhs_ds_qiu_zhu",
-        "text": "比王燕老师讲的时间序列简单，统计专业无压力。给分友好。",
-        "title": "港硕26届ds选课求助 评论区 (RUI)",
-        "url": "https://www.xiaohongshu.com/explore/6a6832680000000001002c0e",
-        "platform": "小红书",
-        "note": "DS 选课求助评论区，涉及 DSC6012 时间序列课程评价。"
-      }
-    ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6013",
-    "requirement_type": "elective",
-    "programme_title": "Topics in Financial Engineering and Technology",
-    "schedule_title": "Topics in Financial Engineering and Technology",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "250",
-      "capacity": "250",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "14419",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "250",
-        "capacity": "250",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "19:00 - 21:50",
-        "building": "ICP",
-        "room": "B-101",
-        "instructor": "WU Qi",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6013",
-      "level": "neutral",
-      "verdict": "项目制但难度上升",
-      "summary": "适合非商科背景，老师讲得比较慢。老师之前在雷曼兄弟工作，风格随意，喜欢交流市场。固收基础加风险基础，no exam 纯项目制。注意：2025 年底有学生反馈难度大增，不再是纯水课。",
-      "tags": [
-        "难度适中",
-        "项目制",
-        "金融工程",
-        "无考试",
-        "难度上升"
-      ],
-      "source_ids": [
-        "xhs_ds_semb_gawin",
-        "xhs_ds_xuanke_buyao"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_semb_gawin",
-        "text": "适合非商科背景，老师讲得比较慢。老师之前在雷曼兄弟工作，风格随意，喜欢交流市场。固收基础加风险基础，no exam纯项目制。注意2025年底有学生反馈难度大增，不再是纯水课。",
-        "title": "CityU DS SemB 分享 (一只Gawin)",
-        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
-        "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
-      },
-      {
-        "sourceId": "xhs_ds_xuanke_buyao",
-        "text": "2025年底有学生反馈难度大增，不再是纯水课。",
-        "title": "球CityU DS专业选课推荐 评论区",
-        "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
-        "platform": "小红书",
-        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
-      }
-    ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6016",
-    "requirement_type": "elective",
-    "programme_title": "Predictive Analytics and Financial Applications",
-    "schedule_title": "Predictive Analytics and Financial Applications",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "200",
-      "capacity": "200",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "15647",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "200",
-        "capacity": "200",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "M",
-        "time": "19:00 - 21:50",
-        "building": "LI",
-        "room": "6606",
-        "instructor": "CHEUNG Alan",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6016",
-      "level": "neutral",
-      "verdict": "无回放需注意",
-      "summary": "老师宾大本硕加芝加哥博，口音很舒服。Mid 很简单，学过 DSC6012 或本科时间序列可裸考。注意：没有 Zoom 没有 Recording，不适合远程上课。闭卷考试。",
-      "tags": [
-        "难度适中",
-        "闭卷考试",
-        "无回放",
-        "不适合远程",
-        "金融预测"
-      ],
-      "source_ids": [
-        "xhs_ds_semb_gawin"
-      ],
-      "last_updated": "2026-08-03"
-    },
-    "sourceReviews": [
-      {
-        "sourceId": "xhs_ds_semb_gawin",
-        "text": "老师宾大本硕加芝加哥博，口音很舒服。Mid很简单，学过DSC6012或本科时间序列可裸考。注意没有Zoom没有Recording，不适合远程上课。闭卷考试。",
-        "title": "CityU DS SemB 分享 (一只Gawin)",
-        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
-        "platform": "小红书",
-        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
-      }
-    ],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6017",
-    "requirement_type": "elective",
-    "programme_title": "Internship Project",
-    "schedule_title": "Internship Project",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
     "summary": {
       "web": "N",
-      "available": "0",
-      "capacity": "0",
+      "available": "450",
+      "capacity": "450",
       "medium": "English"
     },
-    "section_count": 0,
-    "eligible_sections": [],
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "11818",
+        "section": "D61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "N",
+        "level": "P",
+        "available": "450",
+        "capacity": "450",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": null,
+        "time": null,
+        "building": null,
+        "room": null,
+        "instructor": "CHAN Yu Wing",
+        "medium": "English",
+        "notes": []
+      }
+    ],
     "recommendation": {
-      "course_code": "DSC6017",
-      "level": null,
+      "course_code": "DSC6002",
+      "level": "unknown",
       "verdict": "暂无评价",
-      "summary": "实习项目课程：学生在数据科学相关行业机构完成一段实习，将课堂所学应用于真实业务场景，积累实际数据分析项目经验，并按课程要求提交实习项目报告与成果。本地暂未收集到往届学生评价。",
-      "tags": [
-        "实习",
-        "项目实践",
-        "行业应用"
-      ],
-      "source_ids": []
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
     },
     "sourceReviews": [],
     "documentAvailable": true
-  },
-  {
-    "code": "DSC6018",
-    "requirement_type": "elective",
-    "programme_title": "Health Data Analytics",
-    "schedule_title": "Health Data Analytics",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "200",
-      "capacity": "200",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "15444",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "200",
-        "capacity": "200",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "R",
-        "time": "19:00 - 21:50",
-        "building": "MMW",
-        "room": "3420",
-        "instructor": "TBA",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6018",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "健康数据分析课程：聚焦医疗与健康领域的数据科学应用，涉及电子健康记录、临床与公共卫生数据的统计分析和机器学习建模，支持疾病预测、临床决策与健康管理。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "医疗健康",
-        "健康数据",
-        "统计建模",
-        "机器学习"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": true
-  },
-  {
-    "code": "DSC6020",
-    "requirement_type": "elective",
-    "programme_title": "Artificial Intelligence for Scientific Knowledge Discovery",
-    "schedule_title": "Artificial Intelligence for Scientific Knowledge Discovery",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "300",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "15417",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "100",
-        "capacity": "300",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "R",
-        "time": "19:00 - 21:50",
-        "building": "LI",
-        "room": "3505",
-        "instructor": "WEI Ye",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6020",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "人工智能科学知识发现课程（AI for Science）：将人工智能与机器学习技术应用于科学数据（如实验、观测与多源科学数据）的分析与建模，用于自动发现科学规律、加速科研流程。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "AI for Science",
-        "科学数据",
-        "知识发现"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC6021",
-    "requirement_type": "elective",
-    "programme_title": "Generative Artificial Intelligence",
-    "schedule_title": "Generative Artificial Intelligence",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "300",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "15418",
-        "section": "C61",
-        "credits": 3,
-        "web": "Y",
-        "available": "100",
-        "capacity": "300",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "W",
-        "time": "19:00 - 21:50",
-        "building": "LAU",
-        "room": "LT-501",
-        "instructor": "MIAO Ning",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6021",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "生成式人工智能课程：系统介绍生成式 AI 的原理与技术，涵盖生成对抗网络（GAN）、变分自编码器、扩散模型以及大规模生成模型（如大语言模型）等，并探讨其在文本、图像、代码等生成任务中的应用。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "生成式AI",
-        "大模型",
-        "扩散模型",
-        "GAN"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC6026",
-    "requirement_type": "elective",
-    "programme_title": "Social Network Analysis",
-    "schedule_title": "Social Network Analysis",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "250",
-      "capacity": "250",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "15830",
-        "section": "C01",
-        "credits": 3,
-        "web": "Y",
-        "available": "250",
-        "capacity": "250",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "M",
-        "time": "12:00 - 14:50",
-        "building": "ICP",
-        "room": "B-101",
-        "instructor": "KE Qing",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC6026",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "社交网络分析课程：研究社交网络数据的表示与分析方法，涵盖网络结构度量、社区发现、传播模型与图机器学习（图神经网络）等技术，并应用于社交平台、推荐系统与舆情分析等场景。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "社交网络",
-        "图神经网络",
-        "网络分析"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC8001",
-    "requirement_type": "elective",
-    "programme_title": "Seminars on Data Science I",
-    "schedule_title": "Seminars on Data Science I",
-    "title_changed": false,
-    "credits": 1,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "0",
-      "capacity": "0",
-      "medium": "English"
-    },
-    "section_count": 0,
-    "eligible_sections": [],
-    "recommendation": {
-      "course_code": "DSC8001",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "数据科学系列研讨会 I：以专题研讨形式邀请学术界或行业专家分享数据科学前沿研究与实际应用，学生通过参与讲座、阅读材料与课堂讨论，拓展对数据科学各方向的视野。本地暂未收集到往届学生评价。",
-      "tags": [
-        "研讨会",
-        "前沿讲座",
-        "学术交流"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC8002",
-    "requirement_type": "elective",
-    "programme_title": "Seminars on Data Science II",
-    "schedule_title": "Seminars on Data Science II",
-    "title_changed": false,
-    "credits": 1,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "0",
-      "capacity": "0",
-      "medium": "English"
-    },
-    "section_count": 0,
-    "eligible_sections": [],
-    "recommendation": {
-      "course_code": "DSC8002",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "数据科学系列研讨会 II：延续系列研讨会形式，围绕数据科学前沿议题组织专家讲座与研讨，学生参与讨论并可能进行小组展示或报告。本地暂未收集到往届学生评价。",
-      "tags": [
-        "研讨会",
-        "前沿讲座",
-        "学术交流"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC8003",
-    "requirement_type": "elective",
-    "programme_title": "Machine Learning",
-    "schedule_title": "Machine Learning",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "100",
-      "medium": "English"
-    },
-    "section_count": 1,
-    "eligible_sections": [
-      {
-        "crn": "12939",
-        "section": "C01",
-        "credits": 3,
-        "web": "Y",
-        "available": "100",
-        "capacity": "100",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "R",
-        "time": "09:00 - 11:50",
-        "building": "LAU",
-        "room": "LT-501",
-        "instructor": "YANG Yu",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC8003",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "机器学习课程：系统讲授机器学习的核心理论与方法，涵盖监督学习（回归、分类）、无监督学习、模型评估与选择、核方法以及深度神经网络等基础内容，强调算法原理与实现能力。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "机器学习",
-        "监督学习",
-        "无监督学习",
-        "深度学习"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC8004",
-    "requirement_type": "elective",
-    "programme_title": "Advanced Statistics",
-    "schedule_title": "Advanced Statistics",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "100",
-      "medium": "English"
-    },
-    "section_count": 2,
-    "eligible_sections": [
-      {
-        "crn": "11647",
-        "section": "C01",
-        "credits": 3,
-        "web": "Y",
-        "available": "95",
-        "capacity": "95",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "12:00 - 14:50",
-        "building": "YEUNG",
-        "room": "G7510",
-        "instructor": "TAN Matthias Hwai-yong",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "12547",
-        "section": "C02",
-        "credits": 3,
-        "web": "Y",
-        "available": "5",
-        "capacity": "5",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "12:00 - 14:50",
-        "building": "YEUNG",
-        "room": "G7510",
-        "instructor": "TAN Matthias Hwai-yong",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC8004",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "高级统计学课程：在基础统计推断之上深入讲授更高级的统计理论与方法，涉及多元统计分析、贝叶斯方法、非参数方法、广义线性模型等，培养严格统计思维与数据分析能力。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "高级统计",
-        "多元分析",
-        "贝叶斯",
-        "统计推断"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
-  },
-  {
-    "code": "DSC8005",
-    "requirement_type": "elective",
-    "programme_title": "Optimization",
-    "schedule_title": "Optimization",
-    "title_changed": false,
-    "credits": 3,
-    "remarks": "SD",
-    "prerequisites": "Nil",
-    "exclusive_course": "Nil",
-    "summary": {
-      "web": "Y",
-      "available": "100",
-      "capacity": "100",
-      "medium": "English"
-    },
-    "section_count": 2,
-    "eligible_sections": [
-      {
-        "crn": "11648",
-        "section": "C01",
-        "credits": 3,
-        "web": "Y",
-        "available": "90",
-        "capacity": "90",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "F",
-        "time": "09:00 - 11:50",
-        "building": "LI",
-        "room": "3505",
-        "instructor": "HO Chin Pang",
-        "medium": "English",
-        "notes": []
-      },
-      {
-        "crn": "12544",
-        "section": "C02",
-        "credits": 3,
-        "web": "Y",
-        "available": "10",
-        "capacity": "10",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "F",
-        "time": "09:00 - 11:50",
-        "building": "LI",
-        "room": "3505",
-        "instructor": "HO Chin Pang",
-        "medium": "English",
-        "notes": []
-      }
-    ],
-    "recommendation": {
-      "course_code": "DSC8005",
-      "level": null,
-      "verdict": "暂无评价",
-      "summary": "优化课程：讲授最优化理论与算法的核心内容，涵盖凸优化、线性与非线性规划、对偶理论、梯度类方法与数值算法，及其在机器学习和数据科学问题中的应用。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
-      "tags": [
-        "最优化",
-        "凸优化",
-        "数值算法",
-        "机器学习应用"
-      ],
-      "source_ids": []
-    },
-    "sourceReviews": [],
-    "documentAvailable": false
   },
   {
     "code": "CS5285",
     "requirement_type": "elective",
-    "programme_title": "Information Security for eCommerce",
-    "schedule_title": "Information Security for eCommerce",
+    "programme_title": "Introduction to Cybersecurity",
+    "schedule_title": "Introduction to Cybersecurity",
     "title_changed": false,
     "credits": 3,
     "remarks": "CC",
@@ -1332,19 +455,46 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "235",
-      "capacity": "235",
+      "available": "60",
+      "capacity": "60",
       "medium": "English"
     },
     "section_count": 2,
+    "offered_terms": [
+      "A"
+    ],
     "eligible_sections": [
       {
-        "crn": "21009",
-        "section": "C01",
+        "term": "A",
+        "crn": "13297",
+        "section": "CA1",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "120",
-        "capacity": "120",
+        "level": "P R",
+        "available": "30",
+        "capacity": "30",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "F",
+        "time": "15:00 - 17:50",
+        "building": "YEUNG",
+        "room": "LT-2",
+        "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
+        "medium": "English",
+        "notes": []
+      },
+      {
+        "term": "A",
+        "crn": "15358",
+        "section": "CA2",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P R",
+        "available": "30",
+        "capacity": "30",
+        "waitlist_available": "N",
         "date": "31/08/2026 - 28/11/2026",
         "day": "F",
         "time": "19:00 - 21:50",
@@ -1352,27 +502,7 @@ const courses = [
         "room": "R4057",
         "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
-      },
-      {
-        "crn": "21010",
-        "section": "C02",
-        "credits": 3,
-        "web": "Y",
-        "available": "115",
-        "capacity": "115",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "R",
-        "time": "19:00 - 21:50",
-        "building": "BOC",
-        "room": "R4057",
-        "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
-        "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -1498,47 +628,54 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "180",
-      "capacity": "180",
+      "available": "340",
+      "capacity": "340",
       "medium": "English"
     },
     "section_count": 2,
+    "offered_terms": [
+      "B"
+    ],
     "eligible_sections": [
       {
-        "crn": "21011",
+        "term": "B",
+        "crn": "13998",
         "section": "C01",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "90",
-        "capacity": "90",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "12:00 - 13:50",
+        "level": "P R",
+        "available": "170",
+        "capacity": "170",
+        "waitlist_available": "34",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "15:00 - 17:50",
         "building": "LI",
-        "room": "2705",
-        "instructor": "TBA",
+        "room": "6606",
+        "instructor": "CHAN Antoni Bert",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
       },
       {
-        "crn": "21012",
+        "term": "B",
+        "crn": "14003",
         "section": "C61",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "90",
-        "capacity": "90",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "T",
-        "time": "19:00 - 20:50",
-        "building": "LI",
-        "room": "2705",
-        "instructor": "TBA",
+        "level": "P",
+        "available": "170",
+        "capacity": "170",
+        "waitlist_available": "34",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "19:00 - 21:50",
+        "building": "YEUNG",
+        "room": "LT-6",
+        "instructor": "CHAN Antoni Bert",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -1615,33 +752,67 @@ const courses = [
     "title_changed": false,
     "credits": 3,
     "remarks": "CC",
-    "prerequisites": "Nil",
+    "prerequisites": "CS5285（须在 Semester A 修读）",
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "120",
-      "capacity": "120",
+      "available": "40",
+      "capacity": "40",
       "medium": "English"
     },
-    "section_count": 1,
+    "section_count": 2,
+    "offered_terms": [
+      "B"
+    ],
+    "selection_requirement": {
+      "terms": [
+        "A"
+      ],
+      "minimum_credits": 0,
+      "required_courses": [
+        "CS5285"
+      ]
+    },
     "eligible_sections": [
       {
-        "crn": "21013",
-        "section": "C01",
+        "term": "B",
+        "crn": "12937",
+        "section": "CP1",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "120",
-        "capacity": "120",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "W",
-        "time": "19:00 - 21:50",
-        "building": "YEUNG",
-        "room": "LT-2",
-        "instructor": "TBA",
+        "level": "P R",
+        "available": "40",
+        "capacity": "40",
+        "waitlist_available": "2",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "19:00 - 20:50",
+        "building": "CMC",
+        "room": "M3017",
+        "instructor": "CHEN Yufei",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
+      },
+      {
+        "term": "B",
+        "crn": "12938",
+        "section": "TP1",
+        "credits": 0,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P R",
+        "available": "40",
+        "capacity": "40",
+        "waitlist_available": "2",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "21:00 - 21:50",
+        "building": "CMC",
+        "room": "M3017",
+        "instructor": "CHEN Yufei",
+        "medium": "English",
+        "notes": []
       }
     ],
     "recommendation": {
@@ -1731,47 +902,54 @@ const courses = [
     "exclusive_course": "Nil",
     "summary": {
       "web": "Y",
-      "available": "150",
-      "capacity": "150",
+      "available": "40",
+      "capacity": "40",
       "medium": "English"
     },
     "section_count": 2,
+    "offered_terms": [
+      "B"
+    ],
     "eligible_sections": [
       {
-        "crn": "21014",
-        "section": "C01",
+        "term": "B",
+        "crn": "15357",
+        "section": "CA1",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "75",
-        "capacity": "75",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "M",
-        "time": "12:00 - 13:50",
-        "building": "LI",
-        "room": "3408",
-        "instructor": "TBA",
+        "level": "P R",
+        "available": "20",
+        "capacity": "20",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "W",
+        "time": "11:00 - 12:50",
+        "building": "YEUNG",
+        "room": "LT-2",
+        "instructor": "SONG Linqi, MA Chen",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
       },
       {
-        "crn": "21015",
-        "section": "C61",
+        "term": "B",
+        "crn": "12006",
+        "section": "CP1",
         "credits": 3,
+        "campus": "Main Campus",
         "web": "Y",
-        "available": "75",
-        "capacity": "75",
-        "date": "31/08/2026 - 28/11/2026",
-        "day": "M",
+        "level": "P R",
+        "available": "20",
+        "capacity": "20",
+        "waitlist_available": "6",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "W",
         "time": "19:00 - 20:50",
         "building": "LI",
-        "room": "3408",
-        "instructor": "TBA",
+        "room": "3505",
+        "instructor": "SONG Linqi, MA Chen",
         "medium": "English",
-        "notes": [
-          "only for Programme: MSDS"
-        ]
+        "notes": []
       }
     ],
     "recommendation": {
@@ -1847,6 +1025,1114 @@ const courses = [
         "note": "来自 CityU-CS-Guide 汇总；强烈推荐 CS6493 与 CS6290。"
       }
     ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6003",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Bayesian Data Analysis",
+    "schedule_title": "Bayesian Data Analysis",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "200",
+      "capacity": "200",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15249",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "200",
+        "capacity": "200",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "F",
+        "time": "19:00 - 21:50",
+        "building": "YEUNG",
+        "room": "LT-18",
+        "instructor": "TAN Matthias Hwai-yong",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6003",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6004",
+    "requirement_type": "elective",
+    "programme_title": "Topics of Artificial Intelligence for Smart Cities",
+    "schedule_title": "Topics of Artificial Intelligence for Smart Cities",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "265",
+      "capacity": "265",
+      "medium": "English"
+    },
+    "section_count": 2,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "15821",
+        "section": "C01",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "165",
+        "capacity": "165",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "T",
+        "time": "13:00 - 15:50",
+        "building": "BOC",
+        "room": "R4057",
+        "instructor": "WU Jiaman",
+        "medium": "English",
+        "notes": []
+      },
+      {
+        "term": "A",
+        "crn": "15834",
+        "section": "C05",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "100",
+        "capacity": "100",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "T",
+        "time": "13:00 - 15:50",
+        "building": "BOC",
+        "room": "R4057",
+        "instructor": "WU Jiaman",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6004",
+      "level": "recommended",
+      "verdict": "推荐选择",
+      "summary": "院主任授课，上课佛系口音舒服。讲基础 ML/DL 加智慧城市各方面知识。期末开卷，推荐选。可能有出勤分。",
+      "tags": [
+        "难度简单",
+        "作业适中",
+        "开卷考试",
+        "佛系风格",
+        "可能有出勤分"
+      ],
+      "source_ids": [
+        "xhs_ds_semb_gawin"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_semb_gawin",
+        "text": "院主任授课，上课佛系口音舒服。讲基础ML/DL加智慧城市各方面知识。期末开卷，推荐选。可能有出勤分。",
+        "title": "CityU DS SemB 分享 (一只Gawin)",
+        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
+        "platform": "小红书",
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6006",
+    "requirement_type": "project",
+    "programme_title": "Dissertation",
+    "schedule_title": "Dissertation",
+    "title_changed": false,
+    "credits": 6,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "N",
+      "available": "0",
+      "capacity": "0",
+      "medium": "English"
+    },
+    "section_count": 0,
+    "offered_terms": [
+      "A",
+      "B"
+    ],
+    "allow_without_section": true,
+    "eligible_sections": [],
+    "recommendation": {
+      "course_code": "DSC6006",
+      "level": "neutral",
+      "verdict": "论文课程",
+      "summary": "可以远程完成，时间看想做成什么水平。可以和 mentor 讨论投稿方向。考核为论文。",
+      "tags": [
+        "学位论文",
+        "可远程",
+        "灵活安排",
+        "无考试"
+      ],
+      "source_ids": [
+        "xhs_ds_hunzi_qing"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_hunzi_qing",
+        "text": "可以远程完成，时间看想做成什么水平。可以和mentor讨论投稿方向。考核为论文。",
+        "title": "CityU 24Fall DS混子完结撒花 评论区 (晴可可)",
+        "url": "https://www.xiaohongshu.com/explore/68b0296a000000001d010a16",
+        "platform": "小红书",
+        "note": "DS 混子完结总结评论区，涉及 DSC6006 论文课与 DSC6007/DSC8013 等课程评价。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6007",
+    "requirement_type": "elective",
+    "programme_title": "Dynamic Programming and Reinforcement Learning",
+    "schedule_title": "Dynamic Programming and Reinforcement Learning",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "190",
+      "capacity": "190",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "B"
+    ],
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15250",
+        "section": "C01",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "190",
+        "capacity": "190",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "09:00 - 11:50",
+        "building": "LAU",
+        "room": "LT-501",
+        "instructor": "HO Chin Pang",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6007",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-06"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6008",
+    "requirement_type": "elective",
+    "programme_title": "Design of Experiments",
+    "schedule_title": "Design of Experiments",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "50",
+      "capacity": "50",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "15799",
+        "section": "C62",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "50",
+        "capacity": "50",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 05/12/2026",
+        "day": "S",
+        "time": "16:00 - 18:50",
+        "building": "YEUNG",
+        "room": "LT-2",
+        "instructor": "TBA DS002",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6008",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "含高斯过程建模，评估方式均衡分散。",
+      "tags": [
+        "实验设计",
+        "高斯过程",
+        "均衡评估"
+      ],
+      "source_ids": [],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6011",
+    "requirement_type": "elective",
+    "programme_title": "Optimization for Data Science",
+    "schedule_title": "Optimization for Data Science",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "190",
+      "capacity": "190",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "11607",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "190",
+        "capacity": "190",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "F",
+        "time": "13:00 - 15:50",
+        "building": "LI",
+        "room": "3505",
+        "instructor": "WANG Jun",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6011",
+      "level": "caution",
+      "verdict": "建议避雷",
+      "summary": "考试占比 80%，需扎实数学基础。有学生明确建议避开此课（避雷）。考核以考试为主。",
+      "tags": [
+        "考试占比高",
+        "数学要求高",
+        "避雷",
+        "考试为主"
+      ],
+      "source_ids": [
+        "xhs_ds_xuanke_buyao"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_xuanke_buyao",
+        "text": "考试占比80%，需扎实数学基础。有学生明确建议避开此课（避雷）。考核以考试为主。",
+        "title": "球CityU DS专业选课推荐 评论区",
+        "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
+        "platform": "小红书",
+        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6012",
+    "requirement_type": "elective",
+    "programme_title": "Time Series and Recurrent Neural Networks",
+    "schedule_title": "Time Series and Recurrent Neural Networks",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "250",
+      "capacity": "250",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "13508",
+        "section": "C01",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "250",
+        "capacity": "250",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "R",
+        "time": "12:00 - 14:50",
+        "building": "ICP",
+        "room": "B-101",
+        "instructor": "WANG Linlin",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6012",
+      "level": "recommended",
+      "verdict": "给分友好",
+      "summary": "比王燕老师讲的时间序列简单，统计专业无压力。神经网络部分讲 RNN/LSTM/GRU，难度不大。作者数学一般也拿了 B+，给分友好。闭卷考试。",
+      "tags": [
+        "难度适中",
+        "给分大方",
+        "闭卷考试",
+        "时间序列",
+        "RNN/LSTM"
+      ],
+      "source_ids": [
+        "xhs_ds_sema_gawin",
+        "xhs_ds_qiu_zhu"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_sema_gawin",
+        "text": "比王燕老师讲的时间序列简单，统计专业无压力。神经网络部分讲RNN/LSTM/GRU，难度不大。作者数学一般也拿了B+，给分友好。闭卷考试。",
+        "title": "CityU DS SemA 学渣版分享 (一只Gawin)",
+        "url": "https://www.xiaohongshu.com/explore/677e0f320000000020022685",
+        "platform": "小红书",
+        "note": "DS SemA 课程体验汇总，涉及 DSC5001/DSC5002/DSC5003/DSC6012 等课程难度、给分与考核方式。"
+      },
+      {
+        "sourceId": "xhs_ds_qiu_zhu",
+        "text": "比王燕老师讲的时间序列简单，统计专业无压力。给分友好。",
+        "title": "港硕26届ds选课求助 评论区 (RUI)",
+        "url": "https://www.xiaohongshu.com/explore/6a6832680000000001002c0e",
+        "platform": "小红书",
+        "note": "DS 选课求助评论区，涉及 DSC6012 时间序列课程评价。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6013",
+    "requirement_type": "elective",
+    "programme_title": "Topics in Financial Engineering and Technology",
+    "schedule_title": "Topics in Financial Engineering and Technology",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "250",
+      "capacity": "250",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "14419",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "250",
+        "capacity": "250",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "T",
+        "time": "19:00 - 21:50",
+        "building": "ICP",
+        "room": "B-101",
+        "instructor": "WU Qi",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6013",
+      "level": "neutral",
+      "verdict": "项目制但难度上升",
+      "summary": "适合非商科背景，老师讲得比较慢。老师之前在雷曼兄弟工作，风格随意，喜欢交流市场。固收基础加风险基础，no exam 纯项目制。注意：2025 年底有学生反馈难度大增，不再是纯水课。",
+      "tags": [
+        "难度适中",
+        "项目制",
+        "金融工程",
+        "无考试",
+        "难度上升"
+      ],
+      "source_ids": [
+        "xhs_ds_semb_gawin",
+        "xhs_ds_xuanke_buyao"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_semb_gawin",
+        "text": "适合非商科背景，老师讲得比较慢。老师之前在雷曼兄弟工作，风格随意，喜欢交流市场。固收基础加风险基础，no exam纯项目制。注意2025年底有学生反馈难度大增，不再是纯水课。",
+        "title": "CityU DS SemB 分享 (一只Gawin)",
+        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
+        "platform": "小红书",
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
+      },
+      {
+        "sourceId": "xhs_ds_xuanke_buyao",
+        "text": "2025年底有学生反馈难度大增，不再是纯水课。",
+        "title": "球CityU DS专业选课推荐 评论区",
+        "url": "https://www.xiaohongshu.com/explore/68988a1e0000000023033fed",
+        "platform": "小红书",
+        "note": "DS 选课推荐评论区，涉及 DSC6011 避雷、DSC6012/DSC6013 等课程讨论。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6015",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Stochastic Optimization for Machine Learning",
+    "schedule_title": "Stochastic Optimization for Machine Learning",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "200",
+      "capacity": "200",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15363",
+        "section": "C01",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "200",
+        "capacity": "200",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "13:00 - 15:50",
+        "building": "LI",
+        "room": "2505",
+        "instructor": "TBA DS002",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6015",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6016",
+    "requirement_type": "elective",
+    "programme_title": "Predictive Analytics and Financial Applications",
+    "schedule_title": "Predictive Analytics and Financial Applications",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "380",
+      "capacity": "380",
+      "medium": "English"
+    },
+    "section_count": 2,
+    "offered_terms": [
+      "A",
+      "B"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "15647",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "190",
+        "capacity": "190",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "M",
+        "time": "19:00 - 21:50",
+        "building": "LI",
+        "room": "6606",
+        "instructor": "CHEUNG Alan",
+        "medium": "English",
+        "notes": []
+      },
+      {
+        "term": "B",
+        "crn": "12158",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "190",
+        "capacity": "190",
+        "waitlist_available": "40",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "W",
+        "time": "19:00 - 21:50",
+        "building": "YEUNG",
+        "room": "LT-6",
+        "instructor": "QIAO Xiao",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6016",
+      "level": "neutral",
+      "verdict": "无回放需注意",
+      "summary": "老师宾大本硕加芝加哥博，口音很舒服。Mid 很简单，学过 DSC6012 或本科时间序列可裸考。注意：没有 Zoom 没有 Recording，不适合远程上课。闭卷考试。",
+      "tags": [
+        "难度适中",
+        "闭卷考试",
+        "无回放",
+        "不适合远程",
+        "金融预测"
+      ],
+      "source_ids": [
+        "xhs_ds_semb_gawin"
+      ],
+      "last_updated": "2026-08-03"
+    },
+    "sourceReviews": [
+      {
+        "sourceId": "xhs_ds_semb_gawin",
+        "text": "老师宾大本硕加芝加哥博，口音很舒服。Mid很简单，学过DSC6012或本科时间序列可裸考。注意没有Zoom没有Recording，不适合远程上课。闭卷考试。",
+        "title": "CityU DS SemB 分享 (一只Gawin)",
+        "url": "https://www.xiaohongshu.com/explore/68303e95000000002102e3bc",
+        "platform": "小红书",
+        "note": "DS SemB 课程体验汇总，涉及 DSC6004/DSC6013/DSC6016 等课程评价。"
+      }
+    ],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6017",
+    "requirement_type": "project",
+    "programme_title": "Internship Project",
+    "schedule_title": "Internship Project",
+    "title_changed": false,
+    "credits": 6,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "DSC6032",
+    "summary": {
+      "web": "N",
+      "available": "0",
+      "capacity": "0",
+      "medium": "English"
+    },
+    "section_count": 0,
+    "offered_terms": [
+      "B"
+    ],
+    "allow_without_section": true,
+    "eligibility_note": "仅限全日制第二年学生修读",
+    "selection_requirement": {
+      "terms": [
+        "A"
+      ],
+      "minimum_credits": 15,
+      "required_courses": [
+        "DSC5001",
+        "DSC5002",
+        "DSC5003"
+      ],
+      "confirmation_key": "full_time_second_year"
+    },
+    "eligible_sections": [],
+    "recommendation": {
+      "course_code": "DSC6017",
+      "level": null,
+      "verdict": "暂无评价",
+      "summary": "实习项目课程：学生在数据科学相关行业机构完成一段实习，将课堂所学应用于真实业务场景，积累实际数据分析项目经验，并按课程要求提交实习项目报告与成果。本地暂未收集到往届学生评价。",
+      "tags": [
+        "实习",
+        "项目实践",
+        "行业应用"
+      ],
+      "source_ids": []
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6018",
+    "requirement_type": "elective",
+    "programme_title": "Health Data Analytics",
+    "schedule_title": "Health Data Analytics",
+    "title_changed": false,
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "summary": {
+      "web": "Y",
+      "available": "200",
+      "capacity": "200",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "offered_terms": [
+      "A"
+    ],
+    "eligible_sections": [
+      {
+        "term": "A",
+        "crn": "15444",
+        "section": "C61",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "200",
+        "capacity": "200",
+        "waitlist_available": "N",
+        "date": "31/08/2026 - 28/11/2026",
+        "day": "R",
+        "time": "19:00 - 21:50",
+        "building": "MMW",
+        "room": "3420",
+        "instructor": "TBA DS002",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6018",
+      "level": null,
+      "verdict": "暂无评价",
+      "summary": "健康数据分析课程：聚焦医疗与健康领域的数据科学应用，涉及电子健康记录、临床与公共卫生数据的统计分析和机器学习建模，支持疾病预测、临床决策与健康管理。课程为近期开设，具体内容与考核以开课学期为准。本地暂未收集到往届学生评价。",
+      "tags": [
+        "医疗健康",
+        "健康数据",
+        "统计建模",
+        "机器学习"
+      ],
+      "source_ids": []
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6019",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Embodied AI and Applications",
+    "schedule_title": "Embodied AI and Applications",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "100",
+      "capacity": "100",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15584",
+        "section": "C02",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "100",
+        "capacity": "100",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "M",
+        "time": "14:00 - 16:50",
+        "building": "LAU",
+        "room": "LT-501",
+        "instructor": "YIN Max",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC6019",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC6032",
+    "requirement_type": "project",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "DSC6017",
+    "programme_title": "Internship Project (S)",
+    "schedule_title": "Internship Project (S)",
+    "title_changed": false,
+    "offered_terms": [
+      "S"
+    ],
+    "summary": {
+      "web": "N",
+      "available": "0",
+      "capacity": "0",
+      "medium": "English"
+    },
+    "section_count": 0,
+    "allow_without_section": true,
+    "selection_requirement": {
+      "terms": [
+        "A",
+        "B"
+      ],
+      "minimum_credits": 15,
+      "required_courses": [
+        "DSC5001",
+        "DSC5002",
+        "DSC5003"
+      ]
+    },
+    "eligible_sections": [],
+    "recommendation": {
+      "course_code": "DSC6032",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC8007",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Deep Learning",
+    "schedule_title": "Deep Learning",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "230",
+      "capacity": "230",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15290",
+        "section": "C02",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "230",
+        "capacity": "230",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "M",
+        "time": "09:00 - 11:50",
+        "building": "LI",
+        "room": "3505",
+        "instructor": "WANG Linlin",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC8007",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC8009",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Data Mining and Knowledge Discovery",
+    "schedule_title": "Data Mining and Knowledge Discovery",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "160",
+      "capacity": "160",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "13941",
+        "section": "C04",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "160",
+        "capacity": "160",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "F",
+        "time": "16:00 - 18:50",
+        "building": "LAU",
+        "room": "LT-501",
+        "instructor": "TBA DS005",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC8009",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC8013",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Statistical Methods for Categorical Data Analysis",
+    "schedule_title": "Statistical Methods for Categorical Data Analysis",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "165",
+      "capacity": "165",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "12390",
+        "section": "C02",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "165",
+        "capacity": "165",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "R",
+        "time": "15:00 - 17:50",
+        "building": "LI",
+        "room": "3505",
+        "instructor": "SO Ernest",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC8013",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
+    "documentAvailable": true
+  },
+  {
+    "code": "DSC8014",
+    "requirement_type": "elective",
+    "credits": 3,
+    "remarks": "SD",
+    "prerequisites": "Nil",
+    "exclusive_course": "Nil",
+    "programme_title": "Online Learning and Optimization",
+    "schedule_title": "Online Learning and Optimization",
+    "title_changed": false,
+    "offered_terms": [
+      "B"
+    ],
+    "summary": {
+      "web": "Y",
+      "available": "140",
+      "capacity": "140",
+      "medium": "English"
+    },
+    "section_count": 1,
+    "eligible_sections": [
+      {
+        "term": "B",
+        "crn": "15568",
+        "section": "C02",
+        "credits": 3,
+        "campus": "Main Campus",
+        "web": "Y",
+        "level": "P",
+        "available": "140",
+        "capacity": "140",
+        "waitlist_available": "N",
+        "date": "11/01/2027 - 17/04/2027",
+        "day": "T",
+        "time": "09:00 - 11:50",
+        "building": "LI",
+        "room": "3508",
+        "instructor": "YUNG Siu Pang",
+        "medium": "English",
+        "notes": []
+      }
+    ],
+    "recommendation": {
+      "course_code": "DSC8014",
+      "level": "unknown",
+      "verdict": "暂无评价",
+      "summary": "本地资料暂未收集到可核对的学生评价，暂不作判断。",
+      "tags": [],
+      "source_ids": [],
+      "last_updated": "2026-08-11"
+    },
+    "sourceReviews": [],
     "documentAvailable": true
   }
 ];

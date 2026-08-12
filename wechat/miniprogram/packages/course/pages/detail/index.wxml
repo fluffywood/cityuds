@@ -7,9 +7,53 @@
     <view class="course-title">{{course.programme_title}}</view>
     <view class="course-subtitle">{{course.credits}} 学分 · {{course.remarks}} · {{course.titleNote}}</view>
 
+    <view class="term-switcher" aria-label="选择学期">
+      <button
+        wx:for="{{termOptions}}"
+        wx:key="code"
+        class="term-option {{activeTerm === item.code ? 'is-active' : ''}}"
+        data-term="{{item.code}}"
+        bindtap="onTermChange"
+        aria-pressed="{{activeTerm === item.code}}"
+      >{{item.label}}</button>
+    </view>
+    <view class="term-context">当前查看：{{activeTermLabel}}</view>
+    <view class="selection-status {{!course.offered ? 'is-unavailable' : (canAdd || added ? 'is-ready' : 'is-waiting')}}">{{course.selectionStatus}}</view>
+
+    <view wx:if="{{eligibility && eligibility.hasRequirement}}" class="eligibility-panel {{eligibility.eligible ? 'is-met' : 'is-unmet'}}">
+      <view class="eligibility-title">选课条件</view>
+      <view>{{eligibility.requirementText}}</view>
+      <view class="eligibility-state">{{eligibility.statusText}}</view>
+      <checkbox-group wx:if="{{eligibility.confirmationKey}}" bindchange="onEligibilityConfirm">
+        <label class="eligibility-confirmation">
+          <checkbox
+            value="{{eligibility.confirmationKey}}"
+            checked="{{eligibility.confirmationMet}}"
+            disabled="{{added && eligibility.confirmationMet}}"
+          />
+          <text>我确认：{{eligibility.audienceNote}}</text>
+        </label>
+      </checkbox-group>
+    </view>
+
+    <view wx:if="{{course.offered && !allowsUnscheduled && primaryOptions.length && !added}}" class="section-pickers">
+      <label>
+        <text>主课班次</text>
+        <picker mode="selector" range="{{primaryOptions}}" range-key="pickerLabel" value="{{primaryIndex}}" bindchange="onPrimaryChange">
+          <view class="picker-control">{{primaryOptions[primaryIndex].pickerLabel}}<text>选择</text></view>
+        </picker>
+      </label>
+      <label wx:if="{{tutorialOptions.length > 1}}">
+        <text>Tutorial</text>
+        <picker mode="selector" range="{{tutorialOptions}}" range-key="pickerLabel" value="{{tutorialIndex}}" bindchange="onTutorialChange">
+          <view class="picker-control">{{tutorialOptions[tutorialIndex].pickerLabel}}<text>选择</text></view>
+        </picker>
+      </label>
+    </view>
+
     <view class="actions">
-      <button class="{{!course.offered ? 'unavailable-button' : (added ? 'secondary-button' : 'primary-button')}}" bindtap="toggleCourse" disabled="{{!course.offered}}">
-        {{!course.offered ? '本学年不开设' : (added ? '已加入课表' : '加入课表')}}
+      <button class="{{!course.offered || (!canAdd && !added) ? 'unavailable-button' : (added ? 'secondary-button' : 'primary-button')}}" bindtap="toggleCourse" disabled="{{!course.offered || (!canAdd && !added)}}">
+        {{!course.offered ? '该学期未开设' : (!canAdd && !added ? (eligibility && !eligibility.eligible ? '暂不符合选课条件' : '暂无可选班次') : (added ? '移出当前课表' : (allowsUnscheduled ? '无需班次 · 加入课表' : '按所选班次加入')))}}
       </button>
       <button class="secondary-button" bindtap="openTimetable">查看课表</button>
       <button wx:if="{{documentRoute}}" class="document-button" bindtap="openDocument">查看详细课程介绍</button>
@@ -35,22 +79,40 @@
 
   <view class="section-heading">可选班次</view>
   <view class="section-list" wx:if="{{sections.length}}">
-    <view class="section-card surface" wx:for="{{sections}}" wx:key="key">
+    <view
+      class="section-card surface {{item.selectable ? 'is-selectable' : ''}} {{item.selected ? 'is-selected' : ''}}"
+      wx:for="{{sections}}"
+      wx:key="key"
+      data-kind="{{item.kind}}"
+      data-key="{{item.key}}"
+      bindtap="onSectionCardTap"
+      hover-class="{{item.selectable ? 'section-card-pressed' : 'none'}}"
+      hover-stay-time="100"
+      role="button"
+      aria-disabled="{{!item.selectable}}"
+      aria-pressed="{{item.selected}}"
+      aria-label="{{item.selected ? '当前选择' : '选择'}} {{item.section}} {{item.dayLabel}} {{item.timeLabel}}"
+    >
       <view class="section-card-head">
         <view>
           <text class="section-name">{{item.section}}</text>
           <text class="section-kind">{{item.typeLabel}}</text>
         </view>
-        <text class="registration {{item.web === 'Y' ? 'available' : ''}}">{{item.webLabel}}</text>
+        <view class="section-card-status">
+          <text class="registration {{item.web === 'Y' ? 'available' : ''}}">{{item.webLabel}}</text>
+          <text wx:if="{{item.selectable}}" class="section-choice {{item.selected ? 'is-selected' : ''}}">{{item.selectionLabel}}</text>
+        </view>
       </view>
-      <view class="section-time">{{item.dayLabel}} · {{item.time}}</view>
+      <view class="section-time">{{item.dayLabel}} · {{item.timeLabel}}</view>
       <view class="section-meta">{{item.location}} · CRN {{item.crn}}</view>
+      <view class="section-meta">校区：{{item.campusText}} · Level：{{item.levelText}} · 授课语言：{{item.mediumText}}</view>
       <view class="section-meta">教师：{{item.instructor || '待公布'}}</view>
-      <view class="section-meta">名额快照：{{item.seatText}} · {{item.date}}</view>
+      <view class="section-meta">名额快照：{{item.seatText}} · Waitlist Avail：{{item.waitlistText}}</view>
+      <view class="section-meta">日期：{{item.date || '待公布'}}</view>
       <view class="section-note" wx:for="{{item.notes}}" wx:key="*this">{{item}}</view>
     </view>
   </view>
-  <view class="surface empty-state" wx:else>{{course.offered ? '当前课表快照中没有可展示班次。' : '本学年不开设，暂无可选班次。'}}</view>
+  <view class="surface empty-state" wx:else>{{!course.offered ? '该学期未开设，暂无可选班次。' : (allowsUnscheduled ? '该课程在本学期无需选择班次，加入后不会生成周课表时间块。' : '该学期开设，但暂无可选班次。')}}</view>
 
   <view class="section-heading">原始来源与评价原文</view>
   <view class="source-intro">以下评价对应往届课程，考核方式、教师和难度可能变化。点击“复制原文链接”后可在浏览器查看。</view>

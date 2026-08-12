@@ -10,6 +10,21 @@
     </view>
   </view>
 
+  <view class="term-switch surface" role="tablist" aria-label="选择学期">
+    <button
+      wx:for="{{termOptions}}"
+      wx:key="code"
+      class="term-button {{activeTerm === item.code ? 'is-active' : ''}}"
+      data-term="{{item.code}}"
+      bindtap="changeTerm"
+      role="tab"
+      aria-selected="{{activeTerm === item.code}}"
+    >
+      <text>{{item.label}}</text>
+      <text>{{item.fullLabel}}</text>
+    </button>
+  </view>
+
   <view class="summary-grid" wx:if="{{summary}}">
     <view class="summary-card surface">
       <text>{{summary.coreCount}}</text><text>核心课 · {{summary.coreCredits}} 分</text>
@@ -17,10 +32,14 @@
     <view class="summary-card surface">
       <text>{{summary.electiveCount}}</text><text>选修课 · {{summary.electiveCredits}} 分</text>
     </view>
+    <view class="summary-card project surface" wx:if="{{summary.projectCount}}">
+      <text>{{summary.projectCount}}</text><text>项目课 · {{summary.projectCredits}} 分</text>
+    </view>
     <view class="summary-card total surface">
       <text>{{summary.totalCredits}}</text><text>总学分 · {{summary.totalCount}} 门</text>
     </view>
   </view>
+  <view class="summary-note">以上合计 A、B、S 三学期；当前显示 {{activeTermLabel}} 课表。</view>
 
   <view class="conflict-banner {{conflictCourseCount ? 'has-conflict' : ''}}">
     <text>{{conflictPairCount ? '检测到 ' + conflictPairCount + ' 组时间冲突，涉及 ' + conflictCourseCount + ' 门课程' : '当前已选课程暂无时间冲突'}}</text>
@@ -50,7 +69,7 @@
   </view>
 
   <view class="week-heading-row">
-    <view class="section-heading week-heading">周课表</view>
+    <view class="section-heading week-heading">{{activeTermLabel}}周课表</view>
     <view class="week-scroll-hint">左右滑动查看更多日期</view>
   </view>
   <view class="week-card surface">
@@ -104,7 +123,7 @@
           </view>
         </view>
       </scroll-view>
-      <view class="week-empty" wx:if="{{!weekEventCount}}">加入课程后将在这里生成周课表</view>
+      <view class="week-empty" wx:if="{{!weekEventCount}}">{{selectedCourses.length ? '项目课或无固定时间课程不在周课表显示' : '加入课程后将在这里生成周课表'}}</view>
     </view>
   </view>
 
@@ -149,7 +168,7 @@
     </view>
   </block>
 
-  <view class="section-heading">已选课程与班次</view>
+  <view class="section-heading">{{activeTermLabel}}已选课程与班次</view>
   <view class="selected-list" wx:if="{{selectedCourses.length}}">
     <view class="selected-card surface" wx:for="{{selectedCourses}}" wx:key="code">
       <view class="selected-head">
@@ -159,7 +178,9 @@
         </view>
         <button class="remove-button" data-code="{{item.code}}" bindtap="removeCourse">移除</button>
       </view>
+      <view class="project-selection-note" wx:if="{{item.isProject}}">{{item.projectNote}}</view>
       <picker
+        wx:if="{{!item.isProject}}"
         mode="selector"
         range="{{item.primaryChoices}}"
         range-key="label"

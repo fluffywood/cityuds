@@ -1,22 +1,40 @@
-const { courses, courseByCode } = require("../../data/catalog");
+const { metadata, courses, courseByCode } = require("../../data/catalog");
 const {
   buildTimetableModel,
+  allowsUnscheduledSelection,
+  courseOfferedInTerm,
   DAY_NAMES,
+  findInvalidatedDependents,
+  isProjectCourse,
+  makeInitialSelections,
   makeSelectionForPrimary,
   sanitizeSelections,
+  sectionsForTerm,
   sectionKey,
-  summarizeCredits,
+  summarizeAllTerms,
+  TERM_CODES,
   WEEK_DAYS,
   WEEK_END_MINUTES,
   WEEK_START_MINUTES
 } = require("../../utils/planner");
 const {
   clearStoredSelections,
+  getActiveTerm,
+  getAllStoredSelections,
+  getEligibilityConfirmations,
   getStoredSelections,
-  saveSelections
+  initializeStoredSelections,
+  saveSelections,
+  setActiveTerm
 } = require("../../utils/storage");
 
 const DAYS = WEEK_DAYS.concat("U");
+const TERM_LABELS = Object.freeze({ A: "A 学期", B: "B 学期", S: "S 学期" });
+const TERM_OPTIONS = TERM_CODES.map((code) => ({
+  code,
+  label: TERM_LABELS[code],
+  fullLabel: (metadata.terms || []).find((term) => term.code === code)?.label || TERM_LABELS[code]
+}));
 const WEEK_DAY_WIDTH = 190;
 const WEEK_HEADER_HEIGHT = 70;
 const WEEK_HOUR_HEIGHT = 80;
@@ -38,15 +56,17 @@ const WEEK_TIME_LABELS = Array.from(
 );
 
 function formatChoice(section) {
-  return `${section.section} · ${DAY_NAMES[section.day] || section.day} ${section.time}${section.web === "N" ? " · WEB=N" : ""}`;
+  const day = DAY_NAMES[section.day] || section.day || "日期待定";
+  const time = section.time || "时间待定";
+  return `${section.section} · ${day} ${time}${section.web === "N" ? " · WEB=N" : ""}`;
 }
 
-function makeConflictEditorItem(event, selections) {
+function makeConflictEditorItem(event, selections, term) {
   const course = courseByCode[event.courseCode];
   if (!course) return null;
 
   const isTutorial = event.sectionType === "tutorial";
-  const sections = course.eligible_sections.filter((section) => (
+  const sections = sectionsForTerm(course, term).filter((section) => (
     isTutorial ? Number(section.credits) === 0 : Number(section.credits) > 0
   ));
   const choices = sections.map((section) => ({
@@ -121,8 +141,20 @@ function makeWeekDays(events) {
   }));
 }
 
+function newlyInvalidatedDependents(before, after, confirmations) {
+  const beforeKeys = new Set(
+    findInvalidatedDependents(courses, before, confirmations)
+      .map((item) => `${item.term}:${item.course.code}`)
+  );
+  return findInvalidatedDependents(courses, after, confirmations)
+    .filter((item) => !beforeKeys.has(`${item.term}:${item.course.code}`));
+}
+
 Page({
   data: {
+    activeTerm: "A",
+    activeTermLabel: TERM_LABELS.A,
+    termOptions: TERM_OPTIONS,
     days: DAYS.map((key) => ({ key, label: DAY_NAMES[key] })),
     activeDay: "M",
     activeDayLabel: DAY_NAMES.M,
@@ -149,25 +181,42 @@ Page({
   },
 
   onShow() {
+    this.activeTerm = getActiveTerm();
     this.renderPlanner();
   },
 
   renderPlanner(selectionOverride) {
+    const activeTerm = this.activeTerm || getActiveTerm();
     const hasSelectionOverride = selectionOverride !== undefined;
+    const storedSelections = hasSelectionOverride
+      ? selectionOverride
+      : initializeStoredSelections(activeTerm, makeInitialSelections(courses, activeTerm));
     const selections = sanitizeSelections(
       courses,
-      hasSelectionOverride ? selectionOverride : getStoredSelections()
+      storedSelections,
+      activeTerm
     );
-    if (!hasSelectionOverride) saveSelections(selections);
-    const timetableModel = buildTimetableModel(courses, selections);
+    if (!hasSelectionOverride) saveSelections(activeTerm, selections);
+    const timetableModel = buildTimetableModel(courses, selections, activeTerm);
     const allEvents = timetableModel.events;
     const weekDays = makeWeekDays(allEvents);
     const selectedCourses = courses
-      .filter((course) => Boolean(selections[course.code]))
+      .filter((course) => courseOfferedInTerm(course, activeTerm) && Boolean(selections[course.code]))
       .map((course) => {
         const selection = selections[course.code];
-        const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
-        const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
+        const termSections = sectionsForTerm(course, activeTerm);
+        const primaries = termSections.filter((section) => Number(section.credits) > 0);
+        const tutorials = termSections.filter((section) => Number(section.credits) === 0);
+        if (allowsUnscheduledSelection(course, activeTerm)) {
+          return {
+            code: course.code,
+            title: course.programme_title,
+            isProject: true,
+            projectNote: isProjectCourse(course)
+              ? "无需选择班次，不在周课表显示；作为项目课单独计入总门数和总学分。"
+              : "该学期开设，但暂无可选班次；已按课程学分计入总数，不在周课表显示。"
+          };
+        }
         const primaryKeys = primaries.map(sectionKey);
         const tutorialKeys = [""].concat(tutorials.map(sectionKey));
         const primaryIndex = Math.max(0, primaryKeys.indexOf(String(selection.primaryCrn || "")));
@@ -202,6 +251,8 @@ Page({
     });
     this.conflictPairs = timetableModel.conflictPairs;
     this.setData({
+      activeTerm,
+      activeTermLabel: TERM_LABELS[activeTerm],
       events: allEvents
         .filter((event) => event.day === this.data.activeDay)
         .sort((left, right) => left.start - right.start)
@@ -210,15 +261,31 @@ Page({
       weekGridWidth: weekDays.length * WEEK_DAY_WIDTH,
       weekEventCount: weekDays.reduce((count, day) => count + day.events.length, 0),
       selectedCourses,
-      summary: summarizeCredits(courses, selections),
+      summary: summarizeAllTerms(
+        courses,
+        { ...getAllStoredSelections(), [activeTerm]: selections },
+        getEligibilityConfirmations()
+      ),
       conflictCourseCount: Object.keys(conflictCodes).length,
       conflictPairCount: timetableModel.conflictPairs.length,
       conflictPairs: timetableModel.conflictPairs
     });
   },
 
+  changeTerm(event) {
+    const term = event.currentTarget.dataset.term;
+    if (!TERM_CODES.includes(term) || term === this.activeTerm) return;
+    this.activeTerm = setActiveTerm(term);
+    this.setData({
+      activeDay: "M",
+      activeDayLabel: DAY_NAMES.M,
+      conflictEditorVisible: false
+    });
+    this.renderPlanner();
+  },
+
   openOverview() {
-    wx.navigateTo({ url: "/pages/timetable-overview/index" });
+    wx.navigateTo({ url: `/pages/timetable-overview/index?term=${this.activeTerm || "A"}` });
   },
 
   toggleDailyAgenda() {
@@ -264,10 +331,11 @@ Page({
   },
 
   showConflictEditor(pair, pairChoices, pairIndex) {
-    const selections = sanitizeSelections(courses, getStoredSelections());
+    const activeTerm = this.activeTerm || getActiveTerm();
+    const selections = sanitizeSelections(courses, getStoredSelections(activeTerm), activeTerm);
     const items = [pair.firstId, pair.secondId]
       .map((eventId) => this.eventById && this.eventById[eventId])
-      .map((event) => event && makeConflictEditorItem(event, selections))
+      .map((event) => event && makeConflictEditorItem(event, selections, activeTerm))
       .filter(Boolean);
     if (items.length !== 2) {
       wx.showToast({ title: "暂时无法读取班次", icon: "none" });
@@ -330,10 +398,10 @@ Page({
       const course = courseByCode[item.courseCode];
       if (!course) return null;
       if (item.sectionType !== "tutorial") {
-        const nextSelection = makeSelectionForPrimary(course, item.choice.key);
+        const nextSelection = makeSelectionForPrimary(course, item.choice.key, this.activeTerm);
         return nextSelection ? { ...item, nextSelection } : null;
       }
-      const tutorialIsValid = item.choice.key === "" || course.eligible_sections.some(
+      const tutorialIsValid = item.choice.key === "" || sectionsForTerm(course, this.activeTerm).some(
         (section) => Number(section.credits) === 0 && sectionKey(section) === item.choice.key
       );
       return tutorialIsValid ? item : null;
@@ -343,7 +411,11 @@ Page({
       return;
     }
 
-    const selections = sanitizeSelections(courses, getStoredSelections());
+    const selections = sanitizeSelections(
+      courses,
+      getStoredSelections(this.activeTerm),
+      this.activeTerm
+    );
     preparedChanges
       .filter((item) => item.sectionType !== "tutorial")
       .forEach((item) => {
@@ -355,7 +427,7 @@ Page({
         if (selections[item.courseCode]) selections[item.courseCode].tutorialCrn = item.choice.key || null;
       });
 
-    saveSelections(selections);
+    saveSelections(this.activeTerm, selections);
     this.setData({
       conflictEditorVisible: false,
       conflictEditorPairId: "",
@@ -389,9 +461,9 @@ Page({
     const selectedView = this.data.selectedCourses.find((item) => item.code === code);
     const choice = selectedView && selectedView.primaryChoices[Number(event.detail.value)];
     if (!course || !choice) return;
-    const selections = getStoredSelections();
-    selections[code] = makeSelectionForPrimary(course, choice.key);
-    saveSelections(selections);
+    const selections = getStoredSelections(this.activeTerm);
+    selections[code] = makeSelectionForPrimary(course, choice.key, this.activeTerm);
+    saveSelections(this.activeTerm, selections);
     this.renderPlanner();
     wx.showToast({ title: `已切换 ${code} 班次`, icon: "none" });
   },
@@ -400,25 +472,47 @@ Page({
     const code = event.currentTarget.dataset.code;
     const selectedView = this.data.selectedCourses.find((item) => item.code === code);
     const choice = selectedView && selectedView.tutorialChoices[Number(event.detail.value)];
-    const selections = getStoredSelections();
+    const selections = getStoredSelections(this.activeTerm);
     if (!selections[code] || !choice) return;
     selections[code].tutorialCrn = choice.key || null;
-    saveSelections(selections);
+    saveSelections(this.activeTerm, selections);
     this.renderPlanner();
   },
 
   removeCourse(event) {
     const code = event.currentTarget.dataset.code;
-    const selections = getStoredSelections();
+    const selections = getStoredSelections(this.activeTerm);
+    const nextSelections = { ...selections };
+    delete nextSelections[code];
+    const currentSelectionsByTerm = getAllStoredSelections();
+    const selectionsByTerm = {
+      ...currentSelectionsByTerm,
+      [this.activeTerm]: nextSelections
+    };
+    const invalidated = newlyInvalidatedDependents(
+      currentSelectionsByTerm,
+      selectionsByTerm,
+      getEligibilityConfirmations()
+    );
+    if (invalidated.length) {
+      const blocked = invalidated[0];
+      wx.showModal({
+        title: `暂不能移除 ${code}`,
+        content: `${blocked.term} 学期的 ${blocked.course.code} 依赖这门课程。请先移除依赖课程。`,
+        showCancel: false,
+        confirmText: "知道了"
+      });
+      return;
+    }
     delete selections[code];
-    saveSelections(selections);
+    saveSelections(this.activeTerm, selections);
     this.renderPlanner();
     wx.showToast({ title: `已移除 ${code}`, icon: "none" });
   },
 
   openCourse(event) {
     const code = event.currentTarget.dataset.code;
-    wx.navigateTo({ url: `/packages/course/pages/detail/index?code=${code}` });
+    wx.navigateTo({ url: `/packages/course/pages/detail/index?code=${code}&term=${this.activeTerm}` });
   },
 
   browseCourses() {
@@ -427,13 +521,33 @@ Page({
 
   clearAll() {
     if (!this.data.selectedCourses.length) return;
+    const currentSelectionsByTerm = getAllStoredSelections();
+    const selectionsByTerm = {
+      ...currentSelectionsByTerm,
+      [this.activeTerm]: {}
+    };
+    const invalidated = newlyInvalidatedDependents(
+      currentSelectionsByTerm,
+      selectionsByTerm,
+      getEligibilityConfirmations()
+    );
+    if (invalidated.length) {
+      const blocked = invalidated[0];
+      wx.showModal({
+        title: `暂不能清空 ${this.data.activeTermLabel}`,
+        content: `${blocked.term} 学期的 ${blocked.course.code} 依赖当前学期课程。请先移除依赖课程。`,
+        showCancel: false,
+        confirmText: "知道了"
+      });
+      return;
+    }
     wx.showModal({
-      title: "清空课表",
-      content: "确定移除全部已选课程吗？",
+      title: `清空${this.data.activeTermLabel}课表`,
+      content: `确定移除${this.data.activeTermLabel}的全部已选课程吗？其他学期不会受影响。`,
       confirmColor: "#b42335",
       success: (result) => {
         if (!result.confirm) return;
-        clearStoredSelections();
+        clearStoredSelections(this.activeTerm);
         this.renderPlanner();
       }
     });

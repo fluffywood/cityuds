@@ -4,6 +4,7 @@
     "pages/courses/index",
     "pages/timetable/index",
     "pages/timetable-overview/index",
+    "pages/aims-fields/index",
     "pages/about/index"
   ],
   "subPackages": [
@@ -56,6 +57,24 @@
       ]
     },
     {
+      "root": "packages/doc-dsc6001",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6002",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6003",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
       "root": "packages/doc-dsc6004",
       "pages": [
         "pages/index/index"
@@ -98,6 +117,12 @@
       ]
     },
     {
+      "root": "packages/doc-dsc6015",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
       "root": "packages/doc-dsc6016",
       "pages": [
         "pages/index/index"
@@ -111,6 +136,42 @@
     },
     {
       "root": "packages/doc-dsc6018",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6019",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc6032",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc8007",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc8009",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc8013",
+      "pages": [
+        "pages/index/index"
+      ]
+    },
+    {
+      "root": "packages/doc-dsc8014",
       "pages": [
         "pages/index/index"
       ]

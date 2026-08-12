@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +24,8 @@ except ImportError as exc:  # pragma: no cover - dependency guidance
     ) from exc
 
 
-EXPECTED_COURSE_COUNT = 17
+EXPECTED_COURSE_COUNT = 27
+EXPECTED_PAGE_COUNT = 180
 COURSE_LIMIT_BYTES = 2 * 1024 * 1024
 COURSE_TARGET_BYTES = 1_800_000
 TOTAL_LIMIT_BYTES = 30 * 1024 * 1024
@@ -65,6 +67,15 @@ def clear_generated_pages(assets_dir: Path) -> None:
     for pattern in ("page-*.jpg", "page-*.jpeg", "page-*.webp", "page-*.png"):
         for path in assets_dir.glob(pattern):
             path.unlink()
+
+
+def clear_document_packages(packages_root: Path) -> None:
+    """Remove only generated document packages; preserve every fixed package."""
+    if not packages_root.is_dir():
+        return
+    for package_dir in packages_root.iterdir():
+        if package_dir.is_dir() and package_dir.name.startswith("doc-"):
+            shutil.rmtree(package_dir)
 
 
 def render_course(
@@ -133,6 +144,7 @@ def main() -> None:
     packages_root = repo_root / "wechat" / "miniprogram" / "packages"
     generated_root = repo_root / "wechat" / "generated"
     generated_root.mkdir(parents=True, exist_ok=True)
+    clear_document_packages(packages_root)
 
     course_records: list[dict[str, Any]] = []
     total_pages = 0
@@ -221,6 +233,11 @@ def main() -> None:
         raise RuntimeError(
             f"Generated packages total {total_package_bytes} bytes; limit is "
             f"strictly below {TOTAL_LIMIT_BYTES} bytes"
+        )
+
+    if total_pages != EXPECTED_PAGE_COUNT:
+        raise RuntimeError(
+            f"Expected {EXPECTED_PAGE_COUNT} rendered pages, found {total_pages}"
         )
 
     manifest = {

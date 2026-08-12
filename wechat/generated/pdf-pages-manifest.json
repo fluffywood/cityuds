@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "format": "jpeg",
-  "course_count": 17,
-  "page_count": 114,
-  "total_package_bytes": 16704250,
+  "course_count": 27,
+  "page_count": 180,
+  "total_package_bytes": 25851526,
   "limits": {
     "course_bytes": 2097152,
     "total_bytes": 31457280
@@ -465,6 +465,194 @@
       ]
     },
     {
+      "course_code": "DSC6001",
+      "source_pdf": "docs/DSC6001.pdf",
+      "source_sha256": "40a08c4891e4daa9cd852ad433128a8a69bd222cfe47c1983050d37cf0db183a",
+      "page_count": 8,
+      "package": "packages/doc-dsc6001",
+      "asset_bytes": 1020465,
+      "package_bytes": 1021324,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6001/assets/page-001.jpg",
+          "bytes": 99065,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6001/assets/page-002.jpg",
+          "bytes": 242692,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6001/assets/page-003.jpg",
+          "bytes": 127026,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6001/assets/page-004.jpg",
+          "bytes": 85338,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6001/assets/page-005.jpg",
+          "bytes": 119985,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc6001/assets/page-006.jpg",
+          "bytes": 125168,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-dsc6001/assets/page-007.jpg",
+          "bytes": 111849,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 8,
+          "path": "packages/doc-dsc6001/assets/page-008.jpg",
+          "bytes": 109342,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC6002",
+      "source_pdf": "docs/DSC6002.pdf",
+      "source_sha256": "89c470643c86d9320aa00645533924c801b9e382e17bc3cb3df444d3a2ef7ed5",
+      "page_count": 6,
+      "package": "packages/doc-dsc6002",
+      "asset_bytes": 760759,
+      "package_bytes": 761524,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6002/assets/page-001.jpg",
+          "bytes": 98703,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6002/assets/page-002.jpg",
+          "bytes": 214033,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6002/assets/page-003.jpg",
+          "bytes": 161607,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6002/assets/page-004.jpg",
+          "bytes": 95783,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6002/assets/page-005.jpg",
+          "bytes": 99116,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc6002/assets/page-006.jpg",
+          "bytes": 91517,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC6003",
+      "source_pdf": "docs/DSC6003.pdf",
+      "source_sha256": "9a7e3c30718545f9e04024aa0108d8ca1dcdacd3a15cb474b19e7c13ef2bf411",
+      "page_count": 6,
+      "package": "packages/doc-dsc6003",
+      "asset_bytes": 859452,
+      "package_bytes": 860217,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6003/assets/page-001.jpg",
+          "bytes": 113857,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6003/assets/page-002.jpg",
+          "bytes": 232890,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6003/assets/page-003.jpg",
+          "bytes": 127966,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6003/assets/page-004.jpg",
+          "bytes": 132253,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6003/assets/page-005.jpg",
+          "bytes": 149660,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc6003/assets/page-006.jpg",
+          "bytes": 102826,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
       "course_code": "DSC6004",
       "source_pdf": "docs/DSC6004.pdf",
       "source_sha256": "1c99fb1d98a2a4df2d1c0985c76d96b870b25342b43cfe25ff71183f7303bfb8",
@@ -899,6 +1087,71 @@
       ]
     },
     {
+      "course_code": "DSC6015",
+      "source_pdf": "docs/DSC6015.pdf",
+      "source_sha256": "d2e4dec0a2d5858ad2544bbd6e1ffe42f00cd173b65f137dbe710367b8d420c7",
+      "page_count": 7,
+      "package": "packages/doc-dsc6015",
+      "asset_bytes": 1081302,
+      "package_bytes": 1082114,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6015/assets/page-001.jpg",
+          "bytes": 105136,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6015/assets/page-002.jpg",
+          "bytes": 269357,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6015/assets/page-003.jpg",
+          "bytes": 141721,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6015/assets/page-004.jpg",
+          "bytes": 145135,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6015/assets/page-005.jpg",
+          "bytes": 129006,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc6015/assets/page-006.jpg",
+          "bytes": 132262,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-dsc6015/assets/page-007.jpg",
+          "bytes": 158685,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
       "course_code": "DSC6016",
       "source_pdf": "docs/DSC6016.pdf",
       "source_sha256": "9bddde8ea2d2222e25e2215dedfc85ad422acfe80f2247e3219d1ba3ffa9930a",
@@ -1074,6 +1327,375 @@
           "page": 8,
           "path": "packages/doc-dsc6018/assets/page-008.jpg",
           "bytes": 115813,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC6019",
+      "source_pdf": "docs/DSC6019.pdf",
+      "source_sha256": "776f6beeb19a7d34b59176335ebd8401b62179f69dd7bacf3be111cbf5268a9a",
+      "page_count": 7,
+      "package": "packages/doc-dsc6019",
+      "asset_bytes": 1021069,
+      "package_bytes": 1021881,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6019/assets/page-001.jpg",
+          "bytes": 112326,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6019/assets/page-002.jpg",
+          "bytes": 266339,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6019/assets/page-003.jpg",
+          "bytes": 140800,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6019/assets/page-004.jpg",
+          "bytes": 137159,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6019/assets/page-005.jpg",
+          "bytes": 133099,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc6019/assets/page-006.jpg",
+          "bytes": 125222,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-dsc6019/assets/page-007.jpg",
+          "bytes": 106124,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC6032",
+      "source_pdf": "docs/DSC6032.pdf",
+      "source_sha256": "ca6c71fc32beb4827e158fef38dda9397d6ee72f6b82f96ccc35e731cd8af3e5",
+      "page_count": 5,
+      "package": "packages/doc-dsc6032",
+      "asset_bytes": 795740,
+      "package_bytes": 796458,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc6032/assets/page-001.jpg",
+          "bytes": 110416,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc6032/assets/page-002.jpg",
+          "bytes": 313520,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc6032/assets/page-003.jpg",
+          "bytes": 182759,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc6032/assets/page-004.jpg",
+          "bytes": 145427,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc6032/assets/page-005.jpg",
+          "bytes": 43618,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC8007",
+      "source_pdf": "docs/DSC8007.pdf",
+      "source_sha256": "1513cc8340f1dc28f968fd308b0c91e5c5e9efc557790963a272076559c9a298",
+      "page_count": 7,
+      "package": "packages/doc-dsc8007",
+      "asset_bytes": 896024,
+      "package_bytes": 896836,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc8007/assets/page-001.jpg",
+          "bytes": 108111,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc8007/assets/page-002.jpg",
+          "bytes": 215228,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc8007/assets/page-003.jpg",
+          "bytes": 138677,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc8007/assets/page-004.jpg",
+          "bytes": 117606,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc8007/assets/page-005.jpg",
+          "bytes": 100382,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc8007/assets/page-006.jpg",
+          "bytes": 148389,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-dsc8007/assets/page-007.jpg",
+          "bytes": 67631,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC8009",
+      "source_pdf": "docs/DSC8009.pdf",
+      "source_sha256": "dc513c88b87f37f9be2b2bc54714c2655600f25b29a117e10b2cb80090b8ddc0",
+      "page_count": 6,
+      "package": "packages/doc-dsc8009",
+      "asset_bytes": 746376,
+      "package_bytes": 747141,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc8009/assets/page-001.jpg",
+          "bytes": 104738,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc8009/assets/page-002.jpg",
+          "bytes": 273432,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc8009/assets/page-003.jpg",
+          "bytes": 118055,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc8009/assets/page-004.jpg",
+          "bytes": 82507,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc8009/assets/page-005.jpg",
+          "bytes": 94865,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc8009/assets/page-006.jpg",
+          "bytes": 72779,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC8013",
+      "source_pdf": "docs/DSC8013.pdf",
+      "source_sha256": "76b5d0b3070c66280a75dc52529366b808522276227aa78ce914927c9582f4d1",
+      "page_count": 6,
+      "package": "packages/doc-dsc8013",
+      "asset_bytes": 899900,
+      "package_bytes": 900665,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc8013/assets/page-001.jpg",
+          "bytes": 106459,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc8013/assets/page-002.jpg",
+          "bytes": 264318,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc8013/assets/page-003.jpg",
+          "bytes": 146109,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc8013/assets/page-004.jpg",
+          "bytes": 110729,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc8013/assets/page-005.jpg",
+          "bytes": 127790,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc8013/assets/page-006.jpg",
+          "bytes": 144495,
+          "width": 1275,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "course_code": "DSC8014",
+      "source_pdf": "docs/DSC8014.pdf",
+      "source_sha256": "e208f3422b817e5842dd01ac7a664c65b731e9311f06167ada2024c12a43fd87",
+      "page_count": 8,
+      "package": "packages/doc-dsc8014",
+      "asset_bytes": 1058257,
+      "package_bytes": 1059116,
+      "render": {
+        "format": "jpeg",
+        "dpi": 150,
+        "quality": 84
+      },
+      "pages": [
+        {
+          "page": 1,
+          "path": "packages/doc-dsc8014/assets/page-001.jpg",
+          "bytes": 96959,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 2,
+          "path": "packages/doc-dsc8014/assets/page-002.jpg",
+          "bytes": 228603,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 3,
+          "path": "packages/doc-dsc8014/assets/page-003.jpg",
+          "bytes": 158267,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 4,
+          "path": "packages/doc-dsc8014/assets/page-004.jpg",
+          "bytes": 119202,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 5,
+          "path": "packages/doc-dsc8014/assets/page-005.jpg",
+          "bytes": 117638,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 6,
+          "path": "packages/doc-dsc8014/assets/page-006.jpg",
+          "bytes": 96493,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 7,
+          "path": "packages/doc-dsc8014/assets/page-007.jpg",
+          "bytes": 128589,
+          "width": 1275,
+          "height": 1650
+        },
+        {
+          "page": 8,
+          "path": "packages/doc-dsc8014/assets/page-008.jpg",
+          "bytes": 112506,
           "width": 1275,
           "height": 1650
         }

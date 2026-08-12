@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 const toolDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(toolDirectory, "..", "..");
 const outputDirectory = path.join(repositoryRoot, "wechat", "miniprogram", "data");
+const EXPECTED_COURSE_COUNT = 27;
+const TERM_CODES = ["A", "B", "S"];
 
 async function readJson(relativePath) {
   const absolutePath = path.join(repositoryRoot, relativePath);
@@ -100,11 +102,31 @@ async function buildDocuments() {
 async function buildCatalog(sourcesById, documents) {
   const courseIndex = await readJson("data/courses/index.json");
   assert(Array.isArray(courseIndex.courses), "data/courses/index.json 缺少 courses 数组");
+  assert(
+    TERM_CODES.every((term) => courseIndex.terms?.some((item) => item.code === term)),
+    "课程索引缺少 A、B、S 三学期元数据"
+  );
+
+  const annualCourses = courseIndex.courses.filter(
+    (course) => Array.isArray(course.offered_terms) && course.offered_terms.length > 0
+  );
+  assert(
+    annualCourses.length === EXPECTED_COURSE_COUNT,
+    `网页版本学年课程应为 ${EXPECTED_COURSE_COUNT} 门，实际为 ${annualCourses.length} 门`
+  );
+
+  const annualCourseCodes = annualCourses.map((course) => course.code).sort((left, right) => left.localeCompare(right, "en"));
+  const documentCodes = Object.keys(documents).sort((left, right) => left.localeCompare(right, "en"));
+  assert(
+    annualCourseCodes.length === documentCodes.length
+      && annualCourseCodes.every((courseCode, index) => courseCode === documentCodes[index]),
+    "本学年课程与课程文档索引不一致"
+  );
 
   const courses = [];
   const seenCourseCodes = new Set();
 
-  for (const course of courseIndex.courses) {
+  for (const course of annualCourses) {
     assert(course.code, "课程索引中存在缺少 code 的课程");
     assert(!seenCourseCodes.has(course.code), `课程编号重复：${course.code}`);
     seenCourseCodes.add(course.code);
@@ -116,6 +138,10 @@ async function buildCatalog(sourcesById, documents) {
 
     assert(Array.isArray(eligibleSections), `${course.code} 的班次数据不是数组`);
     assert(recommendation.course_code === course.code, `${course.code} 的评价文件课程编号不一致`);
+    assert(
+      eligibleSections.every((section) => course.offered_terms.includes(section.term)),
+      `${course.code} 存在不属于开课学期的班次`
+    );
 
     const sourceReviews = (recommendation.source_ids || []).map((sourceId) => {
       const source = sourcesById[sourceId];
@@ -140,6 +166,20 @@ async function buildCatalog(sourcesById, documents) {
       documentAvailable: Boolean(documents[course.code])
     });
   }
+
+  const dsc6002 = courses.find((course) => course.code === "DSC6002");
+  assert(dsc6002?.requirement_type === "core" && Number(dsc6002.credits) === 3, "DSC6002 必须保留为 3 学分核心课");
+  assert(
+    dsc6002.offered_terms.includes("B")
+      && dsc6002.offered_terms.includes("S")
+      && dsc6002.allow_without_section_terms?.includes("S"),
+    "DSC6002 必须保留 B、S 开课及 S 学期无班次可选规则"
+  );
+  assert(
+    dsc6002.eligible_sections.some((section) => section.term === "B" && String(section.crn) === "11818")
+      && !dsc6002.eligible_sections.some((section) => section.term === "S"),
+    "DSC6002 必须仅保留 B 学期 CRN 11818，S 学期不得复制班次"
+  );
 
   const { courses: ignoredCourses, ...metadata } = courseIndex;
   return { metadata, courses };

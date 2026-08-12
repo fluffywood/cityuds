@@ -138,6 +138,27 @@
   align-items: flex-start;
 }
 
+.feature-button {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.feature-button-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.feature-arrow {
+  align-self: center;
+  color: #2855d9;
+  font-size: 42rpx;
+  line-height: 1;
+}
+
 .feature-item + .feature-item {
   border-top: 1rpx solid #e6ebf2;
 }

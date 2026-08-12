@@ -1,14 +1,19 @@
 const { courses } = require("../../data/catalog");
 const {
   buildTimetableModel,
+  makeInitialSelections,
   sanitizeSelections,
   WEEK_DAYS,
   WEEK_END_MINUTES,
   WEEK_START_MINUTES
 } = require("../../utils/planner");
 const {
+  getActiveTerm,
   getStoredSelections,
-  saveSelections
+  initializeStoredSelections,
+  normalizeTerm,
+  saveSelections,
+  setActiveTerm
 } = require("../../utils/storage");
 
 const DAY_LABELS = Object.freeze({
@@ -87,6 +92,7 @@ function makeEventView(event, dayIndex, dayCount) {
 
 Page({
   data: {
+    activeTerm: "A",
     days: WEEK_DAYS.map((key, index) => ({
       key,
       label: DAY_LABELS[key] || key,
@@ -97,11 +103,22 @@ Page({
     conflictPairCount: 0
   },
 
-  onShow() {
-    const selections = sanitizeSelections(courses, getStoredSelections());
-    saveSelections(selections);
+  onLoad(options) {
+    this.activeTerm = normalizeTerm(options && options.term) || getActiveTerm();
+    setActiveTerm(this.activeTerm);
+    this.setData({ activeTerm: this.activeTerm });
+  },
 
-    const timetable = buildTimetableModel(courses, selections);
+  onShow() {
+    const activeTerm = this.activeTerm || getActiveTerm();
+    const stored = initializeStoredSelections(
+      activeTerm,
+      makeInitialSelections(courses, activeTerm)
+    );
+    const selections = sanitizeSelections(courses, stored, activeTerm);
+    saveSelections(activeTerm, selections);
+
+    const timetable = buildTimetableModel(courses, selections, activeTerm);
     const allEvents = timetable.events || [];
     const dayKeys = WEEK_DAYS.slice();
     if (allEvents.some((event) => event.day === "U") && !dayKeys.includes("U")) {
@@ -125,6 +142,7 @@ Page({
       this.eventById[event.id] = event;
     });
     this.setData({
+      activeTerm,
       days,
       events,
       conflictPairCount: (timetable.conflictPairs || []).length
@@ -153,7 +171,7 @@ Page({
       success: (result) => {
         if (!result.confirm || !selectedEvent.courseCode) return;
         wx.navigateTo({
-          url: `/packages/course/pages/detail/index?code=${selectedEvent.courseCode}`
+          url: `/packages/course/pages/detail/index?code=${selectedEvent.courseCode}&term=${this.activeTerm}`
         });
       }
     });

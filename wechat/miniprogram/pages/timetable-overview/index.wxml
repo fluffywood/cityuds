@@ -1,6 +1,6 @@
 <view class="overview-page">
   <view class="status-row">
-    <text class="status-hint">{{events.length ? '点击课程块查看时间、地点与冲突详情' : '尚未选择课程'}}</text>
+    <text class="status-hint">{{activeTerm}} 学期 · {{events.length ? '点击课程块查看详情' : '尚无固定时间课程'}}</text>
     <text class="conflict-count {{conflictPairCount ? 'has-conflict' : ''}}">
       {{conflictPairCount ? '⚠ ' + conflictPairCount + ' 组冲突' : '无时间冲突'}}
     </text>

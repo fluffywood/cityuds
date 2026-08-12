@@ -1,0 +1,92 @@
+.fields-page {
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.fields-hero {
+  padding: 14rpx 4rpx 28rpx;
+}
+
+.important-note {
+  margin-bottom: 30rpx;
+  padding: 22rpx 24rpx;
+  border: 1rpx solid #f1d39d;
+  border-radius: 16rpx;
+  background: #fff8e8;
+  color: #6f4b11;
+  font-size: 23rpx;
+  line-height: 1.6;
+}
+
+.important-note text {
+  display: block;
+  margin-bottom: 6rpx;
+  font-weight: 850;
+}
+
+.field-group + .field-group {
+  margin-top: 32rpx;
+}
+
+.field-list {
+  overflow: hidden;
+}
+
+.field-item {
+  padding: 26rpx;
+}
+
+.field-item + .field-item {
+  border-top: 1rpx solid #e6ebf2;
+}
+
+.field-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.field-term {
+  min-width: 0;
+  flex: 0 0 42%;
+  color: #2855d9;
+  font-size: 25rpx;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.field-term text {
+  display: block;
+}
+
+.field-term text + text {
+  margin-top: 4rpx;
+  color: #7a8699;
+  font-size: 18rpx;
+  font-weight: 600;
+}
+
+.field-meaning {
+  min-width: 0;
+  flex: 1;
+  color: #263550;
+  font-size: 23rpx;
+  font-weight: 750;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.field-description {
+  margin-top: 14rpx;
+  color: #657187;
+  font-size: 22rpx;
+  line-height: 1.65;
+}
+
+.source-note {
+  margin-top: 34rpx;
+  color: #748096;
+  font-size: 21rpx;
+  line-height: 1.65;
+  text-align: center;
+}

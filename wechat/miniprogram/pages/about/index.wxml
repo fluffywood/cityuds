@@ -32,6 +32,14 @@
 
   <view class="section-heading">我可以做什么</view>
   <view class="surface feature-list">
+    <button class="feature-item feature-button" bindtap="onOpenAimsFields">
+      <view class="feature-icon blue">释</view>
+      <view class="feature-button-copy">
+        <view class="feature-title">查看选课字段解释</view>
+        <view class="feature-copy">了解 CRN、Section、WEB、名额、时间与授课信息的准确含义。</view>
+      </view>
+      <text class="feature-arrow">›</text>
+    </button>
     <view class="feature-item">
       <view class="feature-icon blue">课</view>
       <view>

@@ -1,10 +1,28 @@
 <view class="page-shell courses-page">
   <view class="hero">
-    <view class="hero-eyebrow">{{semester}}</view>
     <view class="page-title">浏览课程</view>
-    <view class="page-subtitle">按课程编号、名称、类别与上课日期筛选，加入后可在课表页调整班次。</view>
-    <view class="snapshot">课表快照：{{scheduleAsOf}}</view>
+    <view class="page-subtitle">先选择学期，再按课程编号、名称、类别与上课日期筛选。</view>
+    <view class="snapshot-row">
+      <view class="snapshot">课表快照：{{scheduleAsOf}}</view>
+      <button class="fields-link" bindtap="openAimsFields">选课字段解释</button>
+    </view>
   </view>
+
+  <view class="term-switcher surface" aria-label="选择学期">
+    <button
+      wx:for="{{termOptions}}"
+      wx:key="code"
+      class="term-option {{activeTerm === item.code ? 'is-active' : ''}}"
+      data-term="{{item.code}}"
+      bindtap="onTermChange"
+      aria-label="切换到{{item.label}}"
+      aria-pressed="{{activeTerm === item.code}}"
+    >
+      <text class="term-code">{{item.code}}</text>
+      <text class="term-name">{{item.label}}</text>
+    </button>
+  </view>
+  <view class="active-term-context">当前课表：{{activeTermLabel}}</view>
 
   <view class="search-panel surface">
     <view class="search-box">
@@ -57,6 +75,8 @@
       added="{{item.added}}"
       bind:open="onOpenCourse"
       bind:toggle="onToggleCourse"
+      bind:sectionchange="onSectionChange"
+      bind:confirmeligibility="onEligibilityConfirm"
     />
   </view>
   <view wx:else class="surface empty-state">

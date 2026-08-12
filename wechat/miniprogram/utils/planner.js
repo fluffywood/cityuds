@@ -20,10 +20,68 @@ const COURSE_COLORS = Object.freeze([
   Object.freeze({ background: "#f2e4e8", accent: "#984a63", ink: "#77364c" })
 ]);
 const COURSE_COLOR_PALETTE = COURSE_COLORS;
+const TERM_CODES = Object.freeze(["A", "B", "S"]);
+const DEFAULT_TERM = "A";
+const DEFAULT_SELECTIONS = Object.freeze([
+  Object.freeze({ code: "DSC5003", section: "C62" }),
+  Object.freeze({ code: "DSC5001", section: "C61" }),
+  Object.freeze({ code: "DSC5002", section: "C62" })
+]);
+const PROJECT_MUTEX = Object.freeze({ DSC6017: "DSC6032", DSC6032: "DSC6017" });
+
+function normalizeTerm(value) {
+  const term = String(value || "").trim().toUpperCase();
+  return TERM_CODES.includes(term) ? term : "";
+}
+
+function courseOfferedInTerm(course, term = DEFAULT_TERM) {
+  const normalizedTerm = normalizeTerm(term) || DEFAULT_TERM;
+  if (Array.isArray(course && course.offered_terms)) {
+    return course.offered_terms.some((item) => normalizeTerm(item) === normalizedTerm);
+  }
+  return normalizedTerm === DEFAULT_TERM && course && course.offered_this_year !== false;
+}
 
 function sectionsOf(course) {
   if (!course) return [];
   return course.eligible_sections || course.sections || [];
+}
+
+function sectionsForTerm(course, term = DEFAULT_TERM) {
+  const normalizedTerm = normalizeTerm(term) || DEFAULT_TERM;
+  return sectionsOf(course).filter((section) => {
+    const sectionTerm = normalizeTerm(section && section.term);
+    return sectionTerm ? sectionTerm === normalizedTerm : normalizedTerm === DEFAULT_TERM;
+  });
+}
+
+function isProjectCourse(course) {
+  return Boolean(course && course.allow_without_section === true);
+}
+
+function allowsUnscheduledSelection(course, term = DEFAULT_TERM) {
+  if (isProjectCourse(course)) return courseOfferedInTerm(course, term);
+  const normalizedTerm = normalizeTerm(term) || DEFAULT_TERM;
+  return Array.isArray(course && course.allow_without_section_terms)
+    && course.allow_without_section_terms.some((item) => normalizeTerm(item) === normalizedTerm);
+}
+
+function makeUnscheduledSelection() {
+  return { unscheduled: true };
+}
+
+function isUnscheduledSelection(selection) {
+  return Boolean(selection && selection.unscheduled === true);
+}
+
+function projectSelectionKey(courseOrCode) {
+  const code = String(typeof courseOrCode === "string" ? courseOrCode : courseOrCode && courseOrCode.code || "");
+  return code === "DSC6017" || code === "DSC6032" ? "INTERNSHIP_PROJECT" : code;
+}
+
+function projectConflictCodes(courseOrCode) {
+  const code = String(typeof courseOrCode === "string" ? courseOrCode : courseOrCode && courseOrCode.code || "");
+  return Array.from(new Set([code, PROJECT_MUTEX[code]].filter(Boolean)));
 }
 
 function sectionKey(section) {
@@ -31,9 +89,10 @@ function sectionKey(section) {
   return String(section.crn || `${section.section}-${section.day}-${section.time}`);
 }
 
-function findSection(course, key) {
+function findSection(course, key, term) {
   if (!key) return null;
-  return sectionsOf(course).find((section) => sectionKey(section) === String(key)) || null;
+  const sections = term ? sectionsForTerm(course, term) : sectionsOf(course);
+  return sections.find((section) => sectionKey(section) === String(key)) || null;
 }
 
 function pickTutorial(primary, tutorials) {
@@ -50,11 +109,11 @@ function pickTutorial(primary, tutorials) {
   return tutorials.find((tutorial) => String(tutorial.section || "").startsWith(sectionFamily)) || tutorials[0];
 }
 
-function makeSelectionForPrimary(course, primaryKey) {
-  const primary = findSection(course, primaryKey);
+function makeSelectionForPrimary(course, primaryKey, term = DEFAULT_TERM) {
+  const primary = findSection(course, primaryKey, term);
   if (!primary || Number(primary.credits) <= 0) return null;
 
-  const tutorials = sectionsOf(course).filter((section) => Number(section.credits) === 0);
+  const tutorials = sectionsForTerm(course, term).filter((section) => Number(section.credits) === 0);
   const tutorial = pickTutorial(primary, tutorials);
   return {
     primaryCrn: sectionKey(primary),
@@ -62,34 +121,59 @@ function makeSelectionForPrimary(course, primaryKey) {
   };
 }
 
-function makeDefaultSelection(course) {
-  if (!course || course.offered_this_year === false) return null;
-  const primary = sectionsOf(course).find((section) => Number(section.credits) > 0);
-  return primary ? makeSelectionForPrimary(course, sectionKey(primary)) : null;
+function makeDefaultSelection(course, term = DEFAULT_TERM) {
+  if (!courseOfferedInTerm(course, term)) return null;
+  if (allowsUnscheduledSelection(course, term)) return makeUnscheduledSelection();
+  const primary = sectionsForTerm(course, term).find((section) => Number(section.credits) > 0);
+  return primary ? makeSelectionForPrimary(course, sectionKey(primary), term) : null;
 }
 
-function sanitizeSelections(courses, selections = {}) {
+function makeInitialSelections(courses, term = DEFAULT_TERM) {
+  const normalizedTerm = normalizeTerm(term) || DEFAULT_TERM;
+  if (normalizedTerm !== DEFAULT_TERM) return {};
+
+  const selections = {};
+  DEFAULT_SELECTIONS.forEach(({ code, section }) => {
+    const course = (courses || []).find((item) => item && item.code === code);
+    if (!course || !courseOfferedInTerm(course, normalizedTerm)) return;
+    const primary = sectionsForTerm(course, normalizedTerm).find(
+      (item) => item.section === section && Number(item.credits) > 0
+    );
+    const selection = primary
+      ? makeSelectionForPrimary(course, sectionKey(primary), normalizedTerm)
+      : null;
+    if (selection) selections[code] = selection;
+  });
+  return selections;
+}
+
+function sanitizeSelections(courses, selections = {}, term = DEFAULT_TERM) {
   const sanitized = {};
 
   (courses || []).forEach((course) => {
-    if (course.offered_this_year === false) return;
+    if (!courseOfferedInTerm(course, term)) return;
     const existing = selections && selections[course.code];
     if (!existing || typeof existing !== "object") return;
 
-    const existingPrimary = findSection(course, existing.primaryCrn);
+    if (allowsUnscheduledSelection(course, term)) {
+      if (isUnscheduledSelection(existing)) sanitized[course.code] = makeUnscheduledSelection();
+      return;
+    }
+
+    const existingPrimary = findSection(course, existing.primaryCrn, term);
     const primary = existingPrimary && Number(existingPrimary.credits) > 0
       ? existingPrimary
-      : sectionsOf(course).find((section) => Number(section.credits) > 0);
+      : sectionsForTerm(course, term).find((section) => Number(section.credits) > 0);
     if (!primary) return;
 
-    const next = makeSelectionForPrimary(course, sectionKey(primary));
+    const next = makeSelectionForPrimary(course, sectionKey(primary), term);
     if (!next) return;
 
     if (Object.prototype.hasOwnProperty.call(existing, "tutorialCrn")) {
       if (!existing.tutorialCrn) {
         next.tutorialCrn = null;
       } else {
-        const tutorial = findSection(course, existing.tutorialCrn);
+        const tutorial = findSection(course, existing.tutorialCrn, term);
         if (tutorial && Number(tutorial.credits) === 0) {
           next.tutorialCrn = sectionKey(tutorial);
         }
@@ -105,13 +189,15 @@ function filterCourses(courses, filters = {}) {
   const searchTerm = String(filters.searchTerm || "").trim().toLowerCase();
   const requirementType = filters.requirementType || "all";
   const day = filters.day || "all";
+  const term = normalizeTerm(filters.term) || DEFAULT_TERM;
 
   return (courses || []).filter((course) => {
+    if (!courseOfferedInTerm(course, term)) return false;
     const searchableText = `${course.code || ""} ${course.programme_title || ""}`.toLowerCase();
     if (searchTerm && !searchableText.includes(searchTerm)) return false;
     if (requirementType !== "all" && course.requirement_type !== requirementType) return false;
     if (day !== "all") {
-      const offeredThatDay = sectionsOf(course).some(
+      const offeredThatDay = sectionsForTerm(course, term).some(
         (section) => Number(section.credits) > 0 && section.day === day
       );
       if (!offeredThatDay) return false;
@@ -150,7 +236,7 @@ function parseTimeRange(value) {
   return { start, end };
 }
 
-function buildSelectedEvents(courses, selections = {}) {
+function buildSelectedEvents(courses, selections = {}, term = DEFAULT_TERM) {
   const courseByCode = Object.create(null);
   (courses || []).forEach((course) => {
     courseByCode[course.code] = course;
@@ -166,7 +252,7 @@ function buildSelectedEvents(courses, selections = {}) {
       ["primary", selection.primaryCrn],
       ["tutorial", selection.tutorialCrn]
     ].forEach(([sectionType, key]) => {
-      const section = findSection(course, key);
+      const section = findSection(course, key, term);
       const range = section ? parseTimeRange(section.time) : null;
       if (!section || !section.day || !range) return;
       events.push({
@@ -286,7 +372,7 @@ function eventLabel(event) {
   return `${event.courseCode} ${sectionCode}（${typeLabel}）`;
 }
 
-function buildTimetableModel(courses, selections = {}) {
+function buildTimetableModel(courses, selections = {}, term = DEFAULT_TERM) {
   const courseByCode = Object.create(null);
   const colorByCode = Object.create(null);
   (courses || []).forEach((course, index) => {
@@ -294,7 +380,7 @@ function buildTimetableModel(courses, selections = {}) {
     colorByCode[course.code] = COURSE_COLORS[index % COURSE_COLORS.length];
   });
 
-  const detected = detectConflicts(buildSelectedEvents(courses, selections));
+  const detected = detectConflicts(buildSelectedEvents(courses, selections, term));
   const laidOutEvents = assignEventLanes(detected.events);
   const labelsById = Object.create(null);
 
@@ -347,24 +433,33 @@ function buildTimetableModel(courses, selections = {}) {
   };
 }
 
-function getSelectedEvents(courses, selections = {}) {
-  return detectConflicts(buildSelectedEvents(courses, selections)).events;
+function getSelectedEvents(courses, selections = {}, term = DEFAULT_TERM) {
+  return detectConflicts(buildSelectedEvents(courses, selections, term)).events;
 }
 
-function summarizeCredits(courses, selections = {}) {
-  const selectedCourses = (courses || []).filter((course) => Boolean(selections[course.code]));
+function summarizeCredits(courses, selections = {}, term = DEFAULT_TERM) {
+  const selectedCourses = (courses || []).filter((course) => (
+    courseOfferedInTerm(course, term) && Boolean(selections[course.code])
+  ));
   const summary = {
     coreCount: 0,
     coreCredits: 0,
     electiveCount: 0,
     electiveCredits: 0,
     totalCount: selectedCourses.length,
-    totalCredits: 0
+    totalCredits: 0,
+    projectCount: 0,
+    projectCredits: 0,
+    projects: []
   };
 
   selectedCourses.forEach((course) => {
     const credits = Number(course.credits) || 0;
-    if (course.requirement_type === "core") {
+    if (isProjectCourse(course)) {
+      summary.projectCount += 1;
+      summary.projectCredits += credits;
+      summary.projects.push({ code: course.code, title: course.programme_title, credits });
+    } else if (course.requirement_type === "core") {
       summary.coreCount += 1;
       summary.coreCredits += credits;
     } else {
@@ -377,28 +472,168 @@ function summarizeCredits(courses, selections = {}) {
   return summary;
 }
 
+function summarizeAllTerms(courses, selectionsByTerm = {}, confirmations = {}) {
+  const regularEntries = [];
+  const projectsByKey = Object.create(null);
+
+  TERM_CODES.forEach((term) => {
+    const selections = sanitizeSelections(courses, selectionsByTerm[term] || {}, term);
+    (courses || []).forEach((course) => {
+      if (!selections[course.code]) return;
+      if (!getSelectionEligibility(courses, course, selectionsByTerm, confirmations).eligible) return;
+      if (isProjectCourse(course)) {
+        const key = projectSelectionKey(course);
+        if (!projectsByKey[key]) projectsByKey[key] = course;
+      } else {
+        regularEntries.push(course);
+      }
+    });
+  });
+
+  const projects = Object.values(projectsByKey);
+  const core = regularEntries.filter((course) => course.requirement_type === "core");
+  const electives = regularEntries.filter((course) => course.requirement_type === "elective");
+  const credits = (items) => items.reduce((total, course) => total + Number(course.credits || 0), 0);
+  return {
+    coreCount: core.length,
+    coreCredits: credits(core),
+    electiveCount: electives.length,
+    electiveCredits: credits(electives),
+    projectCount: projects.length,
+    projectCredits: credits(projects),
+    projects: projects.map((course) => ({ code: course.code, title: course.programme_title, credits: Number(course.credits) || 0 })),
+    totalCount: core.length + electives.length + projects.length,
+    totalCredits: credits(core) + credits(electives) + credits(projects)
+  };
+}
+
+function countCreditsForSelection(course, selection, term) {
+  if (!selection || !courseOfferedInTerm(course, term)) return 0;
+  if (allowsUnscheduledSelection(course, term)) {
+    return isUnscheduledSelection(selection) ? Number(course.credits || 0) : 0;
+  }
+  const primary = findSection(course, selection.primaryCrn, term);
+  return Number(primary && primary.credits) || 0;
+}
+
+function selectedCreditsInTerm(courses, selections, term) {
+  return (courses || []).reduce((total, course) => {
+    return total + countCreditsForSelection(course, selections && selections[course.code], term);
+  }, 0);
+}
+
+function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirmations = {}) {
+  const requirement = course && course.selection_requirement;
+  const audienceNote = String(course && course.eligibility_note || "");
+  if (!requirement) {
+    return { audienceNote, confirmationKey: "", confirmationMet: true, eligible: true, hasRequirement: false, statusText: "" };
+  }
+
+  const terms = Array.from(new Set((requirement.terms || []).map(normalizeTerm).filter(Boolean)));
+  const minimumCredits = Math.max(0, Number(requirement.minimum_credits || 0));
+  const requiredCourses = Array.from(new Set((requirement.required_courses || []).map(String).filter(Boolean)));
+  const confirmationKey = String(requirement.confirmation_key || "").trim();
+  const confirmationMet = !confirmationKey || confirmations[confirmationKey] === true;
+  const selectedCodes = new Set();
+  let selectedCredits = 0;
+
+  terms.forEach((term) => {
+    const selections = sanitizeSelections(courses, selectionsByTerm[term] || {}, term);
+    (courses || []).forEach((candidate) => {
+      if (selectedCodes.has(candidate.code) || !selections[candidate.code]) return;
+      const credits = countCreditsForSelection(candidate, selections[candidate.code], term);
+      if (credits <= 0) return;
+      selectedCredits += credits;
+      selectedCodes.add(candidate.code);
+    });
+  });
+  const missingCourses = requiredCourses.filter((code) => !selectedCodes.has(code));
+  const termLabel = terms.length === 1 ? `${terms[0]} 学期` : `${terms.join("+")} 两学期`;
+  const unmet = [
+    !confirmationMet ? "尚未确认学生身份" : "",
+    selectedCredits < minimumCredits ? `${termLabel}当前 ${selectedCredits}/${minimumCredits} 学分` : "",
+    missingCourses.length ? `${termLabel}缺少 ${missingCourses.join("、")}` : ""
+  ].filter(Boolean);
+  const eligible = confirmationMet && selectedCredits >= minimumCredits && missingCourses.length === 0;
+  return {
+    audienceNote,
+    confirmationKey,
+    confirmationMet,
+    eligible,
+    hasRequirement: true,
+    minimumCredits,
+    missingCourses,
+    requiredCourses,
+    selectedCredits,
+    selectedRequiredCount: requiredCourses.length - missingCourses.length,
+    statusText: eligible ? "当前排课记录已满足选课条件。" : `当前排课记录未满足：${unmet.join("；")}。`,
+    termLabel,
+    terms
+  };
+}
+
+function findProjectConflict(courses, selectionsByTerm, course) {
+  const conflicts = projectConflictCodes(course);
+  for (const term of TERM_CODES) {
+    const selections = selectionsByTerm[term] || {};
+    const code = conflicts.find((candidate) => selections[candidate]);
+    if (code) return { code, term };
+  }
+  return null;
+}
+
+function findInvalidatedDependents(courses, selectionsByTerm, confirmations = {}) {
+  const invalid = [];
+  TERM_CODES.forEach((term) => {
+    const selections = selectionsByTerm[term] || {};
+    (courses || []).forEach((course) => {
+      if (!selections[course.code] || !course.selection_requirement) return;
+      const eligibility = getSelectionEligibility(courses, course, selectionsByTerm, confirmations);
+      if (!eligibility.eligible) invalid.push({ course, term, eligibility });
+    });
+  });
+  return invalid;
+}
+
 module.exports = {
   COURSE_COLORS,
   COURSE_COLOR_PALETTE,
+  DEFAULT_TERM,
+  DEFAULT_SELECTIONS,
   DAY_NAMES,
+  TERM_CODES,
   WEEK_DAYS,
   WEEK_END_MINUTES,
   WEEK_START_MINUTES,
   assignEventLanes,
+  allowsUnscheduledSelection,
   buildSelectedEvents,
   buildTimetableModel,
+  courseOfferedInTerm,
   detectConflicts,
   filterCourses,
+  findInvalidatedDependents,
+  findProjectConflict,
   findSection,
   formatMinutes,
   getSelectedEvents,
+  getSelectionEligibility,
   hasTimeConflict,
+  isProjectCourse,
+  isUnscheduledSelection,
   makeDefaultSelection,
+  makeInitialSelections,
   makeSelectionForPrimary,
+  makeUnscheduledSelection,
+  normalizeTerm,
   parseTime,
   parseTimeRange,
   pickTutorial,
+  projectConflictCodes,
+  projectSelectionKey,
   sanitizeSelections,
+  sectionsForTerm,
   sectionKey,
+  summarizeAllTerms,
   summarizeCredits
 };

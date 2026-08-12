@@ -17,6 +17,10 @@ Page({
     githubUrl: GITHUB_URL
   },
 
+  onOpenAimsFields() {
+    wx.navigateTo({ url: "/pages/aims-fields/index" });
+  },
+
   onSupportProject() {
     wx.showModal({
       title: "支持这个项目",

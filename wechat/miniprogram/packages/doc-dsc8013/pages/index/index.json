@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "DSC8013 课程介绍",
+  "usingComponents": {
+    "document-viewer": "/components/document-viewer/index"
+  }
+}
