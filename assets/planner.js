@@ -96,7 +96,7 @@
     Object.entries(value || {}).forEach(([code, selection]) => {
       const course = courseByCode(code);
       if (!course) return;
-      if (MSDS.isProjectCourse(course)) {
+      if (MSDS.allowsUnscheduledSelection(course, activeTerm)) {
         if (MSDS.isUnscheduledSelection(selection)) {
           sanitized[code] = MSDS.makeUnscheduledSelection();
         }
@@ -238,13 +238,16 @@
     listElement.innerHTML = filtered.map((course) => {
       const rec = MSDS.getRecommendation(course);
       const isProject = MSDS.isProjectCourse(course);
+      const allowsUnscheduled = MSDS.allowsUnscheduledSelection(course, activeTerm);
       const isAdded = Boolean(selections[course.code]);
       const primaries = course.eligible_sections.filter((item) => Number(item.credits) > 0);
       const eligibility = MSDS.getSelectionEligibility(courseData, course);
-      const hasAddableCourse = isProject || primaries.length > 0;
+      const hasAddableCourse = allowsUnscheduled || primaries.length > 0;
       const canAdd = hasAddableCourse && eligibility.eligible;
       const scheduleText = isProject
         ? "项目课 · 无需选择班次，不在周课表显示"
+        : allowsUnscheduled
+          ? `无需选择班次 · 按必修课计 ${course.credits} 学分，不在周课表显示`
         : hasAddableCourse
           ? primaries.map((item) => [MSDS.DAY_NAMES[item.day] || item.day, item.time].filter(Boolean).join(" ") || "时间待定").join(" / ")
           : "该学期开设，但暂无可选班次";
@@ -265,7 +268,7 @@
               ${isProject ? '<span class="mini-badge project">项目</span>' : course.requirement_type === "core" ? '<span class="mini-badge core">核心</span>' : MSDS.recommendationBadge(rec, true)}
             </div>
             <a class="course-title-link" href="${MSDS.escapeHtml(detailHref(course.code))}">${MSDS.escapeHtml(course.programme_title)}</a>
-            <div class="course-meta"><span>${course.credits} 学分</span><span>${isProject ? "无需班次" : `${primaries.length} 个主课班次`}</span></div>
+            <div class="course-meta"><span>${course.credits} 学分</span><span>${allowsUnscheduled ? "无需班次" : `${primaries.length} 个主课班次`}</span></div>
             <div id="${MSDS.escapeHtml(availabilityId)}" class="course-schedule${isProject ? " course-project-note" : hasAddableCourse ? "" : " course-availability-note"}" title="${MSDS.escapeHtml(scheduleText)}">${MSDS.escapeHtml(scheduleText)}</div>
             ${eligibilityText ? `<p id="${MSDS.escapeHtml(eligibilityId)}" class="course-eligibility ${eligibility.eligible ? "is-met" : "is-unmet"}" title="${MSDS.escapeHtml(eligibility.statusText)}">${MSDS.escapeHtml(eligibilityText)}</p>` : ""}
             ${eligibility.confirmationKey ? `<label class="course-eligibility-confirmation"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.confirmationKey)}"${eligibility.confirmationMet ? " checked" : ""}${isAdded && eligibility.confirmationMet ? " disabled" : ""} aria-describedby="${MSDS.escapeHtml(eligibilityId)}"><span>我确认：${MSDS.escapeHtml(eligibility.audienceNote)}</span></label>` : ""}
@@ -301,6 +304,8 @@
     selectedListElement.innerHTML = selectedCourses.map((course) => {
       const selected = selections[course.code];
       const isProject = MSDS.isProjectCourse(course);
+      const isUnscheduled = MSDS.allowsUnscheduledSelection(course, activeTerm)
+        && MSDS.isUnscheduledSelection(selected);
       const eligibility = MSDS.getSelectionEligibility(courseData, course);
       const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
       const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
@@ -311,8 +316,8 @@
             <div><a href="${MSDS.escapeHtml(detailHref(course.code))}">${MSDS.escapeHtml(course.code)}</a><small>${MSDS.escapeHtml(course.programme_title)}</small></div>
             <button class="remove-course" type="button" data-selected-remove="${MSDS.escapeHtml(course.code)}" aria-label="移除 ${MSDS.escapeHtml(course.code)}">移除</button>
           </div>
-          ${isProject
-            ? '<p class="section-selects-title">无需选择班次</p><p class="selected-project-note">不在周课表显示；计入三学期总门数和总学分。</p>'
+          ${isUnscheduled
+            ? `<p class="section-selects-title">无需选择班次</p><p class="${isProject ? "selected-project-note" : "selected-unscheduled-note"}">不在周课表显示；${isProject ? "计入三学期总门数和总学分" : `按必修课计入 1 门 ${course.credits} 学分`}。</p>`
             : `<p class="section-selects-title">更改班次和时间${hasConflict ? '<span class="selected-conflict-label">时间冲突</span>' : ""}</p>
               <div class="section-selects">
                 <label>主课<select data-code="${MSDS.escapeHtml(course.code)}" data-kind="primary">${sectionOptions(primaries, selected.primaryCrn)}</select></label>
@@ -482,7 +487,9 @@
   function updateSummary() {
     const currentTermSelectedCourses = courses.filter((course) => {
       const selection = selections[course.code];
-      if (MSDS.isProjectCourse(course)) return MSDS.isUnscheduledSelection(selection);
+      if (MSDS.allowsUnscheduledSelection(course, activeTerm)) {
+        return MSDS.isUnscheduledSelection(selection);
+      }
       return Number(MSDS.findSection(course, selection?.primaryCrn)?.credits) > 0;
     });
     const selectedEntries = MSDS.TERM_CODES.flatMap((term) => {
@@ -490,7 +497,7 @@
       const termSelections = term === activeTerm ? selections : MSDS.getStoredSelections(term);
       return termCourses.flatMap((course) => {
         if (!MSDS.getSelectionEligibility(courseData, course).eligible) return [];
-        if (MSDS.isProjectCourse(course)) {
+        if (MSDS.allowsUnscheduledSelection(course, term)) {
           return MSDS.isUnscheduledSelection(termSelections[course.code]) ? [{ course, term }] : [];
         }
         const selectedPrimary = MSDS.findSection(course, termSelections[course.code]?.primaryCrn);
@@ -646,14 +653,20 @@
       MSDS.showToast(`${code} 暂不可选：${eligibility.statusText.replace(/^当前排课记录未满足：/, "")}`, { duration: 5200 });
       return;
     }
-    if (MSDS.isProjectCourse(course)) {
+    const isProject = MSDS.isProjectCourse(course);
+    const allowsUnscheduled = MSDS.allowsUnscheduledSelection(course, activeTerm);
+    if (isProject) {
       const conflict = findProjectConflict(course);
       if (conflict) {
         showProjectConflict(course, conflict);
         return;
       }
+    }
+    if (allowsUnscheduled) {
       selections[code] = MSDS.makeUnscheduledSelection();
-      MSDS.showToast(`已加入 ${code}；无需选择班次，不在周课表显示`);
+      MSDS.showToast(isProject
+        ? `已加入 ${code}；无需选择班次，不在周课表显示`
+        : `已加入 ${code}；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示`);
     } else if (!course.eligible_sections.some((section) => Number(section.credits) > 0)) {
       MSDS.showToast(`${code} 该学期开设，但暂无可选班次`);
       return;

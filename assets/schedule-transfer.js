@@ -67,6 +67,11 @@
     return course?.allow_without_section === true;
   }
 
+  function allowsUnscheduledSelection(course, term) {
+    return isProjectCourse(course)
+      || (course?.allow_without_section_terms || []).some((item) => normalizeTerm(item) === term);
+  }
+
   function isUnscheduledSelection(selection) {
     return selection?.unscheduled === true;
   }
@@ -93,7 +98,7 @@
 
   function selectedCredits(course, selection, term) {
     if (!courseOfferedInTerm(course, term)) return 0;
-    if (isProjectCourse(course)) {
+    if (allowsUnscheduledSelection(course, term)) {
       return isUnscheduledSelection(selection) ? Number(course.credits || 0) : 0;
     }
     const primary = sectionsForTerm(course, term).find((section) => (
@@ -159,18 +164,24 @@
         const course = termCourseMaps[term].get(code);
         if (!course) throw importError(lineNumber, `${code} 未在 ${term} 学期开设。`);
 
-        if (isProjectCourse(course)) {
-          if (!isUnscheduledSelection(selection)) {
-            throw importError(lineNumber, `${code} 是无固定班次项目课，记录格式无效。`);
+        const isProject = isProjectCourse(course);
+        const allowsUnscheduled = allowsUnscheduledSelection(course, term);
+        if (isUnscheduledSelection(selection)) {
+          if (!allowsUnscheduled) {
+            throw importError(lineNumber, `${code} 必须提供有效的主课班次。`);
           }
-          const key = projectSelectionKey(course);
-          if (projects.has(key)) {
-            throw importError(
-              lineNumber,
-              `${course.code} 与 ${projects.get(key)} 不能同时或跨学期重复加入。`
-            );
+          if (isProject) {
+            const key = projectSelectionKey(course);
+            if (projects.has(key)) {
+              throw importError(
+                lineNumber,
+                `${course.code} 与 ${projects.get(key)} 不能同时或跨学期重复加入。`
+              );
+            }
+            projects.set(key, course.code);
           }
-          projects.set(key, course.code);
+        } else if (isProject) {
+          throw importError(lineNumber, `${code} 是无固定班次项目课，记录格式无效。`);
         } else {
           const sections = sectionsForTerm(course, term);
           const primary = sections.find((section) => (
@@ -236,7 +247,7 @@
       orderedCourses.forEach((course) => {
         const selection = termSelections[course.code];
         lines.push(`${course.code} ${term} ${cleanField(course.programme_title || course.schedule_title)}`);
-        if (isProjectCourse(course)) {
+        if (allowsUnscheduledSelection(course, term) && isUnscheduledSelection(selection)) {
           lines.push("NO_SECTION");
           lines.push("# 无需班次，不在周课表显示");
         } else {
@@ -279,13 +290,14 @@
       if (snapshot[term][course.code]) {
         throw importError(lineNumber, `${course.code} 在 ${term} 学期重复出现。`);
       }
-      if (isProjectCourse(course)) {
-        if (!hasNoSection || rows.length) {
-          throw importError(lineNumber, `${course.code} 是无固定班次项目课，必须使用 NO_SECTION。`);
+      if (hasNoSection) {
+        if (!allowsUnscheduledSelection(course, term) || rows.length) {
+          throw importError(lineNumber, `${course.code} 必须提供一个主课班次。`);
         }
         snapshot[term][course.code] = { unscheduled: true };
+      } else if (isProjectCourse(course)) {
+        throw importError(lineNumber, `${course.code} 是无固定班次项目课，必须使用 NO_SECTION。`);
       } else {
-        if (hasNoSection) throw importError(lineNumber, `${course.code} 必须提供一个主课班次。`);
         if (!rows.length) throw importError(lineNumber, `${course.code} 缺少班次记录。`);
         const primaryRows = rows.filter((row) => Number(row.section.credits) > 0);
         const tutorialRows = rows.filter((row) => Number(row.section.credits) === 0);

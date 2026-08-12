@@ -28,7 +28,7 @@
 - 按核心课、选修课和上课星期筛选。
 - 快速查看课程学分、主课班次数量、上课时间和学生评价摘要。
 - 多班次课程可在加入课表前直接选择时间。
-- 一般课程已声明开设但暂无主课班次时会明确标注“该学期开设，但暂无可选班次”，不能加入课表；三门项目课无需班次，可以加入项目汇总。
+- 一般课程已声明开设但暂无主课班次时会明确标注“该学期开设，但暂无可选班次”，不能加入课表；DSC6002 在 Summer Term 可无班次加入并按必修课计分，三门项目课也无需班次，可以加入项目汇总。
 
 ### 可视化课表规划
 
@@ -83,7 +83,7 @@
 ## 当前数据范围
 
 - 网页版年度开课目录共 27 门课程：5 门核心课、19 门选修课、3 门项目课；Semester A、Semester B、Summer Term 分别显示 12、16、2 门课程。
-- 网页版共有 34 条实际班次记录，其中 Semester A 16 条、Semester B 18 条、Summer Term 暂无实际班次。Summer Term 中已声明开设的课程会显示“暂无可选班次”，不会复制 Semester B 的班次。
+- 网页版共有 34 条实际班次记录，其中 Semester A 16 条、Semester B 18 条、Summer Term 暂无实际班次。DSC6002 在 Summer Term 可无班次加入并按必修 1 门 3 学分计入；其他课程不会复制 Semester B 的班次。
 - DSC6007 仅在 Semester B 显示，可选择 C01（CRN 15250）；在 Semester A 和 Summer Term 的选课栏中不显示。
 - DSC6006 Dissertation 为 6 学分，仅在 Semester A、B 开设；DSC6017 Internship Project 为 6 学分，DSC6032 Internship Project (S) 为 3 学分。三者无需班次即可加入，不在周课表显示，其中 `(S)` 属于课程名称。
 - CS6290 仅在 Semester B 开设，不会出现在 Summer Term 课程栏；只有当前 Semester A 课表已包含 CS5285 时才可加入。

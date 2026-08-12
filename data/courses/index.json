@@ -113,6 +113,9 @@
         "B",
         "S"
       ],
+      "allow_without_section_terms": [
+        "S"
+      ],
       "summary": {
         "web": "N",
         "available": "450",

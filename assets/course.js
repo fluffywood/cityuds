@@ -60,7 +60,7 @@
   }
 
   function normalizedSelection(course, selection) {
-    if (MSDS.isProjectCourse(course)) return MSDS.makeUnscheduledSelection();
+    if (MSDS.allowsUnscheduledSelection(course, activeTerm)) return MSDS.makeUnscheduledSelection();
     const fallback = MSDS.makeDefaultSelection(course);
     const primary = MSDS.findSection(course, selection?.primaryCrn)
       || MSDS.findSection(course, fallback.primaryCrn);
@@ -88,8 +88,10 @@
   }
 
   function selectionSummary(course, selection, prefix) {
-    if (MSDS.isProjectCourse(course)) {
-      return `${prefix}：无需选择班次，不在周课表显示。`;
+    if (MSDS.allowsUnscheduledSelection(course, activeTerm)) {
+      return MSDS.isProjectCourse(course)
+        ? `${prefix}：无需选择班次，不在周课表显示。`
+        : `${prefix}：无需选择班次；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示。`;
     }
     const primary = MSDS.findSection(course, selection?.primaryCrn);
     const tutorial = MSDS.findSection(course, selection?.tutorialCrn);
@@ -128,11 +130,12 @@
     const selections = MSDS.getStoredSelections(activeTerm);
     const isOffered = MSDS.courseOfferedInTerm(course, activeTerm);
     const isProject = MSDS.isProjectCourse(course);
+    const allowsUnscheduled = isOffered && MSDS.allowsUnscheduledSelection(course, activeTerm);
     const primarySections = course.eligible_sections.filter((section) => Number(section.credits) > 0);
     const tutorialSections = course.eligible_sections.filter((section) => Number(section.credits) === 0);
     const storedSelection = selections[course.code];
     const storedPrimary = MSDS.findSection(course, storedSelection?.primaryCrn);
-    const isAdded = isOffered && (isProject
+    const isAdded = isOffered && (allowsUnscheduled
       ? MSDS.isUnscheduledSelection(storedSelection)
       : Number(storedPrimary?.credits) > 0);
     if (selections[course.code] && !isAdded) {
@@ -140,7 +143,7 @@
       MSDS.saveSelections(activeTerm, selections);
     }
     const eligibility = MSDS.getSelectionEligibility(data, course);
-    const hasAddableCourse = isOffered && (isProject || primarySections.length > 0);
+    const hasAddableCourse = isOffered && (allowsUnscheduled || primarySections.length > 0);
     const canAdd = hasAddableCourse && eligibility.eligible;
     const canUseAddButton = isAdded || canAdd;
     const activeSelection = normalizedSelection(
@@ -154,7 +157,7 @@
     const instructors = [...new Set(course.eligible_sections.map((section) => section.instructor).filter(Boolean))].join("；");
     const webStatus = !isOffered
       ? "该学期未开设"
-      : isProject
+      : allowsUnscheduled
         ? "无需在本工具选择班次"
       : !primarySections.length
         ? "班次尚未公布"
@@ -176,10 +179,14 @@
         ? "该学期开设，但暂无可选班次，暂时无法加入课表。"
       : !eligibility.eligible
         ? eligibility.statusText
-      : isProject
-        ? isAdded
-          ? "已加入项目汇总；无需选择班次，不在周课表显示。"
-          : "该项目课无需选择班次；加入后计入三学期总门数和总学分，不在周课表显示。"
+      : allowsUnscheduled
+        ? isProject
+          ? isAdded
+            ? "已加入项目汇总；无需选择班次，不在周课表显示。"
+            : "该项目课无需选择班次；加入后计入三学期总门数和总学分，不在周课表显示。"
+          : isAdded
+            ? `已加入课表；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示。`
+            : `${termLabel} 无可选班次，但可直接加入；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示。`
         : isAdded
           ? "已加入课表；当前班次如下。"
           : "尚未加入课表，请先确认下方班次。";
@@ -211,6 +218,8 @@
         ? "暂不符合选课条件"
         : isProject
           ? "加入项目汇总"
+          : allowsUnscheduled
+            ? "加入课表（无需班次）"
           : "按上述班次加入课表";
     const addButtonLabel = isAdded ? `${course.code} 已加入课表，查看课表` : addButtonText;
     const eligibilityItems = [
@@ -256,7 +265,7 @@
             <td>${MSDS.escapeHtml(sectionValue(section.instructor, "待定"))}</td>
             <td>${MSDS.escapeHtml(sectionValue(section.medium || course.summary?.medium))}</td>
           </tr>`).join("")
-      : `<tr class="section-empty-row"><td colspan="16"><strong>${!isOffered ? "该学期未开设" : isProject ? "项目课无需选择班次" : "该学期开设，但暂无可选班次"}</strong><span>${!isOffered ? "请返回课表选择其他学期" : isProject ? "不在周课表显示，加入后计入三学期汇总" : "班次尚未公布，暂时无法加入课表"}</span></td></tr>`;
+      : `<tr class="section-empty-row"><td colspan="16"><strong>${!isOffered ? "该学期未开设" : allowsUnscheduled ? "无需选择班次" : "该学期开设，但暂无可选班次"}</strong><span>${!isOffered ? "请返回课表选择其他学期" : isProject ? "不在周课表显示，加入后计入三学期汇总" : allowsUnscheduled ? `可直接加入；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示` : "班次尚未公布，暂时无法加入课表"}</span></td></tr>`;
 
     document.getElementById("site-term-label").textContent = fullTermLabel;
 
@@ -305,11 +314,11 @@
             <div class="decision-toolbar" role="group" aria-labelledby="selection-heading">
               <div class="decision-toolbar-copy">
                 <p class="eyebrow">加入前确认</p>
-                <h3 id="selection-heading">${isProject ? isAdded ? "已加入项目汇总" : "项目课无需选择班次" : isAdded ? "当前课表班次" : "默认加入班次"}</h3>
-                <p>${isProject ? "项目课不生成周课表事件；加入后仍计入三学期总门数和总学分。" : isAdded ? "如需换班，请前往课程表的“已选”面板。" : "页面不会静默选班；下方显示并保存你确认的主课与导修课。"}</p>
+                <h3 id="selection-heading">${allowsUnscheduled ? isProject ? isAdded ? "已加入项目汇总" : "项目课无需选择班次" : isAdded ? "已加入课表" : "无需选择班次" : isAdded ? "当前课表班次" : "默认加入班次"}</h3>
+                <p>${allowsUnscheduled ? isProject ? "项目课不生成周课表事件；加入后仍计入三学期总门数和总学分。" : `该必修课不生成周课表事件；加入后计入必修 1 门 ${course.credits} 学分。` : isAdded ? "如需换班，请前往课程表的“已选”面板。" : "页面不会静默选班；下方显示并保存你确认的主课与导修课。"}</p>
               </div>
               <div class="decision-controls">
-                ${isProject && isOffered ? '<p class="notice decision-project">无需选择班次，不在周课表显示。</p>' : primarySections.length ? `
+                ${allowsUnscheduled ? `<p class="notice${isProject ? " decision-project" : ""}">无需选择班次，不在周课表显示。</p>` : primarySections.length ? `
                   <div class="section-selects decision-section-selects">
                     <label for="detail-primary-section"><span>主课</span><select id="detail-primary-section" data-kind="primary"${selectionControlsDisabled ? " disabled" : ""} aria-describedby="default-selection-summary">${sectionOptions(primarySections, activeSelection.primaryCrn)}</select></label>
                     ${tutorialSections.length ? `<label for="detail-tutorial-section"><span>导修课</span><select id="detail-tutorial-section" data-kind="tutorial"${selectionControlsDisabled ? " disabled" : ""} aria-describedby="default-selection-summary"><option value=""${activeSelection.tutorialCrn ? "" : " selected"}>不选择导修课</option>${sectionOptions(tutorialSections, activeSelection.tutorialCrn)}</select></label>` : ""}
@@ -424,8 +433,8 @@
         }
       }
 
-      const nextSelection = isProject ? MSDS.makeUnscheduledSelection() : selectionFromControls();
-      if (!isProject && !nextSelection.primaryCrn) {
+      const nextSelection = allowsUnscheduled ? MSDS.makeUnscheduledSelection() : selectionFromControls();
+      if (!allowsUnscheduled && !nextSelection.primaryCrn) {
         status.className = "decision-status is-unavailable";
         status.textContent = "请先选择主课班次。";
         primarySelect?.focus();
@@ -438,16 +447,20 @@
       if (tutorialSelect) tutorialSelect.disabled = true;
       summary.textContent = selectionSummary(course, nextSelection, "已加入");
       status.className = "decision-status is-added";
-      status.textContent = isProject
-        ? "已加入项目汇总；无需选择班次，不在周课表显示。"
+      status.textContent = allowsUnscheduled
+        ? isProject
+          ? "已加入项目汇总；无需选择班次，不在周课表显示。"
+          : `已加入课表；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示。`
         : "已加入课表。请查看课表确认是否与其他课程冲突。";
       addButton.textContent = "已加入 · 查看课表";
       addButton.className = "button button-quiet";
       addButton.setAttribute("aria-label", `${course.code} 已加入课表，查看课表`);
       addButton.focus({ preventScroll: true });
       const primary = MSDS.findSection(course, nextSelection.primaryCrn);
-      MSDS.showToast(isProject
-        ? `已加入 ${course.code}；无需选择班次，不在周课表显示`
+      MSDS.showToast(allowsUnscheduled
+        ? isProject
+          ? `已加入 ${course.code}；无需选择班次，不在周课表显示`
+          : `已加入 ${course.code}；按必修课计入 1 门 ${course.credits} 学分，不在周课表显示`
         : `已加入 ${course.code}${primary ? `：${MSDS.formatSection(primary)}` : ""}`);
     });
   }
@@ -459,7 +472,7 @@
 
   Promise.all([
     MSDS.loadCourseData(),
-    fetch("data/course-documents/index.json?v=20260812a").then((response) => {
+    fetch("data/course-documents/index.json?v=20260812b").then((response) => {
       if (!response.ok) throw new Error("课程介绍索引读取失败");
       return response.json();
     })

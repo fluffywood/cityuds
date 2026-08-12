@@ -2892,12 +2892,22 @@ h3,
 }
 
 .course-project-note,
-.selected-project-note {
-  color: var(--research);
+.selected-project-note,
+.selected-unscheduled-note {
   font-weight: 750;
 }
 
+.course-project-note,
 .selected-project-note {
+  color: var(--research);
+}
+
+.selected-unscheduled-note {
+  color: var(--primary-strong);
+}
+
+.selected-project-note,
+.selected-unscheduled-note {
   margin: 0;
   font-size: 12px;
   line-height: 1.55;

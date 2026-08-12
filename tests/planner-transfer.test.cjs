@@ -130,6 +130,28 @@ test("S 学期无班次课程不能伪造为已选", () => {
   );
 });
 
+test("DSC6002 在 S 学期可无班次导出并完整恢复", () => {
+  const source = { A: {}, B: {}, S: { DSC6002: { unscheduled: true } } };
+  const exported = transfer.serializeSchedule(courseData, source);
+  const imported = transfer.parseSchedule(exported.text, courseData);
+
+  assert.deepEqual(imported.selectionsByTerm, source);
+  assert.equal(exported.courseCount, 1);
+  assert.equal(exported.sectionCount, 0);
+  assert.match(exported.text, /DSC6002 S Research Projects for Data Science\r\nNO_SECTION/);
+});
+
+test("DSC6002 在 B 学期仍必须选择现有班次", () => {
+  const valid = { A: {}, B: { DSC6002: regular("11818") }, S: {} };
+  const invalid = { A: {}, B: { DSC6002: { unscheduled: true } }, S: {} };
+
+  assert.doesNotThrow(() => transfer.validateSnapshot(courseData, valid));
+  assert.throws(
+    () => transfer.validateSnapshot(courseData, invalid),
+    /DSC6002 必须提供有效的主课班次/
+  );
+});
+
 test("互斥 Internship Project 不能同时导入", () => {
   const snapshot = completeSnapshot();
   snapshot.B.DSC6017 = { unscheduled: true };

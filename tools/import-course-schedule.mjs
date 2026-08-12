@@ -15,6 +15,9 @@ const PROJECT_COURSE_METADATA = Object.freeze({
   DSC6017: Object.freeze({ credits: 6, exclusive_course: "DSC6032" }),
   DSC6032: Object.freeze({ credits: 3, exclusive_course: "DSC6017" })
 });
+const TERM_UNSCHEDULED_COURSE_METADATA = Object.freeze({
+  DSC6002: Object.freeze(["S"])
+});
 const FOUNDATION_COURSE_CODES = Object.freeze(["DSC5001", "DSC5002", "DSC5003"]);
 const COURSE_SELECTION_METADATA = Object.freeze({
   CS6290: Object.freeze({
@@ -268,7 +271,11 @@ function mergedCourse(imported, existing) {
     prerequisites: "Nil",
     exclusive_course: "Nil"
   };
-  const { offered_this_year: ignoredOfferedFlag, ...metadata } = base;
+  const {
+    offered_this_year: ignoredOfferedFlag,
+    allow_without_section_terms: ignoredUnscheduledTerms,
+    ...metadata
+  } = base;
 
   return {
     ...metadata,
@@ -286,6 +293,9 @@ function mergedCourse(imported, existing) {
     prerequisites: selectionMetadata?.prerequisites || metadata.prerequisites || "Nil",
     exclusive_course: projectMetadata?.exclusive_course || metadata.exclusive_course || "Nil",
     ...(projectMetadata ? { allow_without_section: true } : {}),
+    ...(TERM_UNSCHEDULED_COURSE_METADATA[imported.code]
+      ? { allow_without_section_terms: TERM_UNSCHEDULED_COURSE_METADATA[imported.code] }
+      : {}),
     offered_terms: imported.offered_terms,
     summary: summarizeSections(imported.sections, metadata.summary?.medium),
     section_count: imported.sections.length
@@ -301,6 +311,19 @@ function assertProjectMetadata(courses) {
     assert(course.credits === expected.credits, `${courseCode} 学分必须为 ${expected.credits}`);
     assert(course.allow_without_section === true, `${courseCode} 必须允许无班次开设`);
     assert(course.exclusive_course === expected.exclusive_course, `${courseCode} 互斥课程不正确`);
+  }
+}
+
+function assertTermUnscheduledMetadata(courses) {
+  const courseByCode = new Map(courses.map((course) => [course.code, course]));
+  for (const [courseCode, terms] of Object.entries(TERM_UNSCHEDULED_COURSE_METADATA)) {
+    const course = courseByCode.get(courseCode);
+    assert(course, `缺少无班次课程 ${courseCode}`);
+    assert(course.requirement_type !== "project", `${courseCode} 不应归类为 project`);
+    assert(
+      JSON.stringify(course.allow_without_section_terms) === JSON.stringify(terms),
+      `${courseCode} 的无班次可选学期不正确`
+    );
   }
 }
 
@@ -362,6 +385,7 @@ async function main() {
   const importedCodes = new Set(parsed.courses.map((course) => course.code));
   const importedCourses = parsed.courses.map((course) => mergedCourse(course, existingByCode.get(course.code)));
   assertProjectMetadata(importedCourses);
+  assertTermUnscheduledMetadata(importedCourses);
   assertSelectionRequirements(importedCourses);
   const retainedCourses = currentIndex.courses
     .filter((course) => !importedCodes.has(course.code))

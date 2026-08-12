@@ -9,7 +9,7 @@
   const TERM_CODES = ["A", "B", "S"];
   const TERM_FALLBACK_LABELS = { A: "Semester A", B: "Semester B", S: "Summer Term" };
   const PROJECT_MUTEX = { DSC6017: "DSC6032", DSC6032: "DSC6017" };
-  const DATA_VERSION = "20260812a";
+  const DATA_VERSION = "20260812b";
   const LEGACY_COURSE_CODE_PATTERN = /^SDSC(?=\d{4}$)/;
   const DAY_NAMES = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五", S: "周六", U: "周日" };
   let courseDataPromise;
@@ -139,6 +139,12 @@
     return course?.allow_without_section === true;
   }
 
+  function allowsUnscheduledSelection(course, term) {
+    const normalized = normalizeTerm(term || course?.active_term) || DEFAULT_TERM;
+    return isProjectCourse(course)
+      || (course?.allow_without_section_terms || []).some((item) => normalizeTerm(item) === normalized);
+  }
+
   function makeUnscheduledSelection() {
     return { unscheduled: true };
   }
@@ -167,7 +173,7 @@
 
   function selectedCreditsInTerm(course, selection, term) {
     if (!courseOfferedInTerm(course, term)) return 0;
-    if (isProjectCourse(course)) {
+    if (allowsUnscheduledSelection(course, term)) {
       return isUnscheduledSelection(selection) ? Number(course.credits || 0) : 0;
     }
     const selectedKey = String(selection?.primaryCrn || "");
@@ -417,6 +423,7 @@
     DEFAULT_TERM,
     LEGACY_STORAGE_KEY,
     TERM_CODES,
+    allowsUnscheduledSelection,
     courseHref,
     courseOfferedInTerm,
     escapeHtml,

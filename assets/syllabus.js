@@ -17,7 +17,7 @@
   const mobileReaderQuery = window.matchMedia("(max-width: 900px)");
 
   function getJson(url) {
-    const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=20260812a`;
+    const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=20260812b`;
     return fetch(requestUrl).then((response) => {
       if (!response.ok) throw new Error(`数据读取失败：${requestUrl}`);
       return response.json();
