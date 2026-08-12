@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CityU MSDS Semester A 2026/27 静态排课与选课参考工具">
-    <title>MSDS 选课板 · Semester A 2026/27</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260811b">
+    <meta name="description" content="CityU MSDS 2026/27 A、B 与暑期学期静态排课与选课参考工具">
+    <title>MSDS 选课板 · 2026/27</title>
+    <link rel="stylesheet" href="assets/styles.css?v=20260812a">
   </head>
   <body data-page="planner">
     <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -13,7 +13,7 @@
       <div class="site-header-inner">
         <a class="brand" href="index.html" aria-label="MSDS 选课板首页">
           <img class="brand-logo" src="assets/cityu-ds-logo.jpg" alt="" width="40" height="40">
-          <span class="brand-copy"><strong>MSDS 选课板</strong><small>Semester A · 2026/27</small></span>
+          <span class="brand-copy"><strong>MSDS 选课板</strong><small id="site-term-label">2026/27 · A / B / S</small></span>
         </a>
         <nav class="main-nav" aria-label="主导航">
           <a class="support-link" href="https://github.com/fluffywood/cityuds" target="_blank" rel="noopener noreferrer" aria-label="前往 GitHub 支持项目并求 Star">
@@ -33,7 +33,19 @@
             <img class="planner-intro-logo" src="assets/cityu-ds-logo.jpg" alt="CityU DS Only Logo" width="96" height="96">
             <h1 class="page-title">自助排课台</h1>
           </div>
-          <p>搜索课程、确认班次并加入课表。时间冲突会直接标出，已选课程可随时调整或撤销。</p>
+          <div class="term-picker">
+            <label class="term-picker-field" for="term-select">
+              <span>排课学期</span>
+              <select id="term-select" aria-describedby="term-picker-note">
+                <option value="A">Semester A · 2026/27</option>
+                <option value="B">Semester B · 2026/27</option>
+                <option value="S">Summer Term · 2026/27</option>
+              </select>
+            </label>
+            <p id="term-picker-note">每个学期保存一份独立课表。</p>
+            <p id="term-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+          </div>
+          <p>选择学期后搜索课程、确认班次并加入课表。时间冲突会直接标出，已选课程可随时调整或撤销。</p>
         </div>
         <div class="intro-stats" role="group" aria-label="课程概况与选课帮助">
           <a class="intro-stat intro-stat-guide" href="aims-fields.html">
@@ -69,6 +81,7 @@
               <button class="filter-pill active" type="button" data-filter="all" aria-pressed="true">全部</button>
               <button class="filter-pill" type="button" data-filter="core" aria-pressed="false">核心</button>
               <button class="filter-pill" type="button" data-filter="elective" aria-pressed="false">选修</button>
+              <button class="filter-pill" type="button" data-filter="project" aria-pressed="false">项目</button>
             </div>
             <div class="day-filter" role="group" aria-label="按上课星期筛选">
               <span>上课日</span>
@@ -94,16 +107,21 @@
         <div id="timetable-panel" class="timetable-panel">
           <div class="timetable-toolbar">
             <div>
-              <h2>我的课表</h2>
-              <p class="selection-summary">
+              <h2 id="timetable-heading">我的课表 <span id="timetable-term-label" class="term-context-badge">Semester A</span></h2>
+              <p class="selection-summary" aria-label="A、B、S 三学期已选必修、选修与项目课程相加后的总课程数和总学分">
                 <span class="selection-summary-part">必修 <strong id="core-count">0</strong>门 <strong id="core-credit-count">0</strong>分</span>
                 <span class="selection-summary-plus" aria-hidden="true">+</span>
                 <span class="selection-summary-part">选修 <strong id="elective-count">0</strong>门 <strong id="elective-credit-count">0</strong>分</span>
-                <span class="selection-summary-plus" aria-hidden="true">+</span>
+                <span id="project-summary-parts"></span>
+                <span class="selection-summary-plus" aria-hidden="true">=</span>
                 <span class="selection-summary-part">总 <strong id="selected-count">0</strong>门 <strong id="credit-count">0</strong>分</span>
               </p>
             </div>
-            <div class="toolbar-actions">
+            <div class="toolbar-actions" role="group" aria-label="课表操作">
+              <button id="export-schedule" class="button button-quiet" type="button">导出课表</button>
+              <button id="import-schedule" class="button button-quiet" type="button" aria-controls="import-schedule-file">导入课表</button>
+              <input id="import-schedule-file" class="sr-only" type="file" accept=".txt,text/plain" tabindex="-1">
+              <span id="schedule-file-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></span>
               <button id="conflict-status" class="conflict-status is-clear" type="button" aria-controls="conflict-details" aria-expanded="false" disabled>暂无冲突</button>
               <span id="conflict-announcement" class="sr-only" role="status" aria-live="polite"></span>
               <button id="clear-selection" class="button button-quiet" type="button">清空</button>
@@ -131,13 +149,14 @@
             </div>
           </div>
           <p class="mobile-scroll-hint">可左右滑动查看整周，点击课程块可打开详情。</p>
-          <p class="data-note">课表快照：2026-08-04 16:48（Asia/Beijing），数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。</p>
+          <p id="schedule-data-note" class="data-note">课表数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。</p>
         </div>
       </section>
     </main>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="assets/shared.js?v=20260811c"></script>
-    <script src="assets/planner.js?v=20260811c"></script>
+    <script src="assets/shared.js?v=20260812a"></script>
+    <script src="assets/schedule-transfer.js?v=20260812a"></script>
+    <script src="assets/planner.js?v=20260812a"></script>
   </body>
 </html>

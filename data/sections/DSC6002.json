@@ -1,0 +1,22 @@
+[
+  {
+    "term": "B",
+    "crn": "11818",
+    "section": "D61",
+    "credits": 3,
+    "campus": "Main Campus",
+    "web": "N",
+    "level": "P",
+    "available": "450",
+    "capacity": "450",
+    "waitlist_available": "N",
+    "date": "11/01/2027 - 17/04/2027",
+    "day": null,
+    "time": null,
+    "building": null,
+    "room": null,
+    "instructor": "CHAN Yu Wing",
+    "medium": "English",
+    "notes": []
+  }
+]

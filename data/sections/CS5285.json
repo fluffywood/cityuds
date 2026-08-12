@@ -1,11 +1,35 @@
 [
   {
-    "crn": "21009",
-    "section": "C01",
+    "term": "A",
+    "crn": "13297",
+    "section": "CA1",
     "credits": 3,
+    "campus": "Main Campus",
     "web": "Y",
-    "available": "120",
-    "capacity": "120",
+    "level": "P R",
+    "available": "30",
+    "capacity": "30",
+    "waitlist_available": "N",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "F",
+    "time": "15:00 - 17:50",
+    "building": "YEUNG",
+    "room": "LT-2",
+    "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
+    "medium": "English",
+    "notes": []
+  },
+  {
+    "term": "A",
+    "crn": "15358",
+    "section": "CA2",
+    "credits": 3,
+    "campus": "Main Campus",
+    "web": "Y",
+    "level": "P R",
+    "available": "30",
+    "capacity": "30",
+    "waitlist_available": "N",
     "date": "31/08/2026 - 28/11/2026",
     "day": "F",
     "time": "19:00 - 21:50",
@@ -13,26 +37,6 @@
     "room": "R4057",
     "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
     "medium": "English",
-    "notes": [
-      "only for Programme: MSDS"
-    ]
-  },
-  {
-    "crn": "21010",
-    "section": "C02",
-    "credits": 3,
-    "web": "Y",
-    "available": "115",
-    "capacity": "115",
-    "date": "31/08/2026 - 28/11/2026",
-    "day": "R",
-    "time": "19:00 - 21:50",
-    "building": "BOC",
-    "room": "R4057",
-    "instructor": "HANCKE Gerhard Petrus, LU Zhenliang",
-    "medium": "English",
-    "notes": [
-      "only for Programme: MSDS"
-    ]
+    "notes": []
   }
 ]

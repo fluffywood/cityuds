@@ -1,0 +1,22 @@
+[
+  {
+    "term": "B",
+    "crn": "13941",
+    "section": "C04",
+    "credits": 3,
+    "campus": "Main Campus",
+    "web": "Y",
+    "level": "P",
+    "available": "160",
+    "capacity": "160",
+    "waitlist_available": "N",
+    "date": "11/01/2027 - 17/04/2027",
+    "day": "F",
+    "time": "16:00 - 18:50",
+    "building": "LAU",
+    "room": "LT-501",
+    "instructor": "TBA DS005",
+    "medium": "English",
+    "notes": []
+  }
+]

@@ -1,6 +1,6 @@
 {
   "programme": "MSDS",
-  "semester": "Semester A 2026/27",
+  "semester": "Academic Year 2026/27 · A / B / S",
   "schedule_as_of": "2026-08-04 16:48 Asia/Beijing",
   "graduation_credit_units": 30,
   "requirement_credit_units": {
@@ -9,7 +9,7 @@
   },
   "source_url": "https://banweb.cityu.edu.hk/pls/PROD/hwscrssh_cityu.P_GetCrse",
   "notes": [
-    "班次时间与名额数据采集自 CityU AIMS 系统（Semester A 2026/27），仅供参考。",
+    "课程与班次数据按 CityU AIMS 2026/27 学年 A、B、S 学期课表手动整理，仅供参考。",
     "Availability and capacity are a snapshot from the schedule timestamp and may change.",
     "WEB=N means the section is listed but is not available for normal web registration; contact the programme or academic unit for registration arrangements.",
     "Zero-credit section components are retained because some courses require registration in both lecture and tutorial components."
@@ -27,11 +27,14 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "154",
-        "capacity": "800",
+        "available": "23",
+        "capacity": "500",
         "medium": "English"
       },
-      "section_count": 3
+      "section_count": 2,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC5002",
@@ -45,11 +48,14 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "54",
-        "capacity": "500",
+        "available": "Full",
+        "capacity": "516",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC5003",
@@ -63,11 +69,171 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "54",
+        "available": "42",
+        "capacity": "500",
+        "medium": "English"
+      },
+      "section_count": 2,
+      "offered_terms": [
+        "A"
+      ]
+    },
+    {
+      "code": "DSC6001",
+      "requirement_type": "core",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Statistical Machine Learning II",
+      "schedule_title": "Statistical Machine Learning II",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "500",
         "capacity": "500",
         "medium": "English"
       },
       "section_count": 2
+    },
+    {
+      "code": "DSC6002",
+      "requirement_type": "core",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Research Projects for Data Science",
+      "schedule_title": "Research Projects for Data Science",
+      "title_changed": false,
+      "offered_terms": [
+        "B",
+        "S"
+      ],
+      "summary": {
+        "web": "N",
+        "available": "450",
+        "capacity": "450",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "CS5285",
+      "requirement_type": "elective",
+      "programme_title": "Introduction to Cybersecurity",
+      "schedule_title": "Introduction to Cybersecurity",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "60",
+        "capacity": "60",
+        "medium": "English"
+      },
+      "section_count": 2,
+      "offered_terms": [
+        "A"
+      ]
+    },
+    {
+      "code": "CS5487",
+      "requirement_type": "elective",
+      "programme_title": "Machine Learning: Principles and Practice",
+      "schedule_title": "Machine Learning: Principles and Practice",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "340",
+        "capacity": "340",
+        "medium": "English"
+      },
+      "section_count": 2,
+      "offered_terms": [
+        "B"
+      ]
+    },
+    {
+      "code": "CS6290",
+      "requirement_type": "elective",
+      "programme_title": "Privacy-enhancing Technologies",
+      "schedule_title": "Privacy-enhancing Technologies",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "CS5285（须在 Semester A 修读）",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "40",
+        "capacity": "40",
+        "medium": "English"
+      },
+      "section_count": 2,
+      "offered_terms": [
+        "B"
+      ],
+      "selection_requirement": {
+        "terms": [
+          "A"
+        ],
+        "minimum_credits": 0,
+        "required_courses": [
+          "CS5285"
+        ]
+      }
+    },
+    {
+      "code": "CS6493",
+      "requirement_type": "elective",
+      "programme_title": "Natural Language Processing",
+      "schedule_title": "Natural Language Processing",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "Y",
+        "available": "40",
+        "capacity": "40",
+        "medium": "English"
+      },
+      "section_count": 2,
+      "offered_terms": [
+        "B"
+      ]
+    },
+    {
+      "code": "DSC6003",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Bayesian Data Analysis",
+      "schedule_title": "Bayesian Data Analysis",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "200",
+        "capacity": "200",
+        "medium": "English"
+      },
+      "section_count": 1
     },
     {
       "code": "DSC6004",
@@ -81,19 +247,22 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "300",
-        "capacity": "300",
+        "available": "265",
+        "capacity": "265",
         "medium": "English"
       },
-      "section_count": 5
+      "section_count": 2,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC6006",
-      "requirement_type": "elective",
+      "requirement_type": "project",
       "programme_title": "Dissertation",
       "schedule_title": "Dissertation",
       "title_changed": false,
-      "credits": 3,
+      "credits": 6,
       "remarks": "SD",
       "prerequisites": "Nil",
       "exclusive_course": "Nil",
@@ -103,7 +272,12 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "offered_terms": [
+        "A",
+        "B"
+      ],
+      "allow_without_section": true
     },
     {
       "code": "DSC6007",
@@ -115,14 +289,16 @@
       "remarks": "SD",
       "prerequisites": "Nil",
       "exclusive_course": "Nil",
-      "offered_this_year": false,
       "summary": {
-        "web": "N",
-        "available": "0",
-        "capacity": "0",
+        "web": "Y",
+        "available": "190",
+        "capacity": "190",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 1,
+      "offered_terms": [
+        "B"
+      ]
     },
     {
       "code": "DSC6008",
@@ -136,11 +312,14 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "100",
-        "capacity": "300",
+        "available": "50",
+        "capacity": "50",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 1,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC6011",
@@ -158,7 +337,10 @@
         "capacity": "190",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC6012",
@@ -176,7 +358,10 @@
         "capacity": "250",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": [
+        "A"
+      ]
     },
     {
       "code": "DSC6013",
@@ -194,6 +379,30 @@
         "capacity": "250",
         "medium": "English"
       },
+      "section_count": 1,
+      "offered_terms": [
+        "A"
+      ]
+    },
+    {
+      "code": "DSC6015",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Stochastic Optimization for Machine Learning",
+      "schedule_title": "Stochastic Optimization for Machine Learning",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "200",
+        "capacity": "200",
+        "medium": "English"
+      },
       "section_count": 1
     },
     {
@@ -208,29 +417,50 @@
       "exclusive_course": "Nil",
       "summary": {
         "web": "Y",
-        "available": "200",
-        "capacity": "200",
+        "available": "380",
+        "capacity": "380",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 2,
+      "offered_terms": [
+        "A",
+        "B"
+      ]
     },
     {
       "code": "DSC6017",
-      "requirement_type": "elective",
+      "requirement_type": "project",
       "programme_title": "Internship Project",
       "schedule_title": "Internship Project",
       "title_changed": false,
-      "credits": 3,
+      "credits": 6,
       "remarks": "SD",
       "prerequisites": "Nil",
-      "exclusive_course": "Nil",
+      "exclusive_course": "DSC6032",
       "summary": {
         "web": "N",
         "available": "0",
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "offered_terms": [
+        "B"
+      ],
+      "allow_without_section": true,
+      "eligibility_note": "仅限全日制第二年学生修读",
+      "selection_requirement": {
+        "terms": [
+          "A"
+        ],
+        "minimum_credits": 15,
+        "required_courses": [
+          "DSC5001",
+          "DSC5002",
+          "DSC5003"
+        ],
+        "confirmation_key": "full_time_second_year"
+      }
     },
     {
       "code": "DSC6018",
@@ -246,6 +476,148 @@
         "web": "Y",
         "available": "200",
         "capacity": "200",
+        "medium": "English"
+      },
+      "section_count": 1,
+      "offered_terms": [
+        "A"
+      ]
+    },
+    {
+      "code": "DSC6019",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Embodied AI and Applications",
+      "schedule_title": "Embodied AI and Applications",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "100",
+        "capacity": "100",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC6032",
+      "requirement_type": "project",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "DSC6017",
+      "programme_title": "Internship Project (S)",
+      "schedule_title": "Internship Project (S)",
+      "title_changed": false,
+      "offered_terms": [
+        "S"
+      ],
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0,
+      "allow_without_section": true,
+      "selection_requirement": {
+        "terms": [
+          "A",
+          "B"
+        ],
+        "minimum_credits": 15,
+        "required_courses": [
+          "DSC5001",
+          "DSC5002",
+          "DSC5003"
+        ]
+      }
+    },
+    {
+      "code": "DSC8007",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Deep Learning",
+      "schedule_title": "Deep Learning",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "230",
+        "capacity": "230",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC8009",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Data Mining and Knowledge Discovery",
+      "schedule_title": "Data Mining and Knowledge Discovery",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "160",
+        "capacity": "160",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC8013",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Statistical Methods for Categorical Data Analysis",
+      "schedule_title": "Statistical Methods for Categorical Data Analysis",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "165",
+        "capacity": "165",
+        "medium": "English"
+      },
+      "section_count": 1
+    },
+    {
+      "code": "DSC8014",
+      "requirement_type": "elective",
+      "credits": 3,
+      "remarks": "SD",
+      "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "programme_title": "Online Learning and Optimization",
+      "schedule_title": "Online Learning and Optimization",
+      "title_changed": false,
+      "offered_terms": [
+        "B"
+      ],
+      "summary": {
+        "web": "Y",
+        "available": "140",
+        "capacity": "140",
         "medium": "English"
       },
       "section_count": 1
@@ -266,7 +638,8 @@
         "capacity": "300",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": []
     },
     {
       "code": "DSC6021",
@@ -284,7 +657,8 @@
         "capacity": "300",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": []
     },
     {
       "code": "DSC6026",
@@ -302,7 +676,8 @@
         "capacity": "250",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": []
     },
     {
       "code": "DSC8001",
@@ -320,7 +695,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "offered_terms": []
     },
     {
       "code": "DSC8002",
@@ -338,7 +714,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "offered_terms": []
     },
     {
       "code": "DSC8003",
@@ -356,7 +733,8 @@
         "capacity": "100",
         "medium": "English"
       },
-      "section_count": 1
+      "section_count": 1,
+      "offered_terms": []
     },
     {
       "code": "DSC8004",
@@ -374,7 +752,8 @@
         "capacity": "100",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "offered_terms": []
     },
     {
       "code": "DSC8005",
@@ -392,79 +771,27 @@
         "capacity": "100",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "offered_terms": []
+    }
+  ],
+  "academic_year": "2026/27",
+  "default_term": "A",
+  "terms": [
+    {
+      "code": "A",
+      "label": "Semester A",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
     },
     {
-      "code": "CS5285",
-      "requirement_type": "elective",
-      "programme_title": "Information Security for eCommerce",
-      "schedule_title": "Information Security for eCommerce",
-      "title_changed": false,
-      "credits": 3,
-      "remarks": "CC",
-      "prerequisites": "Nil",
-      "exclusive_course": "Nil",
-      "summary": {
-        "web": "Y",
-        "available": "235",
-        "capacity": "235",
-        "medium": "English"
-      },
-      "section_count": 2
+      "code": "B",
+      "label": "Semester B",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
     },
     {
-      "code": "CS5487",
-      "requirement_type": "elective",
-      "programme_title": "Machine Learning: Principles and Practice",
-      "schedule_title": "Machine Learning: Principles and Practice",
-      "title_changed": false,
-      "credits": 3,
-      "remarks": "CC",
-      "prerequisites": "Nil",
-      "exclusive_course": "Nil",
-      "summary": {
-        "web": "Y",
-        "available": "180",
-        "capacity": "180",
-        "medium": "English"
-      },
-      "section_count": 2
-    },
-    {
-      "code": "CS6290",
-      "requirement_type": "elective",
-      "programme_title": "Privacy-enhancing Technologies",
-      "schedule_title": "Privacy-enhancing Technologies",
-      "title_changed": false,
-      "credits": 3,
-      "remarks": "CC",
-      "prerequisites": "Nil",
-      "exclusive_course": "Nil",
-      "summary": {
-        "web": "Y",
-        "available": "120",
-        "capacity": "120",
-        "medium": "English"
-      },
-      "section_count": 1
-    },
-    {
-      "code": "CS6493",
-      "requirement_type": "elective",
-      "programme_title": "Natural Language Processing",
-      "schedule_title": "Natural Language Processing",
-      "title_changed": false,
-      "credits": 3,
-      "remarks": "CC",
-      "prerequisites": "Nil",
-      "exclusive_course": "Nil",
-      "summary": {
-        "web": "Y",
-        "available": "150",
-        "capacity": "150",
-        "medium": "English"
-      },
-      "section_count": 2
+      "code": "S",
+      "label": "Summer Term",
+      "schedule_as_of": "2026-08-04 16:48 Asia/Beijing"
     }
   ]
 }

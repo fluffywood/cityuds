@@ -11,6 +11,18 @@
     "pdf": "docs/DSC5003.pdf",
     "translation": "data/course-documents/translations/DSC5003.json"
   },
+  "DSC6001": {
+    "pdf": "docs/DSC6001.pdf",
+    "translation": "data/course-documents/translations/DSC6001.json"
+  },
+  "DSC6002": {
+    "pdf": "docs/DSC6002.pdf",
+    "translation": "data/course-documents/translations/DSC6002.json"
+  },
+  "DSC6003": {
+    "pdf": "docs/DSC6003.pdf",
+    "translation": "data/course-documents/translations/DSC6003.json"
+  },
   "DSC6004": {
     "pdf": "docs/DSC6004.pdf",
     "translation": "data/course-documents/translations/DSC6004.json"
@@ -39,6 +51,10 @@
     "pdf": "docs/DSC6013.pdf",
     "translation": "data/course-documents/translations/DSC6013.json"
   },
+  "DSC6015": {
+    "pdf": "docs/DSC6015.pdf",
+    "translation": "data/course-documents/translations/DSC6015.json"
+  },
   "DSC6016": {
     "pdf": "docs/DSC6016.pdf",
     "translation": "data/course-documents/translations/DSC6016.json"
@@ -50,6 +66,30 @@
   "DSC6018": {
     "pdf": "docs/DSC6018.pdf",
     "translation": "data/course-documents/translations/DSC6018.json"
+  },
+  "DSC6019": {
+    "pdf": "docs/DSC6019.pdf",
+    "translation": "data/course-documents/translations/DSC6019.json"
+  },
+  "DSC6032": {
+    "pdf": "docs/DSC6032.pdf",
+    "translation": "data/course-documents/translations/DSC6032.json"
+  },
+  "DSC8007": {
+    "pdf": "docs/DSC8007.pdf",
+    "translation": "data/course-documents/translations/DSC8007.json"
+  },
+  "DSC8009": {
+    "pdf": "docs/DSC8009.pdf",
+    "translation": "data/course-documents/translations/DSC8009.json"
+  },
+  "DSC8013": {
+    "pdf": "docs/DSC8013.pdf",
+    "translation": "data/course-documents/translations/DSC8013.json"
+  },
+  "DSC8014": {
+    "pdf": "docs/DSC8014.pdf",
+    "translation": "data/course-documents/translations/DSC8014.json"
   },
   "CS5285": {
     "pdf": "docs/CS5285.pdf",

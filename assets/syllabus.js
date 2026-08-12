@@ -2,17 +2,22 @@
   "use strict";
 
   const detail = document.getElementById("syllabus-detail");
-  const rawCode = new URLSearchParams(window.location.search).get("code");
+  const searchParams = new URLSearchParams(window.location.search);
+  const rawCode = searchParams.get("code");
   const code = MSDS.normalizeCourseCode(rawCode);
-  if (code && rawCode && code !== rawCode.trim().toUpperCase()) {
+  const activeTerm = MSDS.setActiveTerm(MSDS.getActiveTerm());
+  if (code) {
     const canonicalUrl = new URL(window.location.href);
     canonicalUrl.searchParams.set("code", code);
+    canonicalUrl.searchParams.set("term", activeTerm);
     window.history.replaceState(null, "", canonicalUrl);
   }
+  document.querySelector(".brand").href = MSDS.plannerHref(activeTerm);
+  document.querySelector('.main-nav a[href^="index.html"]').href = MSDS.plannerHref(activeTerm);
   const mobileReaderQuery = window.matchMedia("(max-width: 900px)");
 
   function getJson(url) {
-    const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=20260811c`;
+    const requestUrl = `${url}${url.includes("?") ? "&" : "?"}v=20260812a`;
     return fetch(requestUrl).then((response) => {
       if (!response.ok) throw new Error(`数据读取失败：${requestUrl}`);
       return response.json();
@@ -173,7 +178,7 @@
     }
 
     const pdfUrl = new URL(courseDocument.pdf, window.location.href).href;
-    const backUrl = `course.html?code=${encodeURIComponent(course.code)}`;
+    const backUrl = MSDS.courseHref(course.code, activeTerm);
     const pageCount = translationPages.length;
 
     document.title = `${course.code} 详细课程介绍 · MSDS 选课板`;
@@ -241,7 +246,7 @@
   }
 
   if (!code) {
-    detail.innerHTML = '<div class="error-state">缺少课程编号。<br><a class="text-link" href="index.html">返回课程表</a></div>';
+    detail.innerHTML = `<div class="error-state">缺少课程编号。<br><a class="text-link" href="${MSDS.escapeHtml(MSDS.plannerHref(activeTerm))}">返回课程表</a></div>`;
     return;
   }
 
@@ -250,6 +255,8 @@
     getJson("data/course-documents/index.json"),
     getJson("data/course-documents/images.json")
   ]).then(([courseIndex, courseDocuments, imageIndex]) => {
+    const fullTermLabel = MSDS.getTermLabel(courseIndex, activeTerm, true);
+    document.getElementById("site-term-label").textContent = fullTermLabel;
     const course = courseIndex.courses.find((item) => item.code === code);
     if (!course) throw new Error("没有找到这门课程");
     const courseDocument = courseDocuments[course.code];
@@ -259,7 +266,7 @@
     return getJson(courseDocument.translation)
       .then((translation) => render(course, courseDocument, translation, imageDocument));
   }).catch((error) => {
-    const backUrl = code ? `course.html?code=${encodeURIComponent(code)}` : "index.html";
+    const backUrl = code ? MSDS.courseHref(code, activeTerm) : MSDS.plannerHref(activeTerm);
     detail.innerHTML = `<div class="error-state">${MSDS.escapeHtml(error.message)}<br><a class="text-link" href="${backUrl}">返回课程详情</a></div>`;
   });
 })();

@@ -876,6 +876,12 @@ main {
   color: var(--info);
 }
 
+.mini-badge.project,
+.verdict-badge.project {
+  background: var(--research-soft);
+  color: var(--research);
+}
+
 .mini-badge.strong,
 .mini-badge.good,
 .verdict-badge.strong,
@@ -1032,9 +1038,19 @@ main {
   font-size: 11px;
 }
 
+#project-summary-parts {
+  display: contents;
+}
+
+.project-summary-part strong {
+  color: var(--research);
+}
+
 .toolbar-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 10px;
 }
 
@@ -2530,6 +2546,61 @@ h3,
   box-shadow: var(--shadow-card);
 }
 
+.term-picker {
+  display: flex;
+  margin: 0 0 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.term-picker-field {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.term-picker-field select {
+  min-width: 220px;
+  height: 44px;
+  padding: 0 34px 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.term-picker-field select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 28%, transparent);
+  outline-offset: 2px;
+  border-color: var(--primary);
+}
+
+.page-intro .term-picker > p#term-picker-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.term-context-badge {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+  font-size: 10px;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
 .intro-stat {
   min-width: 126px;
   padding: 14px 18px;
@@ -2804,6 +2875,40 @@ h3,
   border-color: color-mix(in srgb, var(--danger) 52%, var(--border));
   background: var(--danger-soft);
   color: var(--danger);
+}
+
+.course-row.is-awaiting-sections {
+  border-color: color-mix(in srgb, var(--warning) 38%, var(--border));
+}
+
+.course-row.is-project,
+.selected-course.is-project {
+  border-color: color-mix(in srgb, var(--research) 38%, var(--border));
+}
+
+.course-availability-note {
+  color: var(--warning);
+  font-weight: 750;
+}
+
+.course-project-note,
+.selected-project-note {
+  color: var(--research);
+  font-weight: 750;
+}
+
+.selected-project-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.add-course.is-awaiting-sections,
+.add-course.is-awaiting-sections:hover {
+  border-color: color-mix(in srgb, var(--warning) 48%, var(--border));
+  background: var(--warning-soft);
+  color: var(--warning);
+  cursor: not-allowed;
 }
 
 .add-course.is-unavailable,
@@ -3353,6 +3458,21 @@ h3,
   color: var(--danger);
 }
 
+.decision-status.is-awaiting-sections {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.button-awaiting-sections,
+.button-awaiting-sections:hover {
+  border-color: color-mix(in srgb, var(--warning) 48%, var(--border));
+  background: var(--warning-soft);
+  color: var(--warning);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .course-status {
   padding: 4px 9px;
   font-size: 10px;
@@ -3382,6 +3502,23 @@ h3,
 .section-table {
   min-width: 760px;
   font-size: 13px;
+}
+
+.course-section-table {
+  min-width: 1540px;
+}
+
+.course-section-table th,
+.course-section-table td {
+  white-space: nowrap;
+}
+
+.course-section-table th:nth-child(10),
+.course-section-table td:nth-child(10),
+.course-section-table th:nth-child(15),
+.course-section-table td:nth-child(15) {
+  min-width: 160px;
+  white-space: normal;
 }
 
 .section-table-caption {
@@ -3582,6 +3719,23 @@ h3,
     box-shadow: var(--shadow-card);
   }
 
+  .timetable-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .toolbar-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .toolbar-actions > .button,
+  .toolbar-actions > .conflict-status {
+    width: 100%;
+    min-width: 0;
+  }
+
   .mobile-workspace-switch button {
     min-height: 44px;
     border: 0;
@@ -3634,12 +3788,11 @@ h3,
   }
 
   .timetable-toolbar {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .toolbar-actions {
     align-items: stretch;
-    flex-direction: row;
   }
 
   .mobile-scroll-hint {
@@ -3766,6 +3919,25 @@ h3,
     display: block;
   }
 
+  .term-picker {
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .term-picker-field {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .term-picker-field select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .page-intro .term-picker > p#term-picker-note {
+    margin-top: 6px;
+  }
+
   .planner-intro-logo {
     width: 68px;
     height: 68px;
@@ -3793,11 +3965,15 @@ h3,
   }
 
   .toolbar-actions {
+    display: grid;
     width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .toolbar-actions > * {
-    flex: 1;
+  .toolbar-actions > .button,
+  .toolbar-actions > .conflict-status {
+    width: 100%;
+    max-width: none;
   }
 
   .conflict-details-head,
@@ -4069,6 +4245,174 @@ h3,
   text-underline-offset: 3px;
 }
 
+.course-row.is-ineligible {
+  border-color: color-mix(in srgb, var(--warning) 42%, var(--border));
+}
+
+.course-eligibility {
+  display: -webkit-box;
+  margin: 7px 0 0;
+  padding: 6px 8px;
+  overflow: hidden;
+  border-left: 3px solid currentColor;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.course-eligibility.is-met {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.course-eligibility.is-unmet,
+.selected-eligibility-warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.course-eligibility-confirmation,
+.eligibility-confirmation-control {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.course-eligibility-confirmation {
+  margin-top: 7px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.course-eligibility-confirmation input,
+.eligibility-confirmation-control input {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin: 0;
+  accent-color: var(--primary-action);
+}
+
+.course-eligibility-confirmation:has(input:disabled),
+.eligibility-confirmation-control:has(input:disabled) {
+  cursor: default;
+  opacity: 0.78;
+}
+
+.add-course.is-ineligible,
+.add-course.is-ineligible:hover,
+.button-ineligible,
+.button-ineligible:hover {
+  border-color: color-mix(in srgb, var(--warning) 48%, var(--border));
+  background: var(--warning-soft);
+  color: var(--warning);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.selected-eligibility-warning {
+  margin: 10px 0 0;
+  padding: 7px 9px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.eligibility-panel {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(260px, 1.3fr);
+  gap: 14px 22px;
+  margin: 18px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-left: 4px solid currentColor;
+  border-radius: var(--radius-md);
+  background: var(--card-soft);
+}
+
+.eligibility-panel.is-met {
+  color: var(--ok);
+}
+
+.eligibility-panel.is-unmet {
+  color: var(--warning);
+}
+
+.eligibility-panel h3 {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.eligibility-checklist {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eligibility-checklist li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.eligibility-checklist li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.eligibility-checklist strong {
+  flex: none;
+  color: var(--ink);
+}
+
+.eligibility-checklist .is-met span {
+  color: var(--ok);
+}
+
+.eligibility-checklist .is-unmet span {
+  color: var(--warning);
+}
+
+.eligibility-checklist .is-personal span {
+  color: var(--info);
+}
+
+.eligibility-confirmation-control {
+  justify-content: flex-end;
+  color: var(--info);
+  font-weight: 700;
+  text-align: right;
+}
+
+.eligibility-guidance {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.decision-status.is-ineligible {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
 @media (max-width: 1100px) {
   .planner-intro {
     align-items: stretch;
@@ -4090,6 +4434,16 @@ h3,
 }
 
 @media (max-width: 780px) {
+  .eligibility-panel {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .eligibility-guidance {
+    grid-column: auto;
+  }
+
   .fields-detail {
     width: calc(100% - 24px);
   }

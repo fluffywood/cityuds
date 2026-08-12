@@ -1,0 +1,87 @@
+DSC5001 A Statistical Machine Learning I 
+11599  C61  3  Main Campus  Y  P  12  250  N  31/08/2026 - 05/12/2026  S  13:00 - 15:50  BOC  R4057  YIN Max  English
+13470  C62  3  Main Campus  Y  P  11  250  N  31/08/2026 - 28/11/2026  S  09:00 - 11:50  LAU  LT-501  MO Zhenling  English
+
+DSC5002 A Exploratory Data Analysis and Visualization
+11603  C61  3  Main Campus  Y  P  58  300  N  31/08/2026 - 28/11/2026  F  19:00 - 21:50  BOC  LT401  WANG Lijia  English
+13471  C62  3  Main Campus  Y  P  Full  216  N  31/08/2026 - 28/11/2026  F  19:00 - 21:50  LI  3508  LI Xinke  English
+
+DSC5003 A Storing and Retrieving Data
+11604  C61  3  Main Campus  Y  P  30  250  N  31/08/2026 - 05/12/2026  S  13:00 - 15:50  MMW  2450  YANG Yu, CHAN Yu Wing  English
+13472  C62  3  Main Campus  Y  P  12  250  N  31/08/2026 - 05/12/2026  S  09:00 - 11:50  BOC  LT401  CHAN Yu Wing, YANG Yu  English
+
+DSC6001 B Statistical Machine Learning II
+11460  C61  3  Main Campus  Y  P  250  250  50  11/01/2027 - 17/04/2027  S  13:00 - 15:50  MMW  2450  ZHAO Xiangyu  English
+13388  C62  3  Main Campus  Y  P  250  250  50  11/01/2027 - 17/04/2027  M  19:00 - 21:50  LAU  LT-501  ZHAO Xiangyu  English
+
+DSC6002 B S Research Projects for Data Science
+11818  D61  3  Main Campus  N  P  450  450  N  11/01/2027 - 17/04/2027  CHAN Yu Wing  English
+
+CS5285 A Introduction to Cybersecurity
+13297  CA1  3  Main Campus  Y  P R  30  30  N  31/08/2026 - 28/11/2026  F  15:00 - 17:50  YEUNG  LT-2  HANCKE Gerhard Petrus, LU Zhenliang  English
+15358  CA2  3  Main Campus  Y  P R  30  30  N  31/08/2026 - 28/11/2026  F  19:00 - 21:50  BOC  R4057  HANCKE Gerhard Petrus, LU Zhenliang  English
+
+CS5487 B Machine Learning: Principles and Practice
+13998  C01  3  Main Campus  Y  P R  170  170  34  11/01/2027 - 17/04/2027  R  15:00 - 17:50  LI  6606  CHAN Antoni Bert  English
+14003  C61  3  Main Campus  Y  P  170  170  34  11/01/2027 - 17/04/2027  R  19:00 - 21:50  YEUNG  LT-6  CHAN Antoni Bert  English
+
+CS6290 B Privacy-enhancing Technologies
+12937  CP1  3  Main Campus  Y  P R  40  40  2  11/01/2027 - 17/04/2027  R  19:00 - 20:50  CMC  M3017  CHEN Yufei  English
+12938  TP1  0  Main Campus  Y  P R  40  40  2  11/01/2027 - 17/04/2027  R  21:00 - 21:50  CMC  M3017  CHEN Yufei  English
+
+CS6493 B Natural Language Processing
+15357  CA1  3  Main Campus  Y  P R  20  20  N  11/01/2027 - 17/04/2027  W  11:00 - 12:50  YEUNG	LT-2  SONG Linqi, MA Chen  English
+12006  CP1  3  Main Campus  Y  P R  20  20  6  11/01/2027 - 17/04/2027  W  19:00 - 20:50  LI  3505  SONG Linqi, MA Chen  English
+
+DSC6003 B Bayesian Data Analysis
+15249  C61  3  Main Campus  Y  P  200  200  N  11/01/2027 - 17/04/2027  F  19:00 - 21:50  YEUNG  LT-18  TAN Matthias Hwai-yong  English
+
+DSC6004 A Topics of Artificial Intelligence for Smart Cities
+15821  C01  3  Main Campus  Y  P  165  165  N  31/08/2026 - 28/11/2026  T  13:00 - 15:50  BOC  R4057  WU Jiaman  English
+15834  C05  3  Main Campus  Y  P  100  100  N  31/08/2026 - 28/11/2026  T  13:00 - 15:50  BOC  R4057  WU Jiaman  English
+
+DSC6006 A B Dissertation
+
+DSC6007 B Dynamic Programming and Reinforcement Learning
+15250  C01  3  Main Campus  Y  P  190  190  N  11/01/2027 - 17/04/2027  R  09:00 - 11:50  LAU  LT-501  HO Chin Pang  English
+
+DSC6008 A Design of Experiments
+15799  C62  3  Main Campus  Y  P  50  50  N  31/08/2026 - 05/12/2026  S  16:00 - 18:50  YEUNG  LT-2  TBA  DS002  English
+
+DSC6011 A Optimization for Data Science
+11607  C61  3  Main Campus  Y  P  190  190  N  31/08/2026 - 28/11/2026  F  13:00 - 15:50  LI  3505  WANG Jun  English
+
+DSC6012 A Time Series and Recurrent Neural Networks
+13508  C01  3  Main Campus  Y  P  250  250  N  31/08/2026 - 28/11/2026  R  12:00 - 14:50  ICP  B-101  WANG Linlin  English
+
+DSC6013 A Topics in Financial Engineering and Technology
+14419  C61  3  Main Campus  Y  P  250  250  N  31/08/2026 - 28/11/2026  T  19:00 - 21:50  ICP  B-101  WU Qi  English
+
+DSC6015 B Stochastic Optimization for Machine Learning
+15363  C01  3  Main Campus  Y  P  200  200  N  11/01/2027 - 17/04/2027  R  13:00 - 15:50  LI  2505  TBA  DS002  English
+
+DSC6016 A B Predictive Analytics and Financial Applications
+A : 15647  C61  3  Main Campus  Y  P  190  190  N  31/08/2026 - 28/11/2026  M  19:00 - 21:50  LI  6606  CHEUNG Alan  English
+B : 12158  C61  3  Main Campus  Y  P  190  190  40  11/01/2027 - 17/04/2027  W  19:00 - 21:50  YEUNG  LT-6  QIAO Xiao  English
+
+DSC6017 B Internship Project
+
+DSC6018  A Health Data Analytics
+15444  C61  3  Main Campus  Y  P  200  200  N  31/08/2026 - 28/11/2026  R  19:00 - 21:50  MMW  3420  TBA DS002  English
+
+DSC6019  B Embodied AI and Applications
+15584  C02  3  Main Campus  Y  P  100  100  N  11/01/2027 - 17/04/2027  M  14:00 - 16:50  LAU  LT-501  YIN Max  English
+
+DSC6032 Internship Project (S)
+
+DSC8007 B Deep Learning
+15290  C02  3  Main Campus  Y  P  230  230  N  11/01/2027 - 17/04/2027  M  09:00 - 11:50  LI  3505  WANG Linlin  English
+
+DSC8009 B Data Mining and Knowledge Discovery
+13941  C04  3  Main Campus  Y  P  160  160  N  11/01/2027 - 17/04/2027  F  16:00 - 18:50  LAU  LT-501  TBA DS005  English
+
+DSC8013 B Statistical Methods for Categorical Data Analysis
+12390  C02  3  Main Campus  Y  P  165  165  N  11/01/2027 - 17/04/2027  R  15:00 - 17:50  LI  3505  SO Ernest  English
+
+DSC8014 B Online Learning and Optimization
+15568  C02  3  Main Campus  Y  P  140  140  N  11/01/2027 - 17/04/2027  T  09:00 - 11:50  LI  3508  YUNG Siu Pang  English

@@ -4,7 +4,8 @@
   const DAYS = ["M", "T", "W", "R", "F", "S"];
   const START_HOUR = 9;
   const END_HOUR = 22;
-  const INITIALIZED_KEY = "MSDS-planner-initialized-v1";
+  const LEGACY_INITIALIZED_KEY = "MSDS-planner-initialized-v1";
+  const INITIALIZED_KEY_PREFIX = "MSDS-planner-initialized-v2";
   const COLORS = [
     ["#dceee6", "#145f49", "#0e4938"],
     ["#e1ecf4", "#275b83", "#204c6c"],
@@ -13,6 +14,8 @@
     ["#edf0d9", "#6d7b25", "#526018"],
     ["#f2e4e8", "#984a63", "#77364c"]
   ];
+  const MAX_IMPORT_FILE_BYTES = 1024 * 1024;
+  const SCHEDULE_TRANSFER = window.MSDS_SCHEDULE_TRANSFER;
 
   // 首次访问时默认选中的核心课程班次
   const DEFAULT_SELECTIONS = [
@@ -21,8 +24,10 @@
     { code: "DSC5002", section: "C62" }
   ];
 
+  let courseData;
+  let activeTerm = MSDS.getActiveTerm();
   let courses = [];
-  let selections = MSDS.getStoredSelections();
+  let selections = {};
   let searchTerm = "";
   let activeFilter = "all";
   let activeDay = "all";
@@ -36,12 +41,183 @@
     return courses.find((course) => course.code === code);
   }
 
+  function initializedKey(term) {
+    return `${INITIALIZED_KEY_PREFIX}-${MSDS.normalizeTerm(term) || MSDS.DEFAULT_TERM}`;
+  }
+
+  function detailHref(code) {
+    return MSDS.courseHref(code, activeTerm);
+  }
+
+  function coursesForTerm(data, term) {
+    return data.courses
+      .filter((course) => MSDS.courseOfferedInTerm(course, term))
+      .map((course) => ({
+        ...course,
+        active_term: term,
+        eligible_sections: MSDS.sectionsForTerm(course, term)
+      }));
+  }
+
+  function courseFilterType(course) {
+    return MSDS.isProjectCourse(course) ? "project" : course.requirement_type;
+  }
+
+  function findProjectConflict(course) {
+    if (!MSDS.isProjectCourse(course)) return null;
+    const conflictCodes = MSDS.projectConflictCodes(course);
+    for (const term of MSDS.TERM_CODES) {
+      const termSelections = term === activeTerm ? selections : MSDS.getStoredSelections(term);
+      for (const conflictCode of conflictCodes) {
+        if (term === activeTerm && conflictCode === course.code) continue;
+        if (MSDS.isUnscheduledSelection(termSelections[conflictCode])) {
+          const conflictCourse = courseData.courses.find((item) => item.code === conflictCode);
+          if (conflictCourse && !MSDS.courseOfferedInTerm(conflictCourse, term)) continue;
+          if (conflictCourse && !MSDS.getSelectionEligibility(courseData, conflictCourse).eligible) continue;
+          return { code: conflictCode, term };
+        }
+      }
+    }
+    return null;
+  }
+
+  function showProjectConflict(course, conflict) {
+    const conflictCourse = courseData.courses.find((item) => item.code === conflict.code);
+    const termLabel = MSDS.getTermLabel(courseData, conflict.term, false);
+    const conflictTitle = conflictCourse?.programme_title || conflict.code;
+    const message = conflict.code === course.code
+      ? `${conflictTitle} 已加入 ${termLabel}，请先在该学期移除。`
+      : `${conflictTitle} 已加入 ${termLabel}；${course.code} 与 ${conflict.code} 只能选一门，请先移除。`;
+    MSDS.showToast(message, { duration: 5200 });
+  }
+
+  function sanitizeSelectionsForTerm(value) {
+    const sanitized = {};
+    Object.entries(value || {}).forEach(([code, selection]) => {
+      const course = courseByCode(code);
+      if (!course) return;
+      if (MSDS.isProjectCourse(course)) {
+        if (MSDS.isUnscheduledSelection(selection)) {
+          sanitized[code] = MSDS.makeUnscheduledSelection();
+        }
+        return;
+      }
+      const primary = MSDS.findSection(course, selection?.primaryCrn);
+      if (!primary || Number(primary.credits) <= 0) return;
+      const tutorial = MSDS.findSection(course, selection?.tutorialCrn);
+      sanitized[code] = {
+        primaryCrn: MSDS.sectionKey(primary),
+        tutorialCrn: tutorial && Number(tutorial.credits) === 0 ? MSDS.sectionKey(tutorial) : null
+      };
+    });
+    return sanitized;
+  }
+
+  function scheduleSnapshot() {
+    return Object.fromEntries(MSDS.TERM_CODES.map((term) => [
+      term,
+      term === activeTerm ? selections : MSDS.getStoredSelections(term)
+    ]));
+  }
+
+  function scheduleTransferOptions() {
+    return { eligibilityConfirmations: MSDS.getEligibilityConfirmations() };
+  }
+
+  function announceScheduleFile(message, toastOptions = {}) {
+    document.getElementById("schedule-file-announcement").textContent = message;
+    MSDS.showToast(message, toastOptions);
+  }
+
+  function exportSchedule() {
+    try {
+      const result = SCHEDULE_TRANSFER.serializeSchedule(
+        courseData,
+        scheduleSnapshot(),
+        scheduleTransferOptions()
+      );
+      if (!result.courseCount) {
+        announceScheduleFile("A、B、S 三学期暂无可导出的课程。");
+        return;
+      }
+
+      const academicYear = String(courseData.academic_year || "course-plan")
+        .replace(/[^0-9A-Za-z]+/g, "-")
+        .replace(/^-|-$/g, "");
+      const blob = new Blob(["\uFEFF", result.text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = `cityuds-course-plan-${academicYear || "backup"}.txt`;
+      download.hidden = true;
+      document.body.append(download);
+      download.click();
+      download.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+      announceScheduleFile(`已导出 ${result.courseCount} 门课程、${result.sectionCount} 个班次。`);
+    } catch (error) {
+      announceScheduleFile(`导出失败：${error.message}`, { duration: 6000 });
+    }
+  }
+
+  async function importScheduleFile(file) {
+    if (!file) return;
+    const importButton = document.getElementById("import-schedule");
+    const toolbar = importButton.closest(".toolbar-actions");
+    const originalLabel = importButton.textContent;
+    importButton.disabled = true;
+    importButton.textContent = "正在导入…";
+    toolbar.setAttribute("aria-busy", "true");
+
+    try {
+      if (!/\.txt$/i.test(file.name || "")) {
+        throw new Error("请选择 .txt 格式的课表文件。");
+      }
+      if (file.size > MAX_IMPORT_FILE_BYTES) {
+        throw new Error("文件超过 1 MB，无法作为课表备份导入。");
+      }
+      const text = await file.text();
+      if (text.includes("\uFFFD")) {
+        throw new Error("文件不是有效的 UTF-8 文本，请重新导出后再试。");
+      }
+      const result = SCHEDULE_TRANSFER.parseSchedule(
+        text,
+        courseData,
+        scheduleTransferOptions()
+      );
+      const confirmed = window.confirm(
+        `将用文件中的 ${result.courseCount} 门课程覆盖当前 A、B、S 三份课表。此操作不会修改课程数据，是否继续？`
+      );
+      if (!confirmed) {
+        announceScheduleFile("已取消导入，当前课表没有变化。");
+        return;
+      }
+
+      SCHEDULE_TRANSFER.replaceStoredSelections(localStorage, result.selectionsByTerm, {
+        selectionKeyForTerm: MSDS.selectionStorageKey,
+        initializedKeyForTerm: initializedKey
+      });
+      selections = sanitizeSelectionsForTerm(result.selectionsByTerm[activeTerm]);
+      renderAll("#import-schedule");
+      announceScheduleFile(
+        `已导入 ${result.courseCount} 门课程、${result.sectionCount} 个班次，A、B、S 三学期课表已更新。`,
+        { duration: 5200 }
+      );
+    } catch (error) {
+      announceScheduleFile(`导入失败：${error.message}`, { duration: 7000 });
+    } finally {
+      importButton.disabled = false;
+      importButton.textContent = originalLabel;
+      toolbar.removeAttribute("aria-busy");
+    }
+  }
+
   function filterCourses() {
     return courses.filter((course) => {
       const haystack = `${course.code} ${course.programme_title}`.toLowerCase();
       const matchesSearch = haystack.includes(searchTerm.toLowerCase());
       const matchesFilter = activeFilter === "all"
-        || course.requirement_type === activeFilter;
+        || courseFilterType(course) === activeFilter;
       const primaryDays = course.eligible_sections
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
@@ -52,7 +228,8 @@
 
   function renderCourseList() {
     const filtered = filterCourses();
-    document.getElementById("course-result-status").textContent = `显示 ${filtered.length} 门课程`;
+    const termLabel = MSDS.getTermLabel(courseData, activeTerm, false);
+    document.getElementById("course-result-status").textContent = `${termLabel}：显示 ${filtered.length} 门课程`;
     if (!filtered.length) {
       listElement.innerHTML = '<div class="empty-list">没有符合条件的课程</div>';
       return;
@@ -60,30 +237,47 @@
 
     listElement.innerHTML = filtered.map((course) => {
       const rec = MSDS.getRecommendation(course);
-      const isOffered = course.offered_this_year !== false;
-      const isAdded = isOffered && Boolean(selections[course.code]);
+      const isProject = MSDS.isProjectCourse(course);
+      const isAdded = Boolean(selections[course.code]);
       const primaries = course.eligible_sections.filter((item) => Number(item.credits) > 0);
-      const scheduleText = isOffered
-        ? primaries.map((item) => `${MSDS.DAY_NAMES[item.day]} ${item.time}`).join(" / ")
-        : "本学年不开设";
+      const eligibility = MSDS.getSelectionEligibility(courseData, course);
+      const hasAddableCourse = isProject || primaries.length > 0;
+      const canAdd = hasAddableCourse && eligibility.eligible;
+      const scheduleText = isProject
+        ? "项目课 · 无需选择班次，不在周课表显示"
+        : hasAddableCourse
+          ? primaries.map((item) => [MSDS.DAY_NAMES[item.day] || item.day, item.time].filter(Boolean).join(" ") || "时间待定").join(" / ")
+          : "该学期开设，但暂无可选班次";
+      const availabilityId = `course-availability-${course.code}`;
+      const eligibilityId = `course-eligibility-${course.code}`;
+      const eligibilityText = [
+        eligibility.audienceNote,
+        eligibility.hasRequirement
+          ? `${eligibility.eligible ? "条件已满足" : "选课条件"}：${eligibility.requirementText}`
+          : ""
+      ].filter(Boolean).join("；");
       const selectedPrimary = selections[course.code]?.primaryCrn;
       return `
-        <article class="course-row ${isAdded ? "is-selected" : ""}">
+        <article class="course-row ${isAdded ? "is-selected" : ""} ${isProject ? "is-project" : ""} ${!hasAddableCourse ? "is-awaiting-sections" : !eligibility.eligible ? "is-ineligible" : ""}">
           <div class="course-row-main">
             <div class="course-code-line">
               <span class="course-code">${MSDS.escapeHtml(course.code)}</span>
-              ${course.requirement_type === "core" ? '<span class="mini-badge core">核心</span>' : MSDS.recommendationBadge(rec, true)}
+              ${isProject ? '<span class="mini-badge project">项目</span>' : course.requirement_type === "core" ? '<span class="mini-badge core">核心</span>' : MSDS.recommendationBadge(rec, true)}
             </div>
-            <a class="course-title-link" href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.programme_title)}</a>
-            <div class="course-meta"><span>${course.credits} 学分</span><span>${primaries.length} 个主课班次</span></div>
-            <div class="course-schedule" title="${MSDS.escapeHtml(scheduleText)}">${MSDS.escapeHtml(scheduleText)}</div>
+            <a class="course-title-link" href="${MSDS.escapeHtml(detailHref(course.code))}">${MSDS.escapeHtml(course.programme_title)}</a>
+            <div class="course-meta"><span>${course.credits} 学分</span><span>${isProject ? "无需班次" : `${primaries.length} 个主课班次`}</span></div>
+            <div id="${MSDS.escapeHtml(availabilityId)}" class="course-schedule${isProject ? " course-project-note" : hasAddableCourse ? "" : " course-availability-note"}" title="${MSDS.escapeHtml(scheduleText)}">${MSDS.escapeHtml(scheduleText)}</div>
+            ${eligibilityText ? `<p id="${MSDS.escapeHtml(eligibilityId)}" class="course-eligibility ${eligibility.eligible ? "is-met" : "is-unmet"}" title="${MSDS.escapeHtml(eligibility.statusText)}">${MSDS.escapeHtml(eligibilityText)}</p>` : ""}
+            ${eligibility.confirmationKey ? `<label class="course-eligibility-confirmation"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.confirmationKey)}"${eligibility.confirmationMet ? " checked" : ""}${isAdded && eligibility.confirmationMet ? " disabled" : ""} aria-describedby="${MSDS.escapeHtml(eligibilityId)}"><span>我确认：${MSDS.escapeHtml(eligibility.audienceNote)}</span></label>` : ""}
             <p class="course-insight">${MSDS.escapeHtml(rec.summary)}</p>
             ${primaries.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaries, selectedPrimary || MSDS.sectionKey(primaries[0]))}</select></label>` : ""}
           </div>
-          ${!isOffered
-            ? `<button class="add-course is-unavailable" type="button" disabled title="本学年不开设" aria-label="${MSDS.escapeHtml(course.code)} 本学年不开设，无法加入课表"><span aria-hidden="true">×</span><span>不开设</span></button>`
+          ${!hasAddableCourse
+            ? `<button class="add-course is-awaiting-sections" type="button" disabled aria-describedby="${MSDS.escapeHtml(availabilityId)}"><span aria-hidden="true">…</span><span>待班次</span></button>`
             : isAdded
               ? `<button class="add-course is-added" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="从课表移除 ${MSDS.escapeHtml(course.code)}"><span aria-hidden="true">−</span><span>移除</span></button>`
+              : !canAdd
+                ? `<button class="add-course is-ineligible" type="button" disabled aria-describedby="${MSDS.escapeHtml(eligibilityId)}"><span aria-hidden="true">!</span><span>未满足</span></button>`
               : `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}"><span aria-hidden="true">+</span><span>加入</span></button>`}
         </article>`;
     }).join("");
@@ -106,20 +300,25 @@
 
     selectedListElement.innerHTML = selectedCourses.map((course) => {
       const selected = selections[course.code];
+      const isProject = MSDS.isProjectCourse(course);
+      const eligibility = MSDS.getSelectionEligibility(courseData, course);
       const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
       const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
       const hasConflict = currentConflictPairs.some((pair) => pair.some((event) => event.course.code === course.code));
       return `
-        <article class="selected-course ${hasConflict ? "has-conflict" : ""}">
+        <article class="selected-course ${isProject ? "is-project" : ""} ${hasConflict ? "has-conflict" : ""}">
           <div class="selected-course-head">
-            <div><a href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.code)}</a><small>${MSDS.escapeHtml(course.programme_title)}</small></div>
+            <div><a href="${MSDS.escapeHtml(detailHref(course.code))}">${MSDS.escapeHtml(course.code)}</a><small>${MSDS.escapeHtml(course.programme_title)}</small></div>
             <button class="remove-course" type="button" data-selected-remove="${MSDS.escapeHtml(course.code)}" aria-label="移除 ${MSDS.escapeHtml(course.code)}">移除</button>
           </div>
-          <p class="section-selects-title">更改班次和时间${hasConflict ? '<span class="selected-conflict-label">时间冲突</span>' : ""}</p>
-          <div class="section-selects">
-            <label>主课<select data-code="${MSDS.escapeHtml(course.code)}" data-kind="primary">${sectionOptions(primaries, selected.primaryCrn)}</select></label>
-            ${tutorials.length ? `<label>Tutorial<select data-code="${MSDS.escapeHtml(course.code)}" data-kind="tutorial"><option value="">不选择</option>${sectionOptions(tutorials, selected.tutorialCrn)}</select></label>` : ""}
-          </div>
+          ${isProject
+            ? '<p class="section-selects-title">无需选择班次</p><p class="selected-project-note">不在周课表显示；计入三学期总门数和总学分。</p>'
+            : `<p class="section-selects-title">更改班次和时间${hasConflict ? '<span class="selected-conflict-label">时间冲突</span>' : ""}</p>
+              <div class="section-selects">
+                <label>主课<select data-code="${MSDS.escapeHtml(course.code)}" data-kind="primary">${sectionOptions(primaries, selected.primaryCrn)}</select></label>
+                ${tutorials.length ? `<label>Tutorial<select data-code="${MSDS.escapeHtml(course.code)}" data-kind="tutorial"><option value="">不选择</option>${sectionOptions(tutorials, selected.tutorialCrn)}</select></label>` : ""}
+              </div>`}
+          ${!eligibility.eligible ? `<p class="selected-eligibility-warning">资格条件已不满足：${MSDS.escapeHtml(eligibility.statusText.replace(/^当前排课记录未满足：/, ""))}</p>` : ""}
         </article>`;
     }).join("");
   }
@@ -133,7 +332,7 @@
     }
     container.innerHTML = selectedCourses.map((course) => `
       <span class="selected-chip">
-        <a href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.code)}</a>
+        <a href="${MSDS.escapeHtml(detailHref(course.code))}">${MSDS.escapeHtml(course.code)}</a>
         <button type="button" data-chip-remove="${MSDS.escapeHtml(course.code)}" aria-label="移除 ${MSDS.escapeHtml(course.code)}">×</button>
       </span>`).join("");
   }
@@ -148,6 +347,7 @@
     courses.forEach((course, courseIndex) => {
       const selected = selections[course.code];
       if (!selected) return;
+      if (MSDS.isUnscheduledSelection(selected)) return;
       [selected.primaryCrn, selected.tutorialCrn].filter(Boolean).forEach((key) => {
         const section = MSDS.findSection(course, key);
         if (!section || !section.time || !DAYS.includes(section.day)) return;
@@ -224,7 +424,7 @@
           data-event-id="${MSDS.escapeHtml(event.id)}"
           data-event-code="${MSDS.escapeHtml(event.course.code)}"
           style="top:${top}px;height:${height}px;left:calc(${left}% + 3px);width:calc(${width}% - 6px);--event-bg:${event.color[0]};--event-accent:${event.color[1]};--event-ink:${event.color[2]}">
-          <a class="event-main-link" href="course.html?code=${encodeURIComponent(event.course.code)}" data-event-link aria-label="查看 ${MSDS.escapeHtml(eventDescription(event) + conflictNote)} 的课程详情">
+          <a class="event-main-link" href="${MSDS.escapeHtml(detailHref(event.course.code))}" data-event-link aria-label="查看 ${MSDS.escapeHtml(eventDescription(event) + conflictNote)} 的课程详情">
             <span class="event-label"><strong>${MSDS.escapeHtml(event.course.code)} · ${MSDS.escapeHtml(event.section.section)}</strong>
               <span>${MSDS.escapeHtml(event.section.time)}</span>
               <span>${MSDS.escapeHtml(room)}</span>
@@ -232,14 +432,21 @@
           </a>
           <span class="event-overlay">
             <span class="event-overlay-content"><strong>${MSDS.escapeHtml(event.course.programme_title)}</strong><span>${MSDS.escapeHtml(MSDS.DAY_NAMES[event.section.day])} · ${MSDS.escapeHtml(event.section.time)}</span><span>${MSDS.escapeHtml(room || "地点待定")}</span><span class="event-tooltip-tags">${tooltipTags || `<span class="event-tooltip-tag">${MSDS.escapeHtml(recommendation.verdict)}</span>`}</span></span>
-            <span class="event-overlay-actions"><a href="course.html?code=${encodeURIComponent(event.course.code)}" data-event-link>详情</a><button type="button" data-event-remove="${MSDS.escapeHtml(event.course.code)}">删除</button></span>
+            <span class="event-overlay-actions"><a href="${MSDS.escapeHtml(detailHref(event.course.code))}" data-event-link>详情</a><button type="button" data-event-remove="${MSDS.escapeHtml(event.course.code)}">删除</button></span>
           </span>
         </article>`;
       }).join("");
       return `<div class="day-column" data-day-column="${day}">${blocks}</div>`;
     }).join("");
 
-    document.getElementById("empty-timetable").hidden = events.length > 0;
+    const emptyTimetable = document.getElementById("empty-timetable");
+    const selectedCourseCount = courses.filter((course) => selections[course.code]).length;
+    emptyTimetable.hidden = events.length > 0;
+    if (!events.length) {
+      emptyTimetable.innerHTML = selectedCourseCount
+        ? '<span class="empty-plus">…</span><strong>已选课程暂无排课时间</strong><p>请在“已选”中查看班次，最终时间以 AIMS 为准</p>'
+        : '<span class="empty-plus">+</span><strong>从左侧加入课程</strong><p>班次可在“已选”中切换</p>';
+    }
     const status = document.getElementById("conflict-status");
     const details = document.getElementById("conflict-details");
     const announcement = document.getElementById("conflict-announcement");
@@ -273,9 +480,36 @@
   }
 
   function updateSummary() {
-    const selectedCourses = courses.filter((course) => selections[course.code]);
-    const coreCourses = selectedCourses.filter((course) => course.requirement_type === "core");
-    const electiveCourses = selectedCourses.filter((course) => course.requirement_type === "elective");
+    const currentTermSelectedCourses = courses.filter((course) => {
+      const selection = selections[course.code];
+      if (MSDS.isProjectCourse(course)) return MSDS.isUnscheduledSelection(selection);
+      return Number(MSDS.findSection(course, selection?.primaryCrn)?.credits) > 0;
+    });
+    const selectedEntries = MSDS.TERM_CODES.flatMap((term) => {
+      const termCourses = coursesForTerm(courseData, term);
+      const termSelections = term === activeTerm ? selections : MSDS.getStoredSelections(term);
+      return termCourses.flatMap((course) => {
+        if (!MSDS.getSelectionEligibility(courseData, course).eligible) return [];
+        if (MSDS.isProjectCourse(course)) {
+          return MSDS.isUnscheduledSelection(termSelections[course.code]) ? [{ course, term }] : [];
+        }
+        const selectedPrimary = MSDS.findSection(course, termSelections[course.code]?.primaryCrn);
+        return Number(selectedPrimary?.credits) > 0 ? [{ course, term }] : [];
+      });
+    });
+    const regularCourses = selectedEntries
+      .map((entry) => entry.course)
+      .filter((course) => !MSDS.isProjectCourse(course));
+    const projectsByKey = new Map();
+    selectedEntries.forEach(({ course }) => {
+      if (!MSDS.isProjectCourse(course)) return;
+      const key = MSDS.projectSelectionKey(course);
+      if (!projectsByKey.has(key)) projectsByKey.set(key, course);
+    });
+    const projectCourses = [...projectsByKey.values()];
+    const selectedCourses = [...regularCourses, ...projectCourses];
+    const coreCourses = regularCourses.filter((course) => course.requirement_type === "core");
+    const electiveCourses = regularCourses.filter((course) => course.requirement_type === "elective");
     const sumCredits = (items) => items.reduce((sum, course) => sum + Number(course.credits || 0), 0);
 
     document.getElementById("core-count").textContent = coreCourses.length;
@@ -283,10 +517,13 @@
     document.getElementById("elective-count").textContent = electiveCourses.length;
     document.getElementById("elective-credit-count").textContent = sumCredits(electiveCourses);
     document.getElementById("selected-count").textContent = selectedCourses.length;
-    document.getElementById("selected-tab-count").textContent = selectedCourses.length;
-    document.getElementById("mobile-selected-count").textContent = selectedCourses.length;
+    document.getElementById("selected-tab-count").textContent = currentTermSelectedCourses.length;
+    document.getElementById("mobile-selected-count").textContent = currentTermSelectedCourses.length;
     document.getElementById("credit-count").textContent = sumCredits(selectedCourses);
-    document.getElementById("clear-selection").disabled = selectedCourses.length === 0;
+    document.getElementById("project-summary-parts").innerHTML = projectCourses.map((course) => `
+      <span class="selection-summary-plus" aria-hidden="true">+</span>
+      <span class="selection-summary-part project-summary-part">${MSDS.escapeHtml(course.programme_title)} <strong>${MSDS.escapeHtml(course.credits)}</strong>分</span>`).join("");
+    document.getElementById("clear-selection").disabled = currentTermSelectedCourses.length === 0;
   }
 
   function restoreFocus(selector) {
@@ -295,7 +532,7 @@
   }
 
   function renderAll(focusSelector) {
-    MSDS.saveSelections(selections);
+    MSDS.saveSelections(activeTerm, selections);
     renderCourseList();
     renderTimetable();
     renderSelectedList();
@@ -305,10 +542,17 @@
   }
 
   function applyDefaultSelections() {
-    const hasStoredState = localStorage.getItem(MSDS.STORAGE_KEY) !== null;
-    const wasInitialized = localStorage.getItem(INITIALIZED_KEY) === "1";
-    if (hasStoredState || wasInitialized) {
-      localStorage.setItem(INITIALIZED_KEY, "1");
+    const termInitializedKey = initializedKey(activeTerm);
+    const hasStoredState = localStorage.getItem(MSDS.selectionStorageKey(activeTerm)) !== null;
+    const wasInitialized = localStorage.getItem(termInitializedKey) === "1";
+    const wasLegacyInitialized = activeTerm === MSDS.DEFAULT_TERM
+      && localStorage.getItem(LEGACY_INITIALIZED_KEY) === "1";
+    if (activeTerm !== MSDS.DEFAULT_TERM) {
+      localStorage.setItem(termInitializedKey, "1");
+      return;
+    }
+    if (hasStoredState || wasInitialized || wasLegacyInitialized) {
+      localStorage.setItem(termInitializedKey, "1");
       return;
     }
     DEFAULT_SELECTIONS.forEach(({ code, section }) => {
@@ -321,8 +565,8 @@
         selections[code] = selectionForPrimary(course, MSDS.sectionKey(primary));
       }
     });
-    MSDS.saveSelections(selections);
-    localStorage.setItem(INITIALIZED_KEY, "1");
+    MSDS.saveSelections(activeTerm, selections);
+    localStorage.setItem(termInitializedKey, "1");
   }
 
   function selectionForPrimary(course, primaryCrn) {
@@ -338,14 +582,51 @@
     return selection;
   }
 
+  function findInvalidatedDependent(nextSelections) {
+    const selectionOverrides = { [activeTerm]: nextSelections };
+    for (const term of MSDS.TERM_CODES) {
+      const termSelections = term === activeTerm ? nextSelections : MSDS.getStoredSelections(term);
+      const termCourses = coursesForTerm(courseData, term);
+      for (const dependent of termCourses) {
+        if (!dependent.selection_requirement) continue;
+        if (MSDS.selectedCreditsInTerm(dependent, termSelections[dependent.code], term) <= 0) continue;
+        const before = MSDS.getSelectionEligibility(courseData, dependent);
+        const after = MSDS.getSelectionEligibility(courseData, dependent, selectionOverrides);
+        if (before.eligible && !after.eligible) return { course: dependent, term, after };
+      }
+    }
+    return null;
+  }
+
+  function showDependentBlock(action, dependent) {
+    const termLabel = MSDS.getTermLabel(courseData, dependent.term, false);
+    MSDS.showToast(
+      `无法${action}：会使 ${termLabel} 的 ${dependent.course.code} 不再满足选课条件。请先移除 ${dependent.course.code}。`,
+      { duration: 6000 }
+    );
+  }
+
   function removeCourse(code, focusSelector) {
     if (!selections[code]) return;
+    const nextSelections = { ...selections };
+    delete nextSelections[code];
+    const invalidatedDependent = findInvalidatedDependent(nextSelections);
+    if (invalidatedDependent) {
+      showDependentBlock(`移除 ${code}`, invalidatedDependent);
+      return;
+    }
     const removedSelection = { ...selections[code] };
     delete selections[code];
     renderAll(focusSelector || `button[data-code="${code}"]`);
     MSDS.showToast(`已移除 ${code}`, {
       actionLabel: "撤销",
       onAction: () => {
+        const course = courseByCode(code);
+        const conflict = course && findProjectConflict(course);
+        if (conflict) {
+          showProjectConflict(course, conflict);
+          return;
+        }
         selections[code] = removedSelection;
         renderAll(`button[data-code="${code}"]`);
         MSDS.showToast(`已恢复 ${code}`);
@@ -359,8 +640,22 @@
     if (selections[code]) {
       removeCourse(code);
       return;
-    } else if (course.offered_this_year === false) {
-      MSDS.showToast(`${code} 本学年不开设`);
+    }
+    const eligibility = MSDS.getSelectionEligibility(courseData, course);
+    if (!eligibility.eligible) {
+      MSDS.showToast(`${code} 暂不可选：${eligibility.statusText.replace(/^当前排课记录未满足：/, "")}`, { duration: 5200 });
+      return;
+    }
+    if (MSDS.isProjectCourse(course)) {
+      const conflict = findProjectConflict(course);
+      if (conflict) {
+        showProjectConflict(course, conflict);
+        return;
+      }
+      selections[code] = MSDS.makeUnscheduledSelection();
+      MSDS.showToast(`已加入 ${code}；无需选择班次，不在周课表显示`);
+    } else if (!course.eligible_sections.some((section) => Number(section.credits) > 0)) {
+      MSDS.showToast(`${code} 该学期开设，但暂无可选班次`);
       return;
     } else {
       selections[code] = selectionForPrimary(course, primaryCrn);
@@ -392,6 +687,43 @@
     });
   }
 
+  function updateTermContext(announce = false) {
+    const termLabel = MSDS.getTermLabel(courseData, activeTerm, false);
+    const fullTermLabel = MSDS.getTermLabel(courseData, activeTerm, true);
+    const termConfig = courseData.terms.find((item) => item.code === activeTerm) || {};
+    const scheduleAsOf = termConfig.schedule_as_of || courseData.schedule_as_of || "";
+
+    document.getElementById("term-select").value = activeTerm;
+    document.getElementById("site-term-label").textContent = fullTermLabel;
+    document.getElementById("timetable-term-label").textContent = termLabel;
+    document.title = `MSDS 选课板 · ${fullTermLabel}`;
+    document.querySelector(".brand").href = MSDS.plannerHref(activeTerm);
+    document.querySelector('.main-nav a[href^="index.html"]').href = MSDS.plannerHref(activeTerm);
+    document.querySelector(".intro-stat-guide").href = `aims-fields.html?term=${encodeURIComponent(activeTerm)}`;
+    document.getElementById("schedule-data-note").textContent = scheduleAsOf
+      ? `${termLabel} 课表快照：${scheduleAsOf}，数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。`
+      : `${termLabel} 课表数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。`;
+
+    if (announce) {
+      const selectedCount = courses.filter((course) => selections[course.code]).length;
+      document.getElementById("term-announcement").textContent = `已切换到 ${fullTermLabel}，显示 ${courses.length} 门课程，当前课表 ${selectedCount} 门。`;
+    }
+  }
+
+  function activateTerm(term, announce = false) {
+    activeTerm = MSDS.setActiveTerm(term);
+    const canonicalUrl = new URL(window.location.href);
+    canonicalUrl.searchParams.set("term", activeTerm);
+    window.history.replaceState(null, "", canonicalUrl);
+    plannerElement.setAttribute("aria-busy", "true");
+    courses = coursesForTerm(courseData, activeTerm);
+    selections = sanitizeSelectionsForTerm(MSDS.getStoredSelections(activeTerm));
+    applyDefaultSelections();
+    updateTermContext(announce);
+    renderAll();
+    plannerElement.setAttribute("aria-busy", "false");
+  }
+
   function focusConflictPair(index) {
     const pair = currentConflictPairs[index];
     if (!pair) return;
@@ -411,6 +743,23 @@
   }
 
   function bindEvents() {
+    document.getElementById("term-select").addEventListener("change", (event) => {
+      activateTerm(event.target.value, true);
+    });
+
+    document.getElementById("export-schedule").addEventListener("click", exportSchedule);
+
+    const importInput = document.getElementById("import-schedule-file");
+    document.getElementById("import-schedule").addEventListener("click", () => {
+      importInput.value = "";
+      importInput.click();
+    });
+    importInput.addEventListener("change", async () => {
+      const [file] = importInput.files || [];
+      await importScheduleFile(file);
+      importInput.value = "";
+    });
+
     document.getElementById("course-search").addEventListener("input", (event) => {
       searchTerm = event.target.value.trim();
       renderCourseList();
@@ -465,6 +814,13 @@
     });
 
     listElement.addEventListener("change", (event) => {
+      const confirmationInput = event.target.closest("[data-eligibility-confirm]");
+      if (confirmationInput) {
+        MSDS.setEligibilityConfirmation(confirmationInput.dataset.eligibilityConfirm, confirmationInput.checked);
+        renderAll(`[data-eligibility-confirm="${confirmationInput.dataset.eligibilityConfirm}"]`);
+        MSDS.showToast(confirmationInput.checked ? "已记录学生身份确认" : "已取消学生身份确认");
+        return;
+      }
       const select = event.target.closest("[data-quick-section]");
       if (!select || !selections[select.dataset.quickSection]) return;
       const course = courseByCode(select.dataset.quickSection);
@@ -526,9 +882,14 @@
 
     document.getElementById("clear-selection").addEventListener("click", () => {
       if (!Object.keys(selections).length) return;
+      const invalidatedDependent = findInvalidatedDependent({});
+      if (invalidatedDependent) {
+        showDependentBlock(`清空 ${MSDS.getTermLabel(courseData, activeTerm, false)} 课表`, invalidatedDependent);
+        return;
+      }
       const previousSelections = Object.fromEntries(Object.entries(selections).map(([code, value]) => [code, { ...value }]));
       selections = {};
-      localStorage.setItem(INITIALIZED_KEY, "1");
+      localStorage.setItem(initializedKey(activeTerm), "1");
       renderAll("#clear-selection");
       MSDS.showToast("课表已清空", {
         actionLabel: "撤销",
@@ -542,11 +903,12 @@
   }
 
   MSDS.loadCourseData().then((data) => {
-    courses = data.courses;
-    applyDefaultSelections();
+    courseData = data;
+    document.getElementById("term-select").innerHTML = data.terms.map((term) => `
+      <option value="${MSDS.escapeHtml(term.code)}">${MSDS.escapeHtml(MSDS.getTermLabel(data, term.code, true))}</option>`).join("");
     renderTimeAxis();
     bindEvents();
-    renderAll();
+    activateTerm(activeTerm);
   }).catch((error) => {
     listElement.innerHTML = `<div class="empty-list">${MSDS.escapeHtml(error.message)}<br>请通过本地服务器打开网站。</div>`;
   });

@@ -1,38 +1,42 @@
 [
   {
-    "crn": "21014",
-    "section": "C01",
+    "term": "B",
+    "crn": "15357",
+    "section": "CA1",
     "credits": 3,
+    "campus": "Main Campus",
     "web": "Y",
-    "available": "75",
-    "capacity": "75",
-    "date": "31/08/2026 - 28/11/2026",
-    "day": "M",
-    "time": "12:00 - 13:50",
-    "building": "LI",
-    "room": "3408",
-    "instructor": "TBA",
+    "level": "P R",
+    "available": "20",
+    "capacity": "20",
+    "waitlist_available": "N",
+    "date": "11/01/2027 - 17/04/2027",
+    "day": "W",
+    "time": "11:00 - 12:50",
+    "building": "YEUNG",
+    "room": "LT-2",
+    "instructor": "SONG Linqi, MA Chen",
     "medium": "English",
-    "notes": [
-      "only for Programme: MSDS"
-    ]
+    "notes": []
   },
   {
-    "crn": "21015",
-    "section": "C61",
+    "term": "B",
+    "crn": "12006",
+    "section": "CP1",
     "credits": 3,
+    "campus": "Main Campus",
     "web": "Y",
-    "available": "75",
-    "capacity": "75",
-    "date": "31/08/2026 - 28/11/2026",
-    "day": "M",
+    "level": "P R",
+    "available": "20",
+    "capacity": "20",
+    "waitlist_available": "6",
+    "date": "11/01/2027 - 17/04/2027",
+    "day": "W",
     "time": "19:00 - 20:50",
     "building": "LI",
-    "room": "3408",
-    "instructor": "TBA",
+    "room": "3505",
+    "instructor": "SONG Linqi, MA Chen",
     "medium": "English",
-    "notes": [
-      "only for Programme: MSDS"
-    ]
+    "notes": []
   }
 ]

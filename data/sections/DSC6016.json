@@ -1,1 +1,42 @@
-﻿[{"crn":"15647","section":"C61","credits":3,"web":"Y","available":"200","capacity":"200","date":"31/08/2026 - 28/11/2026","day":"M","time":"19:00 - 21:50","building":"LI","room":"6606","instructor":"CHEUNG Alan","medium":"English","notes":[]}]
+[
+  {
+    "term": "A",
+    "crn": "15647",
+    "section": "C61",
+    "credits": 3,
+    "campus": "Main Campus",
+    "web": "Y",
+    "level": "P",
+    "available": "190",
+    "capacity": "190",
+    "waitlist_available": "N",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "M",
+    "time": "19:00 - 21:50",
+    "building": "LI",
+    "room": "6606",
+    "instructor": "CHEUNG Alan",
+    "medium": "English",
+    "notes": []
+  },
+  {
+    "term": "B",
+    "crn": "12158",
+    "section": "C61",
+    "credits": 3,
+    "campus": "Main Campus",
+    "web": "Y",
+    "level": "P",
+    "available": "190",
+    "capacity": "190",
+    "waitlist_available": "40",
+    "date": "11/01/2027 - 17/04/2027",
+    "day": "W",
+    "time": "19:00 - 21:50",
+    "building": "YEUNG",
+    "room": "LT-6",
+    "instructor": "QIAO Xiao",
+    "medium": "English",
+    "notes": []
+  }
+]

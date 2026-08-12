@@ -2,7 +2,7 @@
 
 面向 City University of Hong Kong（CityU）MSDS 学生的静态选课参考工具，用于浏览课程、比较班次、组合每周课表，并集中查看课程事实与往届学生经验。项目同时提供可部署到 GitHub Pages 的网页版，以及位于 `wechat/` 的微信原生小程序版。
 
-> 当前数据适用于 **Semester A 2026/27**。课表快照时间为 **2026-08-04 16:48（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
+> 网页版课程表覆盖 **2026/27 学年 Semester A、Semester B 与 Summer Term**。当前整理快照时间为 **2026-08-04 16:48（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。微信小程序本次未同步，仍使用此前的 Semester A 静态数据。
 
 ## 在线访问
 
@@ -16,24 +16,31 @@
 
 - **网页版：**仓库根目录中的原生 HTML、CSS 和 JavaScript 静态网站，无需后端或数据库，可直接部署到 GitHub Pages。
 - **微信小程序版：**`wechat/` 中的微信原生工程，不使用 `web-view`，包含首页、课程、课表、详情、中英文课程介绍和项目说明页面。
-- 两个版本使用同一份课程快照与翻译资料，但分别维护展示资源和发布流程；任一版本的发布都不会自动更新另一个平台。
+- 两个版本分别维护课程数据、展示资源和发布流程；任一版本的发布都不会自动更新另一个平台。本次 A/B/S 学期改造仅应用于网页版。
 
 ## 网页版主要功能
 
 ### 课程浏览与筛选
 
+- 先选择 Semester A、Semester B 或 Summer Term，再进入对应学期的课程与课表。
+- 左侧课程栏只显示当前学期声明开设的课程；未在该学期开设的课程不会出现。
 - 按课程编号或课程英文名称搜索。
 - 按核心课、选修课和上课星期筛选。
 - 快速查看课程学分、主课班次数量、上课时间和学生评价摘要。
 - 多班次课程可在加入课表前直接选择时间。
+- 一般课程已声明开设但暂无主课班次时会明确标注“该学期开设，但暂无可选班次”，不能加入课表；三门项目课无需班次，可以加入项目汇总。
 
 ### 可视化课表规划
 
 - 将课程加入每周课表，并分别选择主课和 Tutorial 班次。
-- 自动统计已选课程数量、核心课/选修课数量及总学分。
+- A、B、S 三个学期各自保存一份独立课表，切换学期不会覆盖其他学期的选择。
+- 可将 A、B、S 三份课表一起导出为便于阅读和备份的 UTF-8 TXT；导入同格式文件后，可一次恢复课程及对应主课、Tutorial 班次。
+- 自动汇总 A、B、S 三份课表中的已选课程数量、核心课/选修课数量及总学分；“已选”和“清空”仍只操作当前学期。
+- DSC6006 Dissertation、DSC6017 Internship Project、DSC6032 Internship Project (S) 作为项目课列在必修/选修与总计之间，不计入必修或选修，但计入总门数和总学分，也不会生成周课表时间块。
+- DSC6017 与 DSC6032 互斥，系统会跨 Semester B 和 Summer Term 阻止同时加入；同一项目也不能跨学期重复加入。
 - 自动检测时间冲突，并在课表中标记冲突课程。
 - 从课表课程块进入详情页或直接移除课程。
-- 首次访问会默认选择三门核心课；用户可随时调整或清空。
+- 首次访问 Semester A 会默认选择三门核心课；Semester B 和 Summer Term 初始为空，用户可随时调整或清空当前学期。
 
 ### 课程详情与学生经验
 
@@ -44,8 +51,8 @@
 
 ### 详细课程文件与中文翻译
 
-- 对当前网站中有对应文件的 17 门课程提供“查看详细课程介绍”入口。
-- 将 17 份英文 PDF 转换为 114 张网页页图，访客无需预先下载本地文件。
+- 对当前网站中有对应文件的 27 门课程提供“查看详细课程介绍”入口。
+- 将 27 份英文 PDF 转换为 180 张网页页图，访客无需预先下载本地文件。
 - 英文页图与对应中文翻译使用同一组上一页/下一页按钮同步切换。
 - 电脑端左右对照，手机端上下对照；点击英文页图可单独放大查看。
 - 网页不再依赖 PDF.js 或浏览器内置 PDF 阅读器，原 PDF 仅作为备用和下载入口。
@@ -53,7 +60,8 @@
 ### 本地保存与界面适配
 
 - 选课结果保存在浏览器 `localStorage`，刷新或再次访问后仍会保留。
-- 不需要账号、数据库或后端服务，选课记录不会上传到服务器，也不会跨设备同步。
+- `localStorage` 会按浏览器、域名和端口隔离；切换设备、浏览器或本地端口时，可使用课表 TXT 导入/导出迁移记录。
+- 不需要账号、数据库或后端服务，选课记录不会上传到服务器，也不会自动跨设备同步。
 - 支持响应式布局、键盘操作和跟随系统设置的深色模式。
 
 ## 微信小程序版
@@ -74,12 +82,18 @@
 
 ## 当前数据范围
 
-- 网页版共 25 门课程：3 门核心课、22 门选修课；所有数据科学课程统一使用 `DSC` 前缀，其中 DSC6007 本学年不开设，不能加入课表，但可正常展开课程详情并查看逐页中英文对照课程介绍。
+- 网页版年度开课目录共 27 门课程：5 门核心课、19 门选修课、3 门项目课；Semester A、Semester B、Summer Term 分别显示 12、16、2 门课程。
+- 网页版共有 34 条实际班次记录，其中 Semester A 16 条、Semester B 18 条、Summer Term 暂无实际班次。Summer Term 中已声明开设的课程会显示“暂无可选班次”，不会复制 Semester B 的班次。
+- DSC6007 仅在 Semester B 显示，可选择 C01（CRN 15250）；在 Semester A 和 Summer Term 的选课栏中不显示。
+- DSC6006 Dissertation 为 6 学分，仅在 Semester A、B 开设；DSC6017 Internship Project 为 6 学分，DSC6032 Internship Project (S) 为 3 学分。三者无需班次即可加入，不在周课表显示，其中 `(S)` 属于课程名称。
+- CS6290 仅在 Semester B 开设，不会出现在 Summer Term 课程栏；只有当前 Semester A 课表已包含 CS5285 时才可加入。
+- DSC6017 Internship Project 仅限全日制第二年学生修读；网页会要求本人确认身份，并检查 Semester A 至少 15 学分且包含 DSC5001、DSC5002、DSC5003。DSC6032 Internship Project (S) 则检查 Semester A 与 B 合计至少 15 学分且包含上述三门必修。
+- 资格学分按课程编号去重；如果移除或清空前置课程会让已选的 CS6290、DSC6017 或 DSC6032 失去资格，网页会阻止操作并要求先移除受影响课程。
+- 原 Semester A 索引中未出现在完整 TXT 课表的 8 门课程仅保留历史元数据，`offered_terms` 为空，不会出现在 A、B、S 任一选课栏。
 - 站内课程编号、链接和文件路径统一使用 `DSC`；课程 PDF 与页图保留官方原件内容，原件中可能仍印有 `SDSC` 历史学科代码。
-- 34 个可展示班次组件，包括主课和零学分 Tutorial。
-- 班次数据来自 CityU AIMS 的 Semester A 2026/27 快照。
+- 班次数据来自手动整理的 CityU AIMS 2026/27 学年 A、B、S 课程表 TXT；站内不包含 CityU 爬虫。
 - 学生经验包含 30 条公开小红书来源记录；当前有来源评价的课程为其中一部分。
-- `docs/` 收录 32 份课程 PDF；当前网站课程中有 17 门已完成 PDF 映射和中文翻译。
+- `docs/` 收录 32 份课程 PDF；当前网站课程中有 27 门已完成 PDF 映射和中文翻译。
 - 所有数据均由仓库内的静态 JSON、PDF 和预生成页图提供，项目不包含 CityU 或小红书爬虫，也不会自动更新数据。
 
 ## 网页版本地运行
@@ -123,9 +137,10 @@ cityuds/
 │   ├── planner.js             # 课程筛选、选课和课表逻辑
 │   ├── course.js              # 课程详情渲染逻辑
 │   ├── syllabus.js            # 课程文件与翻译渲染逻辑
-│   └── course-pages/          # 网页版 17 门课程的 114 张英文原文页图
+│   └── course-pages/          # 网页版 27 门课程的 180 张英文原文页图
 ├── data/
 │   ├── courses/index.json     # 学期、培养要求和课程索引
+│   ├── course-schedule-2026-27.txt # 网页版 A/B/S 课程与班次的版本化原始 TXT
 │   ├── course-documents/      # PDF 映射、页图索引与逐页中文翻译
 │   ├── sections/              # 各课程班次数据
 │   ├── reviews/               # 各课程评价摘要
@@ -133,6 +148,7 @@ cityuds/
 │   └── sources.json           # 评价来源及原文链接
 ├── docs/                      # 课程 PDF 资料
 ├── tools/
+│   ├── import-course-schedule.mjs  # 将完整课程表 TXT 导入网页版 JSON
 │   └── build-web-course-images.mjs # 同步网页版课程页图及索引
 └── wechat/                    # 微信原生小程序工程
     ├── project.config.json    # 微信开发者工具项目配置
@@ -146,17 +162,22 @@ cityuds/
 
 更新数据时应保持以下文件之间的课程编号一致：
 
-1. 在 `data/courses/index.json` 更新课程基本信息和学期快照时间。
-2. 在 `data/sections/<课程编号>.json` 更新班次、时间、教师和注册信息。
+1. 将完整课程表保存到 `data/course-schedule-2026-27.txt`，每门课程第一行写课程编号、开课学期和英文名称，后续行写班次字段。
+2. 运行 `node tools\import-course-schedule.mjs --input data\course-schedule-2026-27.txt`，重新生成网页版课程索引、班次和缺失的空评价文件。
 3. 在 `data/reviews/<课程编号>.json` 更新评价摘要和来源 ID。
 4. 在 `data/sources.json` 与 `data/source-reviews/` 中同步维护来源信息。
-5. 根数据发生变化后，运行 `node wechat\tools\build-data.mjs` 同步小程序数据。
-6. 课程 PDF 发生变化后，依次运行以下命令重新生成小程序分包和网页版页图：
+5. 网页版课程文档索引、逐页翻译或已经生成的页图发生变化后，重新校验并生成网页版页图索引：
 
 ```powershell
+node tools\build-web-course-images.mjs
+```
+
+6. 只有在明确同步微信小程序版本时，才运行以下命令；本次新增的 10 门课程介绍没有写入小程序生成物：
+
+```powershell
+node wechat\tools\build-data.mjs
 python wechat\tools\render-pdf-pages.py
 node wechat\tools\build-document-packages.mjs
-node tools\build-web-course-images.mjs
 node wechat\tools\validate-project.mjs
 ```
 
