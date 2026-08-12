@@ -222,15 +222,19 @@
             ? "加入课表（无需班次）"
           : "按上述班次加入课表";
     const addButtonLabel = isAdded ? `${course.code} 已加入课表，查看课表` : addButtonText;
+    const personalConfirmationItem = eligibility.audienceNote
+      ? `<li class="is-personal"><strong>学生身份</strong>${eligibility.confirmationKey
+        ? `<label class="eligibility-confirmation-control"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.confirmationKey)}" data-eligibility-confirm-label="学生身份"${eligibility.confirmationMet ? " checked" : ""}${isAdded && eligibility.confirmationMet ? " disabled" : ""}><span>我确认：${MSDS.escapeHtml(eligibility.audienceNote)}</span></label>`
+        : `<span>${MSDS.escapeHtml(eligibility.audienceNote)}（需本人确认）</span>`}</li>`
+      : "";
+    const minimumCreditsItem = eligibility.minimumCredits > 0
+      ? eligibility.minimumCreditsConfirmationKey
+        ? `<li class="${eligibility.minimumCreditsMet ? "is-met" : "is-unmet"}"><strong>修读学分</strong><label class="eligibility-confirmation-control"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.minimumCreditsConfirmationKey)}" data-eligibility-confirm-label="15 学分修读情况"${eligibility.minimumCreditsConfirmationMet ? " checked" : ""}${isAdded && eligibility.minimumCreditsConfirmationMet ? " disabled" : ""}><span>${MSDS.escapeHtml(eligibility.minimumCreditsConfirmationLabel)}</span></label></li>`
+        : `<li class="${eligibility.minimumCreditsMet ? "is-met" : "is-unmet"}"><strong>${MSDS.escapeHtml(eligibility.termLabel)}学分</strong><span>${MSDS.escapeHtml(eligibility.selectedCredits)} / ${MSDS.escapeHtml(eligibility.minimumCredits)} 学分</span></li>`
+      : "";
     const eligibilityItems = [
-      eligibility.audienceNote
-        ? `<li class="is-personal"><strong>学生身份</strong>${eligibility.confirmationKey
-          ? `<label class="eligibility-confirmation-control"><input id="detail-eligibility-confirmation" type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.confirmationKey)}"${eligibility.confirmationMet ? " checked" : ""}${isAdded && eligibility.confirmationMet ? " disabled" : ""}><span>我确认：${MSDS.escapeHtml(eligibility.audienceNote)}</span></label>`
-          : `<span>${MSDS.escapeHtml(eligibility.audienceNote)}（需本人确认）</span>`}</li>`
-        : "",
-      eligibility.minimumCredits > 0
-        ? `<li class="${eligibility.selectedCredits >= eligibility.minimumCredits ? "is-met" : "is-unmet"}"><strong>${MSDS.escapeHtml(eligibility.termLabel)}学分</strong><span>${MSDS.escapeHtml(eligibility.selectedCredits)} / ${MSDS.escapeHtml(eligibility.minimumCredits)} 学分</span></li>`
-        : "",
+      personalConfirmationItem,
+      minimumCreditsItem,
       eligibility.requiredCourses?.length
         ? `<li class="${eligibility.missingCourses.length ? "is-unmet" : "is-met"}"><strong>${eligibility.requiredCourses.length === 3 ? "三门必修" : `${MSDS.escapeHtml(eligibility.termLabel)}指定课程`}</strong><span>${MSDS.escapeHtml(eligibility.selectedRequiredCount)} / ${MSDS.escapeHtml(eligibility.requiredCourses.length)} · ${MSDS.escapeHtml(eligibility.requiredCourses.join("、"))}</span></li>`
         : ""
@@ -371,13 +375,15 @@
       </div>`;
     detail.setAttribute("aria-busy", "false");
 
-    const eligibilityConfirmation = document.getElementById("detail-eligibility-confirmation");
-    eligibilityConfirmation?.addEventListener("change", () => {
-      MSDS.setEligibilityConfirmation(eligibilityConfirmation.dataset.eligibilityConfirm, eligibilityConfirmation.checked);
+    const eligibilityConfirmations = [...document.querySelectorAll("[data-eligibility-confirm]")];
+    eligibilityConfirmations.forEach((eligibilityConfirmation) => eligibilityConfirmation.addEventListener("change", () => {
+      const confirmationKey = eligibilityConfirmation.dataset.eligibilityConfirm;
+      MSDS.setEligibilityConfirmation(confirmationKey, eligibilityConfirmation.checked);
       renderCourse(data, course, courseDocument);
-      window.requestAnimationFrame(() => document.getElementById("detail-eligibility-confirmation")?.focus());
-      MSDS.showToast(eligibilityConfirmation.checked ? "已记录学生身份确认" : "已取消学生身份确认");
-    });
+      window.requestAnimationFrame(() => document.querySelector(`[data-eligibility-confirm="${confirmationKey}"]`)?.focus());
+      const confirmationLabel = eligibilityConfirmation.dataset.eligibilityConfirmLabel || "资格条件";
+      MSDS.showToast(eligibilityConfirmation.checked ? `已记录${confirmationLabel}确认` : `已取消${confirmationLabel}确认`);
+    }));
 
     if (!canUseAddButton) return;
 
@@ -472,7 +478,7 @@
 
   Promise.all([
     MSDS.loadCourseData(),
-    fetch("data/course-documents/index.json?v=20260812b").then((response) => {
+    fetch("data/course-documents/index.json?v=20260812c").then((response) => {
       if (!response.ok) throw new Error("课程介绍索引读取失败");
       return response.json();
     })

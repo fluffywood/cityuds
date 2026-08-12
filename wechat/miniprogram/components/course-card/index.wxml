@@ -38,16 +38,24 @@
   <view wx:if="{{course.eligibilityNote}}" class="course-eligibility {{course.eligibilityMet ? 'is-met' : 'is-unmet'}}">
     {{course.eligibilityNote}}
   </view>
-  <checkbox-group wx:if="{{course.requiresConfirmation}}" bindchange="confirmEligibility" catchtap="noop">
-    <label class="eligibility-confirmation">
+  <view wx:if="{{course.requiresConfirmation}}" class="eligibility-confirmations">
+    <checkbox-group
+      wx:for="{{course.confirmationItems}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindchange="confirmEligibility"
+      catchtap="noop"
+    >
+      <label class="eligibility-confirmation">
       <checkbox
-        value="{{course.confirmationKey}}"
-        checked="{{course.confirmationMet}}"
-        disabled="{{added && course.confirmationMet}}"
+          value="{{item.key}}"
+          checked="{{item.met}}"
+          disabled="{{added && item.met}}"
       />
-      <text>我确认：{{course.confirmationLabel}}</text>
-    </label>
-  </checkbox-group>
+        <text>{{item.label}}</text>
+      </label>
+    </checkbox-group>
+  </view>
 
   <view class="course-review">
     <text class="review-verdict level-{{course.recommendation.level}}">{{course.recommendation.verdict}}</text>

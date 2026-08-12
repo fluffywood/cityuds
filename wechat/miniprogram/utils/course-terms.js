@@ -112,6 +112,32 @@ function isSelectionValid(course, selection, term) {
   return selectedCreditsInTerm(course, selection, term) > 0;
 }
 
+function confirmationItemsForRequirement(requirement, audienceNote, confirmations) {
+  const items = [];
+  const identityKey = String(requirement.confirmation_key || "").trim();
+  if (identityKey) {
+    items.push({
+      key: identityKey,
+      label: `我确认：${audienceNote || "符合课程身份要求"}`,
+      met: confirmations[identityKey] === true,
+      unmetText: "尚未确认学生身份"
+    });
+  }
+
+  const minimumCreditsKey = String(requirement.minimum_credits_confirmation_key || "").trim();
+  if (minimumCreditsKey) {
+    const minimumCredits = Math.max(0, Number(requirement.minimum_credits || 0));
+    items.push({
+      key: minimumCreditsKey,
+      label: String(requirement.minimum_credits_confirmation_label || `我已修满${minimumCredits}学分`),
+      met: confirmations[minimumCreditsKey] === true,
+      unmetText: `尚未确认已修满${minimumCredits}学分`
+    });
+  }
+
+  return items;
+}
+
 function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirmations = {}) {
   const requirement = course && course.selection_requirement;
   const audienceNote = String(course && course.eligibility_note || "");
@@ -120,6 +146,7 @@ function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirm
       audienceNote,
       confirmationKey: "",
       confirmationMet: true,
+      confirmationItems: [],
       eligible: true,
       hasRequirement: false,
       minimumCredits: 0,
@@ -137,8 +164,9 @@ function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirm
   const requiredCourses = [...new Set(
     (requirement.required_courses || []).map(normalizeCourseCode).filter(Boolean)
   )];
-  const confirmationKey = String(requirement.confirmation_key || "").trim();
-  const confirmationMet = !confirmationKey || confirmations[confirmationKey] === true;
+  const confirmationItems = confirmationItemsForRequirement(requirement, audienceNote, confirmations);
+  const confirmationKey = confirmationItems[0] ? confirmationItems[0].key : "";
+  const confirmationMet = confirmationItems.every((item) => item.met);
   const selectedCodes = new Set();
   let selectedCredits = 0;
 
@@ -153,6 +181,7 @@ function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirm
   });
 
   const minimumCredits = Math.max(0, Number(requirement.minimum_credits || 0));
+  const manuallyConfirmedCredits = Boolean(requirement.minimum_credits_confirmation_key);
   const missingCourses = requiredCourses.filter((code) => !selectedCodes.has(code));
   const requiredCourseText = requiredCourses.length === 3
     && requiredCourses.every((code) => ["DSC5001", "DSC5002", "DSC5003"].includes(code))
@@ -162,20 +191,30 @@ function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirm
       : "";
   const requirementTermLabel = terms.length > 1 ? `${terms.join("+")} 两学期` : `${terms[0] || "指定"} 学期`;
   const requirementText = [
-    minimumCredits > 0 ? `${requirementTermLabel}至少 ${minimumCredits} 学分` : "",
+    minimumCredits > 0
+      ? manuallyConfirmedCredits
+        ? String(requirement.requirement_note || `选课前修满${minimumCredits}学分`)
+        : `${requirementTermLabel}${terms.length > 1 ? "合计" : ""}至少 ${minimumCredits} 学分`
+      : "",
     requiredCourseText
   ].filter(Boolean).join("，且");
   const unmet = [
-    !confirmationMet ? "尚未确认学生身份" : "",
-    selectedCredits < minimumCredits ? `${requirementTermLabel}当前 ${selectedCredits}/${minimumCredits} 学分` : "",
+    ...confirmationItems.filter((item) => !item.met).map((item) => item.unmetText),
+    !manuallyConfirmedCredits && selectedCredits < minimumCredits
+      ? `${requirementTermLabel}当前 ${selectedCredits}/${minimumCredits} 学分`
+      : "",
     missingCourses.length ? `${requirementTermLabel}缺少 ${missingCourses.join("、")}` : ""
   ].filter(Boolean);
-  const eligible = confirmationMet && selectedCredits >= minimumCredits && missingCourses.length === 0;
+  const creditsMet = manuallyConfirmedCredits
+    ? confirmationItems.some((item) => item.key === requirement.minimum_credits_confirmation_key && item.met)
+    : selectedCredits >= minimumCredits;
+  const eligible = confirmationMet && creditsMet && missingCourses.length === 0;
 
   return {
     audienceNote,
     confirmationKey,
     confirmationMet,
+    confirmationItems,
     eligible,
     hasRequirement: true,
     minimumCredits,
@@ -185,7 +224,7 @@ function getSelectionEligibility(courses, course, selectionsByTerm = {}, confirm
     selectedCredits,
     selectedRequiredCount: requiredCourses.length - missingCourses.length,
     statusText: eligible
-      ? `当前课表已满足：${[confirmationKey ? "学生身份已确认" : "", requirementText].filter(Boolean).join("；")}。`
+      ? `当前课表已满足：${[confirmationItems.length ? "所需信息已确认" : "", requirementText].filter(Boolean).join("；")}。`
       : `当前课表未满足：${unmet.join("；")}。`,
     termLabel: requirementTermLabel,
     terms

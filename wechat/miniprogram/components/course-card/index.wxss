@@ -154,13 +154,21 @@
   color: #18734b;
 }
 
+.eligibility-confirmations {
+  margin-top: 14rpx;
+}
+
 .eligibility-confirmation {
   display: flex;
-  margin-top: 14rpx;
+  min-height: 48rpx;
   align-items: flex-start;
   color: #44526a;
   font-size: 22rpx;
   line-height: 1.55;
+}
+
+.eligibility-confirmations checkbox-group + checkbox-group {
+  margin-top: 8rpx;
 }
 
 .eligibility-confirmation checkbox {

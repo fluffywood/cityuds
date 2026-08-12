@@ -318,11 +318,12 @@ Page({
 
   onEligibilityConfirm(event) {
     const eligibility = this.data.eligibility;
-    if (!eligibility || !eligibility.confirmationKey) return;
-    const selected = (event.detail.value || []).includes(eligibility.confirmationKey);
-    setEligibilityConfirmation(eligibility.confirmationKey, selected);
+    const key = String(event.currentTarget.dataset.key || "");
+    if (!eligibility || !key) return;
+    const selected = (event.detail.value || []).includes(key);
+    setEligibilityConfirmation(key, selected);
     this.refreshCourse();
-    wx.showToast({ title: selected ? "已记录身份确认" : "已取消身份确认", icon: "none" });
+    wx.showToast({ title: selected ? "已记录选课确认" : "已取消选课确认", icon: "none" });
   },
 
   toggleCourse() {

@@ -140,3 +140,83 @@ test("internship projects are mutually exclusive across terms", () => {
   );
   assert.deepEqual(conflict, { code: "DSC6017", term: "B" });
 });
+
+test("DSC6017 uses manual credit confirmation while system-checking the three cores", () => {
+  const internship = {
+    code: "DSC6017",
+    eligibility_note: "仅限全日制第二年学生修读",
+    selection_requirement: {
+      terms: ["A"],
+      minimum_credits: 15,
+      required_courses: ["DSC5001", "DSC5002", "DSC5003"],
+      confirmation_key: "full_time_second_year",
+      minimum_credits_confirmation_key: "internship_completed_15_credits",
+      minimum_credits_confirmation_label: "我已修满15学分",
+      requirement_note: "选课前修满15学分"
+    }
+  };
+  const snapshot = {
+    A: {
+      DSC5001: planner.makeDefaultSelection(courseByCode.DSC5001, "A"),
+      DSC5002: planner.makeDefaultSelection(courseByCode.DSC5002, "A"),
+      DSC5003: planner.makeDefaultSelection(courseByCode.DSC5003, "A")
+    },
+    B: {},
+    S: {}
+  };
+  const confirmations = {
+    full_time_second_year: true,
+    internship_completed_15_credits: true
+  };
+  const eligible = planner.getSelectionEligibility(courses, internship, snapshot, confirmations);
+  assert.equal(eligible.eligible, true);
+  assert.deepEqual(eligible.confirmationItems.map(({ key, label, met }) => ({ key, label, met })), [
+    { key: "full_time_second_year", label: "我确认：仅限全日制第二年学生修读", met: true },
+    { key: "internship_completed_15_credits", label: "我已修满15学分", met: true }
+  ]);
+
+  const insufficientInAppCredits = planner.getSelectionEligibility(courses, internship, {
+    ...snapshot,
+    A: {
+      DSC5001: snapshot.A.DSC5001,
+      DSC5002: snapshot.A.DSC5002,
+      DSC5003: snapshot.A.DSC5003
+    }
+  }, confirmations);
+  assert.equal(insufficientInAppCredits.selectedCredits, 9);
+  assert.equal(insufficientInAppCredits.eligible, true);
+
+  assert.equal(planner.getSelectionEligibility(courses, internship, snapshot, {
+    full_time_second_year: true
+  }).eligible, false);
+  assert.equal(planner.getSelectionEligibility(courses, internship, {
+    ...snapshot,
+    A: { DSC5001: snapshot.A.DSC5001, DSC5002: snapshot.A.DSC5002 }
+  }, confirmations).eligible, false);
+});
+
+test("DSC6032 automatically combines A and B credits and requires all three cores", () => {
+  const summerInternship = {
+    code: "DSC6032",
+    selection_requirement: {
+      terms: ["A", "B"],
+      minimum_credits: 15,
+      required_courses: ["DSC5001", "DSC5002", "DSC5003"]
+    }
+  };
+  const snapshot = {
+    A: {
+      DSC5001: planner.makeDefaultSelection(courseByCode.DSC5001, "A"),
+      DSC5002: planner.makeDefaultSelection(courseByCode.DSC5002, "A"),
+      DSC5003: planner.makeDefaultSelection(courseByCode.DSC5003, "A")
+    },
+    B: {
+      DSC6001: planner.makeDefaultSelection(courseByCode.DSC6001, "B"),
+      DSC6002: planner.makeDefaultSelection(courseByCode.DSC6002, "B")
+    },
+    S: {}
+  };
+  const eligibility = planner.getSelectionEligibility(courses, summerInternship, snapshot);
+  assert.equal(eligibility.selectedCredits, 15);
+  assert.equal(eligibility.eligible, true);
+});

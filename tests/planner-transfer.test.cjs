@@ -158,7 +158,10 @@ test("互斥 Internship Project 不能同时导入", () => {
 
   assert.throws(
     () => transfer.validateSnapshot(courseData, snapshot, {
-      eligibilityConfirmations: { full_time_second_year: true }
+      eligibilityConfirmations: {
+        full_time_second_year: true,
+        internship_completed_15_credits: true
+      }
     }),
     /DSC6032 与 DSC6017 不能同时或跨学期重复加入/
   );
@@ -173,9 +176,65 @@ test("Internship Project 必须保留全日制第二年身份确认", () => {
     () => transfer.validateSnapshot(courseData, snapshot),
     /DSC6017 需要先在课程栏确认/
   );
+  assert.throws(
+    () => transfer.validateSnapshot(courseData, snapshot, {
+      eligibilityConfirmations: { full_time_second_year: true }
+    }),
+    /DSC6017 需要先在课程栏确认“我已修满15学分”/
+  );
   assert.doesNotThrow(() => transfer.validateSnapshot(courseData, snapshot, {
-    eligibilityConfirmations: { full_time_second_year: true }
+    eligibilityConfirmations: {
+      full_time_second_year: true,
+      internship_completed_15_credits: true
+    }
   }));
+});
+
+test("Internship Project 手动确认 15 学分但仍由系统检查三门必修", () => {
+  const snapshot = {
+    A: {
+      DSC5001: regular("11599"),
+      DSC5002: regular("11603"),
+      DSC5003: regular("11604")
+    },
+    B: { DSC6017: { unscheduled: true } },
+    S: {}
+  };
+  const options = {
+    eligibilityConfirmations: {
+      full_time_second_year: true,
+      internship_completed_15_credits: true
+    }
+  };
+
+  assert.doesNotThrow(() => transfer.validateSnapshot(courseData, snapshot, options));
+  delete snapshot.A.DSC5003;
+  assert.throws(
+    () => transfer.validateSnapshot(courseData, snapshot, options),
+    /DSC6017 不满足选课条件.*缺少 DSC5003/
+  );
+});
+
+test("Internship Project (S) 自动合计 A+B 两学期的 15 学分", () => {
+  const snapshot = {
+    A: {
+      DSC5001: regular("11599"),
+      DSC5002: regular("11603"),
+      DSC5003: regular("11604")
+    },
+    B: {
+      DSC6001: regular("11460"),
+      DSC6002: regular("11818")
+    },
+    S: { DSC6032: { unscheduled: true } }
+  };
+
+  assert.doesNotThrow(() => transfer.validateSnapshot(courseData, snapshot));
+  delete snapshot.B.DSC6002;
+  assert.throws(
+    () => transfer.validateSnapshot(courseData, snapshot),
+    /DSC6032 不满足选课条件：A\+B 学期当前 12\/15 学分/
+  );
 });
 
 test("三学期存储失败时恢复导入前的全部值", () => {

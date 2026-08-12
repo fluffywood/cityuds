@@ -33,11 +33,12 @@ Component({
     },
 
     confirmEligibility(event) {
-      const course = this.properties.course || {};
       const values = Array.isArray(event.detail.value) ? event.detail.value : [];
+      const key = String(event.currentTarget.dataset.key || "");
+      if (!key) return;
       this.triggerEvent("confirmeligibility", {
-        key: course.confirmationKey,
-        value: values.includes(course.confirmationKey)
+        key,
+        value: values.includes(key)
       });
     },
 

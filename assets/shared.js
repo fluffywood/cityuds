@@ -9,7 +9,7 @@
   const TERM_CODES = ["A", "B", "S"];
   const TERM_FALLBACK_LABELS = { A: "Semester A", B: "Semester B", S: "Summer Term" };
   const PROJECT_MUTEX = { DSC6017: "DSC6032", DSC6032: "DSC6017" };
-  const DATA_VERSION = "20260812b";
+  const DATA_VERSION = "20260812c";
   const LEGACY_COURSE_CODE_PATTERN = /^SDSC(?=\d{4}$)/;
   const DAY_NAMES = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五", S: "周六", U: "周日" };
   let courseDataPromise;
@@ -191,6 +191,10 @@
         audienceNote,
         confirmationKey: "",
         confirmationMet: true,
+        minimumCreditsConfirmationKey: "",
+        minimumCreditsConfirmationLabel: "",
+        minimumCreditsConfirmationMet: true,
+        minimumCreditsMet: true,
         eligible: true,
         hasRequirement: false,
         missingCourses: [],
@@ -208,6 +212,12 @@
     const requiredCourses = [...new Set((requirement.required_courses || []).map(normalizeCourseCode).filter(Boolean))];
     const confirmationKey = String(requirement.confirmation_key || "").trim();
     const confirmationMet = !confirmationKey || getEligibilityConfirmations()[confirmationKey] === true;
+    const minimumCreditsConfirmationKey = String(requirement.minimum_credits_confirmation_key || "").trim();
+    const minimumCreditsConfirmationLabel = String(
+      requirement.minimum_credits_confirmation_label || `我已修满${minimumCredits}学分`
+    ).trim();
+    const minimumCreditsConfirmationMet = !minimumCreditsConfirmationKey
+      || getEligibilityConfirmations()[minimumCreditsConfirmationKey] === true;
     const selectedCodes = new Set();
     let selectedCredits = 0;
 
@@ -233,17 +243,29 @@
         ? `${termLabel}需包含 ${requiredCourses.join("、")}`
         : "";
     const requirementText = [
-      minimumCredits > 0 ? `${termLabel}至少 ${minimumCredits} 学分` : "",
+      minimumCredits > 0
+        ? minimumCreditsConfirmationKey
+          ? `选课前修满${minimumCredits}学分`
+          : `${termLabel}${terms.length > 1 ? "合计" : ""}至少 ${minimumCredits} 学分`
+        : "",
       requiredCourseText
     ].filter(Boolean).join("，且");
+    const minimumCreditsMet = minimumCredits <= 0 || (minimumCreditsConfirmationKey
+      ? minimumCreditsConfirmationMet
+      : selectedCredits >= minimumCredits);
     const unmetParts = [
       !confirmationMet ? "尚未确认学生身份" : "",
-      selectedCredits < minimumCredits ? `${termLabel}当前 ${selectedCredits}/${minimumCredits} 学分` : "",
+      !minimumCreditsMet
+        ? minimumCreditsConfirmationKey
+          ? `尚未确认已修满 ${minimumCredits} 学分`
+          : `${termLabel}当前 ${selectedCredits}/${minimumCredits} 学分`
+        : "",
       missingCourses.length ? `${termLabel}缺少 ${missingCourses.join("、")}` : ""
     ].filter(Boolean);
-    const eligible = confirmationMet && selectedCredits >= minimumCredits && missingCourses.length === 0;
+    const eligible = confirmationMet && minimumCreditsMet && missingCourses.length === 0;
     const satisfiedParts = [
       confirmationKey ? "学生身份已确认" : "",
+      minimumCreditsConfirmationKey ? `已确认选课前修满 ${minimumCredits} 学分` : "",
       requirementText
     ].filter(Boolean);
 
@@ -254,6 +276,10 @@
       eligible,
       hasRequirement: true,
       minimumCredits,
+      minimumCreditsConfirmationKey,
+      minimumCreditsConfirmationLabel,
+      minimumCreditsConfirmationMet,
+      minimumCreditsMet,
       missingCourses,
       requiredCourses,
       requirementText,

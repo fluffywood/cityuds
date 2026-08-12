@@ -117,6 +117,15 @@
         `${course.code} 需要先在课程栏确认“${course.eligibility_note || "学生身份条件"}”，再重新导入。`
       );
     }
+    const minimumCreditsConfirmationKey = String(
+      requirement.minimum_credits_confirmation_key || ""
+    ).trim();
+    if (minimumCreditsConfirmationKey && confirmations?.[minimumCreditsConfirmationKey] !== true) {
+      throw importError(
+        lineNumber,
+        `${course.code} 需要先在课程栏确认“${requirement.minimum_credits_confirmation_label || "我已修满规定学分"}”，再重新导入。`
+      );
+    }
 
     const terms = [...new Set((requirement.terms || []).map(normalizeTerm).filter(Boolean))];
     const requiredCourses = [...new Set(
@@ -135,10 +144,11 @@
 
     const minimumCredits = Math.max(0, Number(requirement.minimum_credits || 0));
     const missingCourses = requiredCourses.filter((code) => !selectedCodes.has(code));
-    if (credits < minimumCredits || missingCourses.length) {
+    const minimumCreditsMet = minimumCreditsConfirmationKey ? true : credits >= minimumCredits;
+    if (!minimumCreditsMet || missingCourses.length) {
       const termText = terms.length > 1 ? terms.join("+") : terms[0];
       const reasons = [
-        credits < minimumCredits ? `${termText} 学期当前 ${credits}/${minimumCredits} 学分` : "",
+        !minimumCreditsMet ? `${termText} 学期当前 ${credits}/${minimumCredits} 学分` : "",
         missingCourses.length ? `${termText} 学期缺少 ${missingCourses.join("、")}` : ""
       ].filter(Boolean).join("；");
       throw importError(lineNumber, `${course.code} 不满足选课条件：${reasons}。`);

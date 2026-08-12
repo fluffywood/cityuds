@@ -259,6 +259,24 @@
           ? `${eligibility.eligible ? "条件已满足" : "选课条件"}：${eligibility.requirementText}`
           : ""
       ].filter(Boolean).join("；");
+      const eligibilityConfirmations = [
+        eligibility.confirmationKey
+          ? {
+              key: eligibility.confirmationKey,
+              checked: eligibility.confirmationMet,
+              label: `我确认：${eligibility.audienceNote}`,
+              toastLabel: "学生身份"
+            }
+          : null,
+        eligibility.minimumCreditsConfirmationKey
+          ? {
+              key: eligibility.minimumCreditsConfirmationKey,
+              checked: eligibility.minimumCreditsConfirmationMet,
+              label: eligibility.minimumCreditsConfirmationLabel,
+              toastLabel: "15 学分修读情况"
+            }
+          : null
+      ].filter(Boolean);
       const selectedPrimary = selections[course.code]?.primaryCrn;
       return `
         <article class="course-row ${isAdded ? "is-selected" : ""} ${isProject ? "is-project" : ""} ${!hasAddableCourse ? "is-awaiting-sections" : !eligibility.eligible ? "is-ineligible" : ""}">
@@ -271,7 +289,7 @@
             <div class="course-meta"><span>${course.credits} 学分</span><span>${allowsUnscheduled ? "无需班次" : `${primaries.length} 个主课班次`}</span></div>
             <div id="${MSDS.escapeHtml(availabilityId)}" class="course-schedule${isProject ? " course-project-note" : hasAddableCourse ? "" : " course-availability-note"}" title="${MSDS.escapeHtml(scheduleText)}">${MSDS.escapeHtml(scheduleText)}</div>
             ${eligibilityText ? `<p id="${MSDS.escapeHtml(eligibilityId)}" class="course-eligibility ${eligibility.eligible ? "is-met" : "is-unmet"}" title="${MSDS.escapeHtml(eligibility.statusText)}">${MSDS.escapeHtml(eligibilityText)}</p>` : ""}
-            ${eligibility.confirmationKey ? `<label class="course-eligibility-confirmation"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(eligibility.confirmationKey)}"${eligibility.confirmationMet ? " checked" : ""}${isAdded && eligibility.confirmationMet ? " disabled" : ""} aria-describedby="${MSDS.escapeHtml(eligibilityId)}"><span>我确认：${MSDS.escapeHtml(eligibility.audienceNote)}</span></label>` : ""}
+            ${eligibilityConfirmations.length ? `<div class="course-eligibility-confirmations">${eligibilityConfirmations.map((confirmation) => `<label class="course-eligibility-confirmation"><input type="checkbox" data-eligibility-confirm="${MSDS.escapeHtml(confirmation.key)}" data-eligibility-confirm-label="${MSDS.escapeHtml(confirmation.toastLabel)}"${confirmation.checked ? " checked" : ""}${isAdded && confirmation.checked ? " disabled" : ""} aria-describedby="${MSDS.escapeHtml(eligibilityId)}"><span>${MSDS.escapeHtml(confirmation.label)}</span></label>`).join("")}</div>` : ""}
             <p class="course-insight">${MSDS.escapeHtml(rec.summary)}</p>
             ${primaries.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaries, selectedPrimary || MSDS.sectionKey(primaries[0]))}</select></label>` : ""}
           </div>
@@ -831,7 +849,8 @@
       if (confirmationInput) {
         MSDS.setEligibilityConfirmation(confirmationInput.dataset.eligibilityConfirm, confirmationInput.checked);
         renderAll(`[data-eligibility-confirm="${confirmationInput.dataset.eligibilityConfirm}"]`);
-        MSDS.showToast(confirmationInput.checked ? "已记录学生身份确认" : "已取消学生身份确认");
+        const confirmationLabel = confirmationInput.dataset.eligibilityConfirmLabel || "资格条件";
+        MSDS.showToast(confirmationInput.checked ? `已记录${confirmationLabel}确认` : `已取消${confirmationLabel}确认`);
         return;
       }
       const select = event.target.closest("[data-quick-section]");

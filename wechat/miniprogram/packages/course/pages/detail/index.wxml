@@ -24,16 +24,23 @@
       <view class="eligibility-title">选课条件</view>
       <view>{{eligibility.requirementText}}</view>
       <view class="eligibility-state">{{eligibility.statusText}}</view>
-      <checkbox-group wx:if="{{eligibility.confirmationKey}}" bindchange="onEligibilityConfirm">
-        <label class="eligibility-confirmation">
+      <view wx:if="{{eligibility.confirmationItems.length}}" class="eligibility-confirmations">
+        <checkbox-group
+          wx:for="{{eligibility.confirmationItems}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindchange="onEligibilityConfirm"
+        >
+          <label class="eligibility-confirmation">
           <checkbox
-            value="{{eligibility.confirmationKey}}"
-            checked="{{eligibility.confirmationMet}}"
-            disabled="{{added && eligibility.confirmationMet}}"
+              value="{{item.key}}"
+              checked="{{item.met}}"
+              disabled="{{added && item.met}}"
           />
-          <text>我确认：{{eligibility.audienceNote}}</text>
-        </label>
-      </checkbox-group>
+            <text>{{item.label}}</text>
+          </label>
+        </checkbox-group>
+      </view>
     </view>
 
     <view wx:if="{{course.offered && !allowsUnscheduled && primaryOptions.length && !added}}" class="section-pickers">

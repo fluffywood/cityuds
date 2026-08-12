@@ -1743,7 +1743,9 @@ const courses = [
         "DSC5002",
         "DSC5003"
       ],
-      "confirmation_key": "full_time_second_year"
+      "confirmation_key": "full_time_second_year",
+      "minimum_credits_confirmation_key": "internship_completed_15_credits",
+      "minimum_credits_confirmation_label": "我已修满15学分"
     },
     "eligible_sections": [],
     "recommendation": {

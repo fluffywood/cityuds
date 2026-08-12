@@ -137,11 +137,18 @@
   opacity: 0.9;
 }
 
+.eligibility-confirmations {
+  margin-top: 14rpx;
+}
+
 .eligibility-confirmation {
   display: flex;
-  margin-top: 12rpx;
   align-items: flex-start;
   color: #384862;
+}
+
+.eligibility-confirmations checkbox-group + checkbox-group {
+  margin-top: 8rpx;
 }
 
 .eligibility-confirmation checkbox {

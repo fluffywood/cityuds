@@ -90,7 +90,7 @@
 - DSC6007 仅在 Semester B 显示，可选择 C01（CRN 15250）；在 Semester A 和 Summer Term 的选课栏中不显示。
 - DSC6006 Dissertation 为 6 学分，仅在 Semester A、B 开设；DSC6017 Internship Project 为 6 学分，DSC6032 Internship Project (S) 为 3 学分。三者无需班次即可加入，不在周课表显示，其中 `(S)` 属于课程名称。
 - CS6290 仅在 Semester B 开设，不会出现在 Summer Term 课程栏；只有当前 Semester A 课表已包含 CS5285 时才可加入。
-- DSC6017 Internship Project 仅限全日制第二年学生修读；网页会要求本人确认身份，并检查 Semester A 至少 15 学分且包含 DSC5001、DSC5002、DSC5003。DSC6032 Internship Project (S) 则检查 Semester A 与 B 合计至少 15 学分且包含上述三门必修。
+- DSC6017 Internship Project 仅限全日制第二年学生修读；网页要求本人分别确认学生身份和“我已修满15学分”，并由系统检查已选课表包含 DSC5001、DSC5002、DSC5003。DSC6032 Internship Project (S) 则由系统检查 Semester A 与 B 合计至少 15 学分且包含上述三门必修。
 - 资格学分按课程编号去重；如果移除或清空前置课程会让已选的 CS6290、DSC6017 或 DSC6032 失去资格，网页会阻止操作并要求先移除受影响课程。
 - 原 Semester A 索引中未出现在完整 TXT 课表的 8 门课程仅保留历史元数据，`offered_terms` 为空，不会出现在 A、B、S 任一选课栏。
 - 站内课程编号、链接和文件路径统一使用 `DSC`；课程 PDF 与页图保留官方原件内容，原件中可能仍印有 `SDSC` 历史学科代码。

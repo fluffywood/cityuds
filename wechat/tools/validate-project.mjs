@@ -142,6 +142,13 @@ assert(
     && courseCardLogic.includes('triggerEvent("sectionchange"'),
   "课程卡时间区域缺少受控班次选择器、事件或点击冒泡保护"
 );
+assert(
+  courseCardMarkup.includes('wx:for="{{course.confirmationItems}}"')
+    && courseCardMarkup.includes('data-key="{{item.key}}"')
+    && courseCardMarkup.includes("{{item.label}}")
+    && courseCardLogic.includes("event.currentTarget.dataset.key"),
+  "课程卡必须支持多项选课确认并显示各自完整文案"
+);
 const coursesMarkup = await readFile(path.join(miniProgramRoot, "pages", "courses", "index.wxml"), "utf8");
 const coursesLogic = await readFile(path.join(miniProgramRoot, "pages", "courses", "index.js"), "utf8");
 assert(
@@ -182,6 +189,13 @@ assert(
     && courseDetailLogic.includes("onSectionCardTap(event)")
     && courseDetailLogic.includes("applySectionChoice(kind, key)"),
   "课程详情的可选班次卡缺少点击切换、班次标识或选中态"
+);
+assert(
+  courseDetailMarkup.includes('wx:for="{{eligibility.confirmationItems}}"')
+    && courseDetailMarkup.includes('data-key="{{item.key}}"')
+    && courseDetailMarkup.includes("{{item.label}}")
+    && courseDetailLogic.includes("event.currentTarget.dataset.key"),
+  "课程详情必须支持多项选课确认并独立保存"
 );
 
 const timetableMarkup = await readFile(path.join(miniProgramRoot, "pages", "timetable", "index.wxml"), "utf8");
@@ -279,6 +293,23 @@ assert(
     "B"
   ) === 3,
   "DSC6002 Semester B 的 CRN 11818 必须按 3 学分计入"
+);
+const dsc6017 = courses.find((course) => course.code === "DSC6017");
+const dsc6032 = courses.find((course) => course.code === "DSC6032");
+const internshipRequirement = dsc6017?.selection_requirement || {};
+assert(
+  internshipRequirement.confirmation_key === "full_time_second_year"
+    && internshipRequirement.minimum_credits_confirmation_key === "internship_completed_15_credits"
+    && internshipRequirement.minimum_credits_confirmation_label === "我已修满15学分"
+    && Number(internshipRequirement.minimum_credits) === 15
+    && JSON.stringify(internshipRequirement.required_courses) === JSON.stringify(["DSC5001", "DSC5002", "DSC5003"]),
+  "DSC6017 必须保留两项手动确认，并由系统检查三门必修"
+);
+assert(
+  JSON.stringify(dsc6032?.selection_requirement?.terms) === JSON.stringify(["A", "B"])
+    && Number(dsc6032.selection_requirement.minimum_credits) === 15
+    && JSON.stringify(dsc6032.selection_requirement.required_courses) === JSON.stringify(["DSC5001", "DSC5002", "DSC5003"]),
+  "DSC6032 必须合计 A、B 两学期 15 学分并检查三门必修"
 );
 const dsc6003 = courses.find((course) => course.code === "DSC6003");
 const ordinaryCourseWithoutSections = {

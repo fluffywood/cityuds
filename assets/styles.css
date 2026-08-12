@@ -4292,8 +4292,13 @@ h3,
   cursor: pointer;
 }
 
-.course-eligibility-confirmation {
+.course-eligibility-confirmations {
+  display: grid;
+  gap: 7px;
   margin-top: 7px;
+}
+
+.course-eligibility-confirmation {
   color: var(--ink);
   font-size: 10px;
   font-weight: 700;

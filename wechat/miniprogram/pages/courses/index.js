@@ -163,10 +163,8 @@ function displayCourse(course, term, selections, eligibility, pendingSelections)
         : ""
     ].filter(Boolean).join("；"),
     eligibilityMet: eligibility.eligible,
-    requiresConfirmation: Boolean(eligibility.confirmationKey),
-    confirmationKey: eligibility.confirmationKey,
-    confirmationMet: eligibility.confirmationMet,
-    confirmationLabel: eligibility.audienceNote
+    requiresConfirmation: eligibility.confirmationItems.length > 0,
+    confirmationItems: eligibility.confirmationItems
   };
 }
 
@@ -274,7 +272,7 @@ Page({
     if (!key) return;
     setEligibilityConfirmation(key, event.detail.value === true);
     this.refreshCourses();
-    wx.showToast({ title: event.detail.value ? "已记录身份确认" : "已取消身份确认", icon: "none" });
+    wx.showToast({ title: event.detail.value ? "已记录选课确认" : "已取消选课确认", icon: "none" });
   },
 
   onOpenCourse(event) {
