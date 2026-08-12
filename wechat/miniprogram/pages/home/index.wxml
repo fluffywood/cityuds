@@ -12,8 +12,8 @@
         <text class="home-stat-label">门课程</text>
       </view>
       <view class="surface home-stat">
-        <text class="home-stat-value">{{documentCount}}</text>
-        <text class="home-stat-label">门课程含介绍</text>
+        <text class="home-stat-value">15+15</text>
+        <text class="home-stat-label">学分组成</text>
       </view>
     </view>
   </view>

@@ -1,7 +1,6 @@
 const { metadata, courses } = require("../../data/catalog");
 const GITHUB_URL = "https://github.com/fluffywood/cityuds";
 
-const documentCount = courses.filter((course) => course.documentAvailable).length;
 const scheduleAsOf = String(metadata.schedule_as_of || "").replace(
   " Asia/Beijing",
   "（Asia/Beijing）"
@@ -13,7 +12,6 @@ Page({
     semester: metadata.semester,
     scheduleAsOf,
     courseCount: courses.length,
-    documentCount,
     githubUrl: GITHUB_URL
   },
 

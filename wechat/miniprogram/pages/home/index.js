@@ -1,13 +1,10 @@
 const { metadata, courses } = require("../../data/catalog");
 const WEB_URL = "https://fluffywood.github.io/cityuds/";
 
-const documentCount = courses.filter((course) => course.documentAvailable).length;
-
 Page({
   data: {
     semester: metadata.semester,
     courseCount: courses.length,
-    documentCount,
     webUrl: WEB_URL
   },
 
